@@ -1,4 +1,4 @@
-package com.howtodoinjava.demo;
+package com.howtodoinjava.demo.mockwerbserver;
 
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;

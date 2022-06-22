@@ -1,4 +1,4 @@
-package com.howtodoinjava.demo;
+package com.howtodoinjava.demo.wiremock;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.junit.jupiter.api.AfterAll;
