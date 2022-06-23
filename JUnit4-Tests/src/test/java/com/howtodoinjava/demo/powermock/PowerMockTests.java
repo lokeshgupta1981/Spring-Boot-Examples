@@ -9,7 +9,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 
-import static org.powermock.api.mockito.PowerMockito.spy;
+import static org.mockito.Mockito.times;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Service.class})
@@ -17,25 +17,54 @@ public class PowerMockTests {
 
   @Test
   public void mockStaticMethodTest() {
+    //Mock static method
     PowerMockito.mockStatic(Service.class);
-    Mockito.when(Service.message()).thenReturn("New Message!");
-    String message = Service.message();
-    Assert.assertEquals(message, "New Message!");
-    //PowerMockito.verifyStatic(Service.class, Mockito.times(1));
+
+    //Set expectation
+    Mockito.when(Service.staticMessage()).thenReturn("New Message from Mock!");
+
+    //invoke the method
+    String message = Service.staticMessage();
+
+    //Assert the stub response
+    Assert.assertEquals(message, "New Message from Mock!");
+
+    //Verify static method invocation
+    PowerMockito.verifyStatic(Service.class, times(1));
+    Service.staticMessage();
   }
+
   @Test
   public void mockFinalMethodTest() {
-    Service service = PowerMockito.mock(Service.class);
-    Mockito.when(service.finalMessage()).thenReturn("Finally, New Message!");
-    String message = service.finalMessage();
-    Assert.assertEquals(message, "Finally, New Message!");
+    //Mock final method
+    Service serviceMock = PowerMockito.mock(Service.class, Mockito
+        .withSettings()
+        .name("ServiceMock")
+        .verboseLogging());
+
+    //Set expectation
+    Mockito.when(serviceMock.finalMessage()).thenReturn("New Message from " +
+        "Mock!");
+
+    //invoke the method
+    String message = serviceMock.finalMessage();
+
+    //Assert the stub response
+    Assert.assertEquals(message, "New Message from Mock!");
+
+    //Verify final method invocation
+    Mockito.verify(serviceMock).finalMessage();
   }
+
   @Test
   public void mockPrivateMethodTest() throws Exception {
-    Service mock = spy(new Service());
-    PowerMockito.when(mock, "privateMessage").thenReturn("A Private Message!");
+    Service mock = PowerMockito.spy(new Service());
+    PowerMockito.doReturn("New Message from Mock!").when(mock,
+        "privateMessage");
     String privateMessage = Whitebox.invokeMethod(mock, "privateMessage");
-    Assert.assertEquals(privateMessage, "A Private Message!");
+    Assert.assertEquals(privateMessage, "New Message from Mock!");
+
+    PowerMockito.verifyPrivate(mock, times(1)).invoke("privateMessage");
   }
 }
 
@@ -43,12 +72,11 @@ class Service {
   private String privateMessage() {
     return "Hello World!";
   }
-  private String privateMessage(String parameter) {
-    return "Hello World! " + parameter;
-  }
-  public static String message() {
+
+  public static String staticMessage() {
     return "Hello World!";
   }
+
   public final String finalMessage() {
     return "Hello World!";
   }
