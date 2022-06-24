@@ -5,33 +5,40 @@ import com.howtodoinjava.demo.easymock.systemUnderTest.RecordDao;
 import com.howtodoinjava.demo.easymock.systemUnderTest.RecordService;
 import com.howtodoinjava.demo.easymock.systemUnderTest.SequenceGenerator;
 import org.easymock.EasyMock;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import static org.easymock.EasyMock.*;
+import static org.junit.Assert.assertEquals;
 
 public class EasyMockTests {
 
   @Test
   public void testSaveRecord() {
+    //Prepare mocks
     RecordDao mockDao = EasyMock.mock(RecordDao.class);
     SequenceGenerator mockGenerator = EasyMock.mock(SequenceGenerator.class);
 
     Record record = new Record();
     record.setName("Test Record");
 
-    expect(mockGenerator.getNext()).andReturn(100L);
-    expect(mockDao.saveRecord(EasyMock.anyObject(Record.class))).andReturn(record);
+    //Set expectations
+    //expect(mockGenerator.getNext()).andReturn(100L).once();
+    mockGenerator.getNext();
+    expectLastCall().andReturn((long) 100);
+    expect(mockDao.saveRecord(EasyMock.anyObject(Record.class))).andReturn(record).once();
 
+    //Replay
     replay(mockGenerator);
     replay(mockDao);
 
+    //Test and assertions
     RecordService service = new RecordService(mockGenerator, mockDao);
     Record savedRecord = service.saveRecord(record);
 
-    Assertions.assertEquals("Test Record", savedRecord.getName());
-    Assertions.assertEquals(savedRecord.getId(), 100L);
+    assertEquals("Test Record", savedRecord.getName());
+    assertEquals(100L, savedRecord.getId());
 
+    //Verify
     verify(mockGenerator);
     verify(mockDao);
   }

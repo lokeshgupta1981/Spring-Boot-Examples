@@ -4,19 +4,14 @@ import com.howtodoinjava.demo.easymock.systemUnderTest.Record;
 import com.howtodoinjava.demo.easymock.systemUnderTest.RecordDao;
 import com.howtodoinjava.demo.easymock.systemUnderTest.RecordService;
 import com.howtodoinjava.demo.easymock.systemUnderTest.SequenceGenerator;
-import org.easymock.EasyMock;
-import org.easymock.EasyMockRunner;
-import org.easymock.Mock;
-import org.easymock.TestSubject;
-import org.junit.Test;
+import org.easymock.*;
 import org.junit.jupiter.api.Assertions;
-import org.junit.runner.RunWith;
-
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import static org.easymock.EasyMock.*;
-import static org.easymock.EasyMock.verify;
 
-@RunWith(EasyMockRunner.class)
-public class EasyMockTestsWithAnnotations {
+@ExtendWith(EasyMockExtension.class)
+public class EasyMockTestsWithAnnotationsJUnit5 {
     @Mock
     RecordDao mockDao;
 
