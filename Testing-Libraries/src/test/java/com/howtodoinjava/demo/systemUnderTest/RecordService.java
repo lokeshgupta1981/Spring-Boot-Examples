@@ -13,8 +13,12 @@ public class RecordService {
   }
 
   public Record saveRecord(Record record) {
+
     log.info("Saving Record in RecordService");
     record.setId(generator.getNext());
-    return dao.saveRecord(record);
+    dao.saveRecord(record);
+
+    NotificationService.getInstance().sendNotification("New Record Added");
+    return record;
   }
 }
