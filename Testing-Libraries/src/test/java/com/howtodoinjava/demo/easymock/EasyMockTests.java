@@ -1,9 +1,9 @@
 package com.howtodoinjava.demo.easymock;
 
-import com.howtodoinjava.demo.easymock.systemUnderTest.Record;
-import com.howtodoinjava.demo.easymock.systemUnderTest.RecordDao;
-import com.howtodoinjava.demo.easymock.systemUnderTest.RecordService;
-import com.howtodoinjava.demo.easymock.systemUnderTest.SequenceGenerator;
+import com.howtodoinjava.demo.systemUnderTest.Record;
+import com.howtodoinjava.demo.systemUnderTest.RecordDao;
+import com.howtodoinjava.demo.systemUnderTest.RecordService;
+import com.howtodoinjava.demo.systemUnderTest.SequenceGenerator;
 import org.easymock.EasyMock;
 import org.junit.Test;
 

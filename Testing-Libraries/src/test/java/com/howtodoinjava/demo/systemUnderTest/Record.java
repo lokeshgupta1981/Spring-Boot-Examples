@@ -1,4 +1,4 @@
-package com.howtodoinjava.demo.easymock.systemUnderTest;
+package com.howtodoinjava.demo.systemUnderTest;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
