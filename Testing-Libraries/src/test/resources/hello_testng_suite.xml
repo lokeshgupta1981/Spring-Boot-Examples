@@ -1,6 +1,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="HelloTestNgSuite">
-    <test name="HelloWorldTest">
+    <test name="HelloWorldTest" preserve-order="true" thread-count="10"
+          parallel="methods">
         <classes>
             <class name="com.howtodoinjava.demo.testng.HelloTestNg"/>
         </classes>

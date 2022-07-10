@@ -1,0 +1,37 @@
+<suite name="Parameter test Suite" verbose="1">
+    <!-- This parameter will be passed to every test in this suite -->
+    <parameter name="suite-param" value="suite level parameter"/>
+    <test name="Parameter Test one">
+        <classes>
+            <class name="com.howtodoinjava.demo.testng.ParameterTest">
+                <methods>
+                    <include name="prameterTestOne"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Parameter Test two">
+        <!-- This parameter will be passed this test only -->
+        <parameter name="test-two-param" value="Test two parameter"/>
+        <classes>
+            <class name="com.howtodoinjava.demo.testng.ParameterTest">
+                <methods>
+                    <include name="prameterTestTwo"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Parameter Test three">
+        <!-- Overriding suite level parameter -->
+        <parameter name="suite-param" value="overiding suite parameter"/>
+        <!-- Test specific parameter -->
+        <parameter name="test-three-param" value="test three parameter"/>
+        <classes>
+            <class name="com.howtodoinjava.demo.testng.ParameterTest">
+                <methods>
+                    <include name="prameterTestThree"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
