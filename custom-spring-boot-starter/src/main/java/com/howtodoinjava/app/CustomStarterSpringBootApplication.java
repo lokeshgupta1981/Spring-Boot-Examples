@@ -1,13 +1,13 @@
-package com.howtodoinjava.securitymodule;
+package com.howtodoinjava.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SecurityModuleSpringBootStarterApplication {
+public class CustomStarterSpringBootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SecurityModuleSpringBootStarterApplication.class, args);
+		SpringApplication.run(CustomStarterSpringBootApplication.class, args);
 	}
 
 }

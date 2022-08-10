@@ -9,19 +9,20 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.howtodoinjava</groupId>
-	<artifactId>security-module-spring-boot-starter</artifactId>
+	<artifactId>custom-spring-boot-starter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>security-module-spring-boot-starter</name>
+	<name>custom-spring-boot-starter</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>11</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -32,10 +33,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-		      	<groupId>org.springframework.boot</groupId>
-		      	<artifactId>spring-boot-autoconfigure</artifactId>
 		</dependency>
 	</dependencies>
 
