@@ -12,9 +12,8 @@ public class SocialConnectServiceImpl implements SocialConnectService {
 
   @Override
   public List<String> fetchMessages() {
-    System.out.println("Fetching messages...");
-    List<String> messages = socialConnection.retrieve();
-    messages.stream().forEach(System.out::println);
-    return messages;
+    System.out.println("Fetching messages using SocialConnection ...");
+    //Do something with socialConnection
+    return List.of("Hello, World!");
   }
 }

@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "social-connect")
 public class SocialConnectProperties {
-  
+
   private Boolean debug = false;
   private OAuth oauth = new OAuth();
 
