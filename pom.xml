@@ -13,6 +13,7 @@
         <module>Profiles</module>
         <module>JUnit4-Tests</module>
         <module>Testing-Libraries</module>
+        <module>Spring-Boot-Filters</module>
     </modules>
     <name>spring-boot-examples</name>
     <url>https://howtodoinjava.com</url>
