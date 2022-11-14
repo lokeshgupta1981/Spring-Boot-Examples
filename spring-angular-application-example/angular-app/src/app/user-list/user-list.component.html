@@ -1,0 +1,24 @@
+<div class="container">
+    <h2 class="text-center">User List</h2>
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td> {{ user.firstName }} </td>
+                <td> {{ user.lastName }} </td>
+                <td> {{ user.username }} </td>
+                <td>
+                    <button (click) = "updateUser(user.id)" class="btn btn-info">Update</button>
+                    <button (click) = "deleteUser(user.id)" class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
