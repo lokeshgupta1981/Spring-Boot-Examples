@@ -1,0 +1,23 @@
+<div class="container">
+    <h2 class="text-center">Create User</h2>
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="firstName"> First Name</label>
+            <input type="text" class="form-control" id="firstName" [(ngModel)]="user.firstName" name="firstName">
+        </div>
+        <div class="form-group">
+            <label for="lastName"> Last Name</label>
+            <input type="text" class="form-control" id="lastName" [(ngModel)]="user.lastName" name="lastName">
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" [(ngModel)]="user.username" name="username">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" [(ngModel)]="user.password" name="password">
+        </div>
+
+        <button class="btn btn-success mt-2" type="submit">Submit</button>
+    </form>
+</div>
