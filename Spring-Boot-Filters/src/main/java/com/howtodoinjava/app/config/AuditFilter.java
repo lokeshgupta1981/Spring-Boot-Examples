@@ -1,11 +1,11 @@
 package com.howtodoinjava.app.config;
 
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 
-import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = "/admin/*")

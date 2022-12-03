@@ -1,5 +1,6 @@
 package com.howtodoinjava.demo;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -7,7 +8,6 @@ import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Data
