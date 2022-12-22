@@ -6,10 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * This class is for local testing only. Not required to bundle.
- */
-
 @SpringBootApplication
 public class SocialConnectStarterSpringBootApplication implements CommandLineRunner {
 

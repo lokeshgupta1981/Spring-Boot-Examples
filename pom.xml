@@ -18,6 +18,10 @@
         <module>social-connect-spring-boot-starter</module>
         <module>spring-angular-application-example/SpringBootApplication
         </module>
+        <module>spring-mvc-angular-file-upload/springboot-3-mvc-file-upload
+        </module>
+        <module>Retry-example</module>
+        <module>caching</module>
     </modules>
     <name>spring-boot-examples</name>
     <url>https://howtodoinjava.com</url>
