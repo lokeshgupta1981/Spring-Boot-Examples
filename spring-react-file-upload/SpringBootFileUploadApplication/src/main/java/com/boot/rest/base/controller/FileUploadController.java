@@ -1,7 +1,10 @@
 package com.boot.rest.base.controller;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,12 +43,25 @@ public class FileUploadController {
 		return this.fileUploadService.getAllFiles();
 	}
 
+	private FileUploadResponse uploadSingleFile(String name, MultipartFile file) throws IOException {
+		return fileUploadService.uploadFile(file, name);
+	}
+
 	@PostMapping(value = "/upload")
-	public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) {
+	public ResponseEntity<Object> uploadFiles(@RequestParam("name") String name,
+			@RequestParam("files") MultipartFile[] files) {
+
 		try {
-			FileUploadResponse fileUploadResponse = fileUploadService.uploadFile(file);
-			return new ResponseEntity<>(fileUploadResponse, HttpStatus.OK);
-		} catch (IOException e) {
+			List<FileUploadResponse> fileUploadResponses = Arrays.stream(files).map(file -> {
+				try {
+					return uploadSingleFile(name, file);
+				} catch (IOException e) {
+					throw new UncheckedIOException(e);
+				}
+			}).collect(Collectors.toList());
+			
+			return new ResponseEntity<>(fileUploadResponses, HttpStatus.OK);
+		} catch (UncheckedIOException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (FileNotSupportedException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

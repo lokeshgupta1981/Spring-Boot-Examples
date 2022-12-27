@@ -6,6 +6,7 @@ public class FileUploadResponse {
 	private String fileUri;
 	private String fileDownloadUri;
 	private long fileSize;
+	private String uploaderName;
 
 	// default constructor
 	public FileUploadResponse() {
@@ -51,17 +52,28 @@ public class FileUploadResponse {
 		this.id = id;
 	}
 
-	public FileUploadResponse(int id, String fileName, String fileUri, String fileDownloadUri, long fileSize) {
+	public String getUploaderName() {
+		return uploaderName;
+	}
+
+	public void setUploaderName(String uploaderName) {
+		this.uploaderName = uploaderName;
+	}
+
+	public FileUploadResponse(int id, String fileName, String fileUri, String fileDownloadUri, long fileSize,
+			String uploaderName) {
 		this.id = id;
 		this.fileName = fileName;
 		this.fileUri = fileUri;
 		this.fileDownloadUri = fileDownloadUri;
 		this.fileSize = fileSize;
+		this.uploaderName = uploaderName;
 	}
 
 	@Override
 	public String toString() {
-		return "FileUploadResponse [fileName=" + fileName + ", fileUri=" + fileUri + ", fileDownloadUri="
-				+ fileDownloadUri + ", fileSize=" + fileSize + "]";
+		return "FileUploadResponse [id=" + id + ", fileName=" + fileName + ", fileUri=" + fileUri + ", fileDownloadUri="
+				+ fileDownloadUri + ", fileSize=" + fileSize + ", uploaderName=" + uploaderName + "]";
 	}
+
 }

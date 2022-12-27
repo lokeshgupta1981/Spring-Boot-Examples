@@ -12,7 +12,7 @@ import com.boot.rest.base.payload.FileUploadResponse;
 
 public interface FileUploadService {
 
-	public FileUploadResponse uploadFile(MultipartFile file) throws IOException;
+	public FileUploadResponse uploadFile(MultipartFile file, String uploaderName) throws IOException;
 
 	public Resource loadFileAsResource(String fileName) throws FileNotFoundException;
 	

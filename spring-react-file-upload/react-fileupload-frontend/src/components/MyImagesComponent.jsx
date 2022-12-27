@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import FileService from '../services/FileService';
 
 class MyImagesComponent extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             imageList: []
@@ -26,9 +26,11 @@ class MyImagesComponent extends Component {
                                 <div className='hovereffect'>
                                     <img src={image.fileUri} width="330" height="300" alt="no"></img>
                                     <div className='overlay'>
-                                        <a className='info text-black border border-dark' href={image.fileDownloadUri} target="_blank" rel='noopener noreferrer'>Dowload</a>
+                                        <a className='info text-primary bg-light border border-dark' href={image.fileDownloadUri} target="_blank" rel='noopener noreferrer'>Dowload</a>
                                         <br />
-                                        <a className='info text-black border border-dark' href={image.fileUri} target="_blank" rel='noopener noreferrer'>View</a>
+                                        <a className='info text-primary bg-light border border-dark' href={image.fileUri} target="_blank" rel='noopener noreferrer'>View</a>
+                                        <br />
+                                        <a className='info text-danger bg-light border border-dark' href='/'>Uploader: {image.uploaderName}</a>
                                     </div>
                                 </div>
                             </div>

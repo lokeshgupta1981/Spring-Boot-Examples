@@ -31,6 +31,9 @@ public class FileDetails {
 	@Column
 	private long fileSize;
 
+	@Column
+	private String uploaderName;
+
 	public String getFileName() {
 		return fileName;
 	}
@@ -71,16 +74,26 @@ public class FileDetails {
 		this.id = id;
 	}
 
-	public FileDetails(String fileName, String fileUri, String fileDownloadUri, long fileSize) {
+	public String getUploaderName() {
+		return uploaderName;
+	}
+
+	public void setUploaderName(String uploaderName) {
+		this.uploaderName = uploaderName;
+	}
+
+	public FileDetails(String fileName, String fileUri, String fileDownloadUri, long fileSize, String uploaderName) {
 		this.fileName = fileName;
 		this.fileUri = fileUri;
 		this.fileDownloadUri = fileDownloadUri;
 		this.fileSize = fileSize;
+		this.uploaderName = uploaderName;
 	}
 
 	@Override
 	public String toString() {
-		return "FileDetails [fileName=" + fileName + ", fileUri=" + fileUri + ", fileDownloadUri=" + fileDownloadUri
-				+ ", fileSize=" + fileSize + "]";
+		return "FileDetails [id=" + id + ", fileName=" + fileName + ", fileUri=" + fileUri + ", fileDownloadUri="
+				+ fileDownloadUri + ", fileSize=" + fileSize + ", uploaderName=" + uploaderName + "]";
 	}
+
 }
