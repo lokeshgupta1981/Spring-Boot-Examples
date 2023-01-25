@@ -1,12 +1,27 @@
 package com.howtodoinjava.app;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
+//@SpringBootApplication
 public class SpringBootDemoApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(SpringBootDemoApplication.class, args);
+  public static void main(String[] args) throws InterruptedException {
+    //SpringApplication.run(SpringBootDemoApplication.class, args);
+
+    Runnable runnable = new Runnable() {
+      @lombok.SneakyThrows
+      @Override
+      public void run() {
+        while (true) {
+          Thread.sleep(1000);
+          System.out.println(Thread.currentThread().getState());
+        }
+      }
+    };
+
+    Thread thread = new Thread(runnable);
+    thread.start();
+
+    Thread.sleep(5000);
   }
+
+
 }
