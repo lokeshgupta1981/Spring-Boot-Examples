@@ -40,12 +40,12 @@ class UploadImageComponent extends Component {
     }
 
     render() {
+        if(this.state.fileUploaded){
+            return  <Navigate to="/my-images" replace={true} />;
+        }
+
         return (
             <div className='row'>
-                {this.state.fileUploaded && (
-                    <Navigate to="/my-images" replace={true} />
-                )}
-
                 <div className='card col-md-6 offset-md-3 mt-5'>
                     <h3 className='text-center'>Upload Image</h3>
                     <div className='card-body'>
