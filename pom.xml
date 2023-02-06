@@ -22,6 +22,8 @@
         </module>
         <module>Retry-example</module>
         <module>caching</module>
+        <module>spring-react-file-upload/SpringBootFileUploadApplication
+        </module>
     </modules>
     <name>spring-boot-examples</name>
     <url>https://howtodoinjava.com</url>
