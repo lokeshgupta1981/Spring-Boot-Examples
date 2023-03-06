@@ -24,6 +24,7 @@
         <module>caching</module>
         <module>spring-react-file-upload/SpringBootFileUploadApplication
         </module>
+        <module>Spring-Validation</module>
     </modules>
     <name>spring-boot-examples</name>
     <url>https://howtodoinjava.com</url>
