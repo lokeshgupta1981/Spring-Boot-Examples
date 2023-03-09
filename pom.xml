@@ -25,6 +25,7 @@
         <module>spring-react-file-upload/SpringBootFileUploadApplication
         </module>
         <module>Spring-Validation</module>
+        <module>spring-boot-docker-minikube</module>
     </modules>
     <name>spring-boot-examples</name>
     <url>https://howtodoinjava.com</url>
