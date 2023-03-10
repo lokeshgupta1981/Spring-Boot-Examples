@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(
     entityManagerFactoryRef = "userEntityManagerFactory",
     transactionManagerRef = "userTransactionManager",
-    basePackages = {"com.example.repositories.user"})
+    basePackages = {"com.howtodoinjava.app.repositories.user"})
 public class UserDatasourceConfiguration {
 
   @Primary
@@ -44,7 +44,7 @@ public class UserDatasourceConfiguration {
       (EntityManagerFactoryBuilder builder,
        @Qualifier("userDatasource") DataSource dataSource) {
     return builder.dataSource(dataSource)
-        .packages("com.example.model.user")
+        .packages("com.howtodoinjava.app.model.user")
         .persistenceUnit("users").build();
   }
 

@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(
     entityManagerFactoryRef = "orderEntityManagerFactory",
     transactionManagerRef = "orderTransactionManager",
-    basePackages = {"com.example.repositories.order"})
+    basePackages = {"com.howtodoinjava.app.repositories.order"})
 public class OrderDatasourceConfiguration {
 
   @Bean(name = "orderProperties")
@@ -40,7 +40,7 @@ public class OrderDatasourceConfiguration {
       (EntityManagerFactoryBuilder builder,
        @Qualifier("orderDatasource") DataSource dataSource) {
     return builder.dataSource(dataSource)
-        .packages("com.example.model.order")
+        .packages("com.howtodoinjava.app.model.order")
         .persistenceUnit("order").build();
   }
 
