@@ -8,6 +8,9 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
+/**
+ * Below code exludes spirng jpa and h2 as to assume it as SQL tables
+ */
 @EnableJpaRepositories(excludeFilters =
 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = MovieDetailRepository.class))
 public class SpringDataDynamodbExampleApplication {
