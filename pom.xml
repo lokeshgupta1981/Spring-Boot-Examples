@@ -28,6 +28,7 @@
         <module>spring-boot-docker-minikube</module>
         <module>multiple-dataSources</module>
         <module>spring-boot-vuejs/Spring-Boot-API</module>
+        <module>spring-data-dynamodb-example</module>
     </modules>
     <name>spring-boot-examples</name>
     <url>https://howtodoinjava.com</url>
