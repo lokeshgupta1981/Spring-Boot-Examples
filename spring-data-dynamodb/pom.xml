@@ -5,17 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.2</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <artifactId>spring-boot-examples</artifactId>
+        <groupId>com.howtodoinjava.demo</groupId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
     <groupId>com.howtodoinjava.demo</groupId>
-    <artifactId>spring-data-dynamodb</artifactId>
+    <artifactId>spring-data-dynamodb-example</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>spring-data-dynamodb</name>
+    <name>spring-data-dynamodb-example</name>
     <url>https://howtodoinjava.com</url>
     <description>spring-data-dynamodb-example</description>
 
@@ -25,17 +24,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-releasetrain</artifactId>
-                <version>Lovelace-SR16</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -44,12 +33,12 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-dynamodb</artifactId>
-            <version>1.11.64</version>
+            <version>1.12.423</version>
         </dependency>
         <dependency>
-            <groupId>com.github.derjust</groupId>
+            <groupId>io.github.boostchicken</groupId>
             <artifactId>spring-data-dynamodb</artifactId>
-            <version>5.1.0</version>
+            <version>5.2.5</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
