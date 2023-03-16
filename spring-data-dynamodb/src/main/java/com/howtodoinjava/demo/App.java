@@ -12,8 +12,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * Below code excludes spring jpa and h2 as to assume it as SQL tables
  */
 @EnableJpaRepositories(excludeFilters =
-@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value =
-    MovieDetailRepository.class))
+@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
+    value = MovieDetailRepository.class))
 public class App {
 
   public static void main(String[] args) {
