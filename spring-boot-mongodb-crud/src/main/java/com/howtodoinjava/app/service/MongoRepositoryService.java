@@ -1,18 +1,24 @@
 package com.howtodoinjava.app.service;
 
-import com.howtodoinjava.app.model.GroceryItem;
+import com.howtodoinjava.app.model.Item;
 
 import java.util.List;
 
 public interface MongoRepositoryService {
 
-    public GroceryItem addGrocery(GroceryItem groceryItem);
-    public GroceryItem updateGrocery(GroceryItem groceryItem);
-    public String deleteGrocery(Integer id);
-    public List<GroceryItem> getAllGroceries();
-    public GroceryItem getGroceryById(Integer id);
-    public GroceryItem findItemByName(String name);
-    public List<GroceryItem> findAllByCategory(String category);
-    public List<GroceryItem> findAllByQuantityBetween(int qtyGT, int qtyLT);
+  public Item add(Item groceryItem);
 
+  public Item update(Item groceryItem);
+
+  public boolean delete(Integer id);
+
+  public List<Item> getAll();
+
+  public Item getById(Integer id);
+
+  public Item findByName(String name);
+
+  public List<Item> findAllByCategory(String category);
+
+  public List<Item> findAllByQuantityBetween(int qtyGT, int qtyLT);
 }

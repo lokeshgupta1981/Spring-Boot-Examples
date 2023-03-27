@@ -8,16 +8,16 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
 @NoArgsConstructor
-@Document("groceryitems")
-public class GroceryItem {
+@Document("items")
+public class Item {
 
-        @Id
-        @Field("id")
-        private Integer id;
-        @Field("name")
-        private String name;
-        @Field("quantity")
-        private int quantity;
-        @Field("category")
-        private String category;
+  @Id
+  @Field("id")
+  private Integer id;
+  @Field("name")
+  private String name;
+  @Field("quantity")
+  private int quantity;
+  @Field("category")
+  private String category;
 }
