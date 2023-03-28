@@ -14,6 +14,8 @@ public interface MongoTemplateService {
 
   public List<Item> getAll();
 
+  public List<Item> getAll(Integer page, Integer size);
+
   public Item getById(Integer id);
 
   public List<Item> search(String name, Integer minQuantity,

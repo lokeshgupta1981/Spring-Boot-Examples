@@ -4,9 +4,14 @@ import com.howtodoinjava.app.model.Item;
 import com.howtodoinjava.app.service.MongoTemplateService;
 import com.mongodb.client.result.DeleteResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -39,6 +44,23 @@ public class MongoTemplateServiceImpl implements MongoTemplateService {
   @Override
   public List<Item> getAll() {
     return mongoTemplate.findAll(Item.class);
+  }
+
+  @Override
+  public List<Item> getAll(Integer page, Integer size) {
+    Sort sort = Sort.by("category").ascending();
+    Pageable pageable = PageRequest.of(page - 1, size, sort);
+   // Pageable pageable = PageRequest.of(page - 1, size);
+    Query query = new Query().with(pageable);
+
+    Page<Item> pagedResult = PageableExecutionUtils.getPage(
+            mongoTemplate.find(query, Item.class),
+            pageable,
+            () -> mongoTemplate.count(query, Item.class));
+
+
+    return pagedResult.getContent();
+
   }
 
   @Override

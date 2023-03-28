@@ -4,6 +4,9 @@ import com.howtodoinjava.app.model.Item;
 import com.howtodoinjava.app.repositories.ItemRepository;
 import com.howtodoinjava.app.service.MongoRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +33,15 @@ public class MongoRepositoryServiceImpl implements MongoRepositoryService {
   }
 
   @Override
+  public List<Item> getAll(Integer page, Integer size) {
+
+    Sort sort = Sort.by("name").ascending();
+    Pageable pageable = PageRequest.of(page - 1, size, sort);
+
+    return itemRepository.findAll(pageable).getContent();
+  }
+
+  @Override
   public Item getById(Integer id) {
     return itemRepository.findById(id).orElse(null);
   }
@@ -52,6 +64,6 @@ public class MongoRepositoryServiceImpl implements MongoRepositoryService {
   @Override
   public boolean delete(Integer id) {
     itemRepository.deleteById(id);
-    return false;
+    return true;
   }
 }

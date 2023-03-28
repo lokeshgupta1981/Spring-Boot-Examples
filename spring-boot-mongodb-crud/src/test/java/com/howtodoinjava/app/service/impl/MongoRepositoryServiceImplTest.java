@@ -10,103 +10,153 @@ import org.testng.Assert;
 import java.util.List;
 
 @SpringBootTest
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class MongoRepositoryServiceImplTest {
 
   @Autowired
   private MongoRepositoryService mongoRepositoryService;
 
-  Item item = null;
-  Item itemToUpdate = null;
+  Item item1 = null;
+  Item item2 = null;
+  Item item1ToUpdate = null;
+
+  String searchCategory = "snacks";
 
   @BeforeEach
   void setUp() {
-    item = new Item();
-    item.setId(1);
-    item.setName("Whole Wheat Biscuit");
-    item.setQuantity(5);
-    item.setCategory("snacks");
+    item1 = new Item();
+    item1.setId(1);
+    item1.setName("Whole Wheat Biscuit");
+    item1.setQuantity(4);
+    item1.setCategory("snacks");
+
+    item2 = new Item();
+    item2.setId(2);
+    item2.setName("Cheese Crackers");
+    item2.setQuantity(8);
+    item2.setCategory("snacks");
 
     //Updated quantity
-    itemToUpdate = new Item();
-    itemToUpdate.setId(1);
-    itemToUpdate.setName("Whole Wheat Biscuit");
-    itemToUpdate.setQuantity(2);
-    itemToUpdate.setCategory("snacks");
+    item1ToUpdate = new Item();
+    item1ToUpdate.setId(1);
+    item1ToUpdate.setName("Whole Wheat Biscuit");
+    item1ToUpdate.setQuantity(2);
+    item1ToUpdate.setCategory("snacks");
   }
 
   @AfterEach
   void tearDown() {
-    item = null;
-    itemToUpdate = null;
-  }
-
-  //TODO: rename all methods starting with test
-  //TODO: Remove @Order annotation. Each test should be independent of other.
-  //TODO: Each test will insert its test data and remove after assertions
-
-  @Test
-  @Order(1)
-  void testAddGrocery() {
-    Item savedItem = mongoRepositoryService.add(item);
-    Assert.assertEquals(savedItem.getId(), item.getId());
-    //TODO: assert name, category and quantity as well
+    item1 = null;
+    item1ToUpdate = null;
+    item2 = null;
   }
 
   @Test
-  @Order(2)
+  void testAddItem() {
+    Item savedItem = mongoRepositoryService.add(item1);
+    Assert.assertEquals(savedItem.getId(), item1.getId());
+    Assert.assertEquals(savedItem.getName(), item1.getName());
+    Assert.assertEquals(savedItem.getQuantity(), item1.getQuantity());
+    Assert.assertEquals(savedItem.getCategory(), item1.getCategory());
+
+    mongoRepositoryService.delete(savedItem.getId());
+  }
+
+  @Test
   void testUpdateGrocery() {
-    Item updatedItem = mongoRepositoryService.update(itemToUpdate);
-    Assert.assertEquals(updatedItem.getQuantity(), itemToUpdate.getQuantity());
+    mongoRepositoryService.add(item1);
+
+    Item updatedItem = mongoRepositoryService.update(item1ToUpdate);
+
+    Assert.assertEquals(updatedItem.getQuantity(), item1ToUpdate.getQuantity());
+    mongoRepositoryService.delete(updatedItem.getId());
   }
 
   @Test
-  @Order(3)
-  void getAllItems() {
+  void testGetAllItems() {
+    mongoRepositoryService.add(item1);
+    mongoRepositoryService.add(item2);
     List<Item> items = mongoRepositoryService.getAll();
-    Assert.assertTrue(items.size() > 0);
+    Assert.assertTrue(items.size() == 2);
 
-    //TODO: save two items and count should be 2, then delete
+    mongoRepositoryService.delete(item1.getId());
+    mongoRepositoryService.delete(item2.getId());
   }
 
   @Test
-  @Order(4)
-  void getGroceryById() {
+  void testGetAllItemsWithPagination() {
+    mongoRepositoryService.add(item1);
+    mongoRepositoryService.add(item2);
+
+    List<Item> items = mongoRepositoryService.getAll();
+    Assert.assertTrue(items.size() == 2);
+
+    mongoRepositoryService.delete(item1.getId());
+    mongoRepositoryService.delete(item2.getId());
+  }
+
+  @Test
+  void testGetItemById() {
+    mongoRepositoryService.add(item1);
+
     Item item = mongoRepositoryService.getById(1);
 
     Assert.assertEquals(item.getName(), item.getName());
+
+    mongoRepositoryService.delete(item1.getId());
   }
 
   @Test
-  @Order(5)
-  void findItemByName() {
-    Item itemFound = mongoRepositoryService.findByName(item.getName());
+  void testFindItemByName() {
+    mongoRepositoryService.add(item1);
+    mongoRepositoryService.add(item2);
 
-    Assert.assertEquals(item.getName(), itemFound.getName());
-    Assert.assertEquals(item.getId(), itemFound.getId());
+    Item itemFound = mongoRepositoryService.findByName(item1.getName());
+
+    Assert.assertEquals(item1.getName(), itemFound.getName());
+    Assert.assertEquals(item1.getId(), itemFound.getId());
+
+    mongoRepositoryService.delete(item1.getId());
+    mongoRepositoryService.delete(item2.getId());
   }
 
   @Test
-  @Order(6)
-  void findAllByCategory() {
+  void testFindAllByCategory() {
+
+    mongoRepositoryService.add(item1);
+    mongoRepositoryService.add(item2);
+
     List<Item> items =
-        mongoRepositoryService.findAllByCategory(item.getCategory());
+        mongoRepositoryService.findAllByCategory(searchCategory);
+
+
+    Assert.assertTrue(items.size() == 2);
+
     Item item = items.get(0);
     Assert.assertNotNull(item.getName());
     Assert.assertNotNull(item.getQuantity());
     Assert.assertNull(item.getCategory());
+
+    mongoRepositoryService.delete(item1.getId());
+    mongoRepositoryService.delete(item2.getId());
   }
 
   @Test
-  @Order(7)
-  void findItemByQuantityBetween() {
+  void testFindItemByQuantityBetween() {
+    mongoRepositoryService.add(item1);
+    mongoRepositoryService.add(item2);
+
     List<Item> items = mongoRepositoryService.findAllByQuantityBetween(1, 5);
-    Assert.assertTrue(items.size() > 0);
+    Assert.assertTrue(items.size() == 1);
+
+    mongoRepositoryService.delete(item1.getId());
+    mongoRepositoryService.delete(item2.getId());
   }
 
   @Test
-  @Order(8)
-  void deleteGrocery() {
+  void testDeleteItem() {
+    mongoRepositoryService.add(item1);
+
+
     boolean response = mongoRepositoryService.delete(1);
     Assert.assertEquals(response, true);
   }

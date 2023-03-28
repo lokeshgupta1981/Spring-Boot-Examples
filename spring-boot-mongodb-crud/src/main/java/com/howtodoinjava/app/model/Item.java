@@ -14,10 +14,13 @@ public class Item {
   @Id
   @Field("id")
   private Integer id;
+
   @Field("name")
   private String name;
+
   @Field("quantity")
   private int quantity;
+  
   @Field("category")
   private String category;
 }
