@@ -9,10 +9,6 @@ import org.testng.Assert;
 
 import java.util.List;
 
-/**
- * Each test case will setup it's own data and remove after completion
- */
-
 @SpringBootTest
 class MongoTemplateServiceImplTest {
 

@@ -37,7 +37,6 @@ public class MongoRepositoryServiceImpl implements MongoRepositoryService {
 
     Sort sort = Sort.by("name").ascending();
     Pageable pageable = PageRequest.of(page - 1, size, sort);
-
     return itemRepository.findAll(pageable).getContent();
   }
 
