@@ -54,7 +54,7 @@ class MongoTemplateServiceImplTest {
 
 
   @Test
-  void addGrocery() {
+  void addItem() {
 
     Item savedItem = mongoTemplateService.add(item1);
 
@@ -67,7 +67,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void updateGrocery() {
+  void updateItem() {
     mongoTemplateService.add(item1);
 
     Item updatedItem = mongoTemplateService.update(item1ToUpdate);
@@ -79,7 +79,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void getAllGroceries() {
+  void getAllItem() {
     mongoTemplateService.add(item1);
     mongoTemplateService.add(item2);
 
@@ -92,7 +92,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void getGroceryById() {
+  void getItemById() {
     mongoTemplateService.add(item1);
 
     Item item = mongoTemplateService.getById(3);
@@ -102,7 +102,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void searchGroceriesWithName() {
+  void searchItemWithName() {
 
     mongoTemplateService.add(item1);
     mongoTemplateService.add(item2);
@@ -119,7 +119,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void searchGroceriesWithQuantity() {
+  void searchItemWithQuantity() {
     mongoTemplateService.add(item1);
     mongoTemplateService.add(item2);
 
@@ -134,7 +134,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void searchGroceriesWithCategory() {
+  void searchItemWithCategory() {
     mongoTemplateService.add(item1);
     mongoTemplateService.add(item2);
 
@@ -149,7 +149,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void searchGroceriesWithAll() {
+  void searchItemWithAll() {
     mongoTemplateService.add(item1);
     mongoTemplateService.add(item2);
 
@@ -179,7 +179,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void deleteGroceryById() {
+  void deleteItemById() {
     mongoTemplateService.add(item1);
 
     boolean result = mongoTemplateService.delete(item1.getId());
