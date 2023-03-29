@@ -53,7 +53,7 @@ class MongoTemplateServiceImplTest {
 
 
   @Test
-  void addItem() {
+  void testAddItem() {
 
     Item savedItem = mongoTemplateService.add(itemSpices);
 
@@ -66,7 +66,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void updateItem() {
+  void testUpdateItem() {
     mongoTemplateService.add(itemSpices);
 
     Item updatedItem = mongoTemplateService.update(itemToUpdate);
@@ -78,7 +78,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void getAllItem() {
+  void testGetAllItems() {
     mongoTemplateService.add(itemSpices);
     mongoTemplateService.add(itemSnacks);
 
@@ -91,7 +91,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void getItemById() {
+  void testGetItemById() {
     mongoTemplateService.add(itemSpices);
 
     Item item = mongoTemplateService.getById(3);
@@ -101,7 +101,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void searchItemWithName() {
+  void testSearchItemWithName() {
 
     mongoTemplateService.add(itemSpices);
     mongoTemplateService.add(itemSnacks);
@@ -118,7 +118,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void searchItemWithQuantity() {
+  void testSearchItemWithQuantity() {
     mongoTemplateService.add(itemSpices);
     mongoTemplateService.add(itemSnacks);
 
@@ -133,7 +133,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void searchItemWithCategory() {
+  void testSearchItemWithCategory() {
     mongoTemplateService.add(itemSpices);
     mongoTemplateService.add(itemSnacks);
 
@@ -148,7 +148,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void searchItemWithAll() {
+  void testSearchItemWithAll() {
     mongoTemplateService.add(itemSpices);
     mongoTemplateService.add(itemSnacks);
 
@@ -164,7 +164,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void findAllWithPagination() {
+  void testFindAllWithPagination() {
     mongoTemplateService.add(itemSpices);
     mongoTemplateService.add(itemSnacks);
 
@@ -178,7 +178,7 @@ class MongoTemplateServiceImplTest {
   }
 
   @Test
-  void deleteItemById() {
+  void testDeleteItemById() {
     mongoTemplateService.add(itemSpices);
 
     boolean result = mongoTemplateService.delete(itemSpices.getId());

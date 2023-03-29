@@ -62,7 +62,7 @@ class MongoRepositoryServiceImplTest {
   }
 
   @Test
-  void testUpdateGrocery() {
+  void testUpdateItem() {
     mongoRepositoryService.add(itemBiscuit);
     Item updatedItem = mongoRepositoryService.update(itemToUpdate);
 
