@@ -16,55 +16,54 @@ import java.util.Date;
 @Slf4j
 public class JwtTokenProvider {
 
-    Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+  Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
-    public String createToken(Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + 3600000);
+  public String createToken(Authentication authentication) {
+    UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+    Date now = new Date();
+    Date expiryDate = new Date(now.getTime() + 3600000);
 
-        return Jwts.builder()
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date())
-                .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, key)
-                .compact();
+    return Jwts.builder()
+        .setSubject(userDetails.getUsername())
+        .setIssuedAt(new Date())
+        .setExpiration(expiryDate)
+        .signWith(SignatureAlgorithm.HS512, key)
+        .compact();
+  }
+
+
+  public String resolveToken(HttpServletRequest request) {
+    String bearerToken = request.getHeader("Authorization");
+    if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+      return bearerToken.substring(7);
     }
+    return null;
+  }
 
 
-
-    public String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-        return null;
+  public boolean validateToken(String token) {
+    // Check if the token is valid and not expired
+    try {
+      Jwts.parser().setSigningKey(key).parseClaimsJws(token);
+      return true;
+    } catch (MalformedJwtException ex) {
+      log.error("Invalid JWT token");
+    } catch (ExpiredJwtException ex) {
+      log.error("Expired JWT token");
+    } catch (UnsupportedJwtException ex) {
+      log.error("Unsupported JWT token");
+    } catch (IllegalArgumentException ex) {
+      log.error("JWT claims string is empty");
     }
+    return false;
+  }
 
-
-    public boolean validateToken(String token) {
-        // Check if the token is valid and not expired
-        try {
-            Jwts.parser().setSigningKey(key).parseClaimsJws(token);
-            return true;
-        } catch (MalformedJwtException ex) {
-            log.error("Invalid JWT token");
-        } catch (ExpiredJwtException ex) {
-            log.error("Expired JWT token");
-        } catch (UnsupportedJwtException ex) {
-             log.error("Unsupported JWT token");
-        } catch (IllegalArgumentException ex) {
-            log.error("JWT claims string is empty");
-        }
-        return false;
-    }
-
-    public String getUsername(String token) {
-        // Extract the username from the JWT token
-        return Jwts.parser()
-                .setSigningKey(key)
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-    }
+  public String getUsername(String token) {
+    // Extract the username from the JWT token
+    return Jwts.parser()
+        .setSigningKey(key)
+        .parseClaimsJws(token)
+        .getBody()
+        .getSubject();
+  }
 }

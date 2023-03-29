@@ -14,26 +14,29 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+  @Autowired
+  private AuthenticationManager authenticationManager;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestBody AuthenticationRequest authenticationRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
-        );
+  @Autowired
+  private JwtTokenProvider jwtTokenProvider;
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtTokenProvider.createToken(authentication);
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
-    }
+  @PostMapping("/login")
+  public ResponseEntity<?> authenticateUser(
+      @RequestBody AuthenticationRequest authenticationRequest) {
+    Authentication authentication = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
+            authenticationRequest.getPassword())
+    );
 
-    @GetMapping("/logout")
-    public ResponseEntity<?> logoutUser() {
-        SecurityContextHolder.clearContext();
-        return ResponseEntity.ok("Logout successful");
-    }
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+    String jwt = jwtTokenProvider.createToken(authentication);
+    return ResponseEntity.ok(new AuthenticationResponse(jwt));
+  }
+
+  @GetMapping("/logout")
+  public ResponseEntity<?> logoutUser() {
+    SecurityContextHolder.clearContext();
+    return ResponseEntity.ok("Logout successful");
+  }
 }

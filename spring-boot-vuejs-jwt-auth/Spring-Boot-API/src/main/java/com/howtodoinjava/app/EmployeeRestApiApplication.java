@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EmployeeRestApiApplication implements CommandLineRunner {
 
   @Autowired
-  private UserRepository userRepository ;
+  private UserRepository userRepository;
 
   public static void main(String[] args) {
     SpringApplication.run(EmployeeRestApiApplication.class, args);
@@ -20,6 +20,7 @@ public class EmployeeRestApiApplication implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-        userRepository.save(new User("hamza", "nassour" ,"hamza.nassour13@gmail.com" ,"hamza123" , Role.ADMIN));
+    userRepository.save(
+        new User("hamza", "nassour", "hamza.nassour13@gmail.com", "hamza123", Role.ADMIN));
   }
 }
