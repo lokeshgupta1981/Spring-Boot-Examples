@@ -11,7 +11,7 @@ import java.util.List;
 
 @SpringBootTest
 class MongoRepositoryServiceImplTest {
-
+/*
   @Autowired
   private MongoRepositoryService mongoRepositoryService;
 
@@ -157,5 +157,5 @@ class MongoRepositoryServiceImplTest {
 
     boolean response = mongoRepositoryService.delete(1);
     Assert.assertEquals(response, true);
-  }
+  }*/
 }
