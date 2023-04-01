@@ -10,13 +10,15 @@ public interface MongoTemplateService {
 
   public Item update(Item item);
 
-  public boolean delete(Integer id);
+  public boolean delete(String id);
+
+  public boolean delete(Item item);
 
   public List<Item> getAll();
 
   public List<Item> getAll(Integer page, Integer size);
 
-  public Item getById(Integer id);
+  public Item getById(String id);
 
   public List<Item> search(String name, Integer minQuantity,
                            Integer maxQuantity,
