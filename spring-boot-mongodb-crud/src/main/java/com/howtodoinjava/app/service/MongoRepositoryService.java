@@ -6,17 +6,17 @@ import java.util.List;
 
 public interface MongoRepositoryService {
 
-  public Item add(Item groceryItem);
+  public Item add(Item item);
 
-  public Item update(Item groceryItem);
+  public Item update(Item itemToUpdate);
 
-  public boolean delete(Integer id);
+  public boolean delete(String id);
 
   public List<Item> getAll();
 
   public List<Item> getAll(Integer page, Integer size);
 
-  public Item getById(Integer id);
+  public Item getById(String id);
 
   public Item findByName(String name);
 
