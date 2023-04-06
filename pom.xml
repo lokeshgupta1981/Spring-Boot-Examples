@@ -33,6 +33,7 @@
         <module>spring-boot-mongodb-crud</module>
       <module>spring-boot-resilience4j</module>
       <module>spring-boot-load-initial-data</module>
+      <module>spring-boot-xml-request-response</module>
     </modules>
     <name>spring-boot-examples</name>
     <url>https://howtodoinjava.com</url>
