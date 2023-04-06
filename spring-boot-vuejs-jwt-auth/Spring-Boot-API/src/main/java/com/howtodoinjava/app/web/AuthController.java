@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
@@ -31,9 +32,10 @@ public class AuthController {
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 
-    @GetMapping("/logout")
-    public ResponseEntity<?> logoutUser() {
-        SecurityContextHolder.clearContext();
-        return ResponseEntity.ok("Logout successful");
+    @GetMapping("/test")
+    public ResponseEntity<?> test() {
+        return ResponseEntity.ok(" you have access to an ansecure endpoint ");
     }
+
+
 }
