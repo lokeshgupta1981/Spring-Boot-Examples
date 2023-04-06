@@ -34,10 +34,16 @@ public class MongoTemplateServiceImpl implements MongoTemplateService {
   }
 
   @Override
-  public boolean delete(Integer id) {
+  public boolean delete(String id) {
     Query query = new Query();
     query.addCriteria(Criteria.where("id").is(id));
     DeleteResult result = mongoTemplate.remove(query, Item.class);
+    return result.wasAcknowledged();
+  }
+
+  @Override
+  public boolean delete(Item item) {
+    DeleteResult result = mongoTemplate.remove(item);
     return result.wasAcknowledged();
   }
 
@@ -50,7 +56,6 @@ public class MongoTemplateServiceImpl implements MongoTemplateService {
   public List<Item> getAll(Integer page, Integer size) {
     Sort sort = Sort.by("category").ascending();
     Pageable pageable = PageRequest.of(page - 1, size, sort);
-   // Pageable pageable = PageRequest.of(page - 1, size);
     Query query = new Query().with(pageable);
 
     Page<Item> pagedResult = PageableExecutionUtils.getPage(
@@ -58,13 +63,12 @@ public class MongoTemplateServiceImpl implements MongoTemplateService {
             pageable,
             () -> mongoTemplate.count(query, Item.class));
 
-
     return pagedResult.getContent();
 
   }
 
   @Override
-  public Item getById(Integer id) {
+  public Item getById(String id) {
     return mongoTemplate.findById(id, Item.class);
   }
 

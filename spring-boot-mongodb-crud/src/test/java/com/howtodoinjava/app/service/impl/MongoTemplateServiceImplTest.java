@@ -12,182 +12,188 @@ import java.util.List;
 @SpringBootTest
 class MongoTemplateServiceImplTest {
 
-  @Autowired
-  MongoTemplateService mongoTemplateService;
+    @Autowired
+    MongoTemplateService mongoTemplateService;
 
-  Integer pageNumber = 1;
-  Integer pageSize = 5;
-  Item item1 = null;
-  Item item2 = null;
-  Item item1ToUpdate = null;
+    Integer pageNumber = 1;
+    Integer pageSize = 5;
+    Item itemSpices = null;
+    Item itemSnacks = null;
+    Item itemToUpdate = null;
+    String searchCategory = "spices";
 
-  String searchCategory = "snacks";
+    @BeforeEach
+    void setUp() {
+        itemSpices = new Item();
+        itemSpices.setName("Dried Red Chilli");
+        itemSpices.setQuantity(3);
+        itemSpices.setCategory("spices");
 
-  @BeforeEach
-  void setUp() {
-    item1 = new Item();
-    item1.setId(3);
-    item1.setName("Dried Red Chilli");
-    item1.setQuantity(3);
-    item1.setCategory("spices");
+        itemToUpdate = new Item();
+        itemToUpdate.setQuantity(1);
+        itemToUpdate.setCategory("spices");
+        itemToUpdate.setName("Dried Red Chilli");
 
-    item1ToUpdate = new Item();
-    item1ToUpdate.setId(3);
-    item1ToUpdate.setQuantity(1);
-    item1ToUpdate.setCategory("spices");
-    item1ToUpdate.setName("Dried Red Chilli");
+        itemSnacks = new Item();
+        itemSnacks.setName("Cheese Crackers");
+        itemSnacks.setQuantity(8);
+        itemSnacks.setCategory("snacks");
 
-    item2 = new Item();
-    item2.setId(4);
-    item2.setName("Cheese Crackers");
-    item2.setQuantity(8);
-    item2.setCategory("snacks");
+    }
 
-  }
-
-  @AfterEach
-  void tearDown() {
-    item1 = null;
-    item1ToUpdate = null;
-    item2 = null;
-  }
+    @AfterEach
+    void tearDown() {
+        itemSpices = null;
+        itemToUpdate = null;
+        itemSnacks = null;
+    }
 
 
-  @Test
-  void addGrocery() {
+    @Test
+    void testAddItem() {
 
-    Item savedItem = mongoTemplateService.add(item1);
+        Item savedItem = mongoTemplateService.add(itemSpices);
 
-    Assert.assertEquals(savedItem.getId(), item1.getId());
-    Assert.assertEquals(savedItem.getName(), item1.getName());
-    Assert.assertEquals(savedItem.getQuantity(), item1.getQuantity());
-    Assert.assertEquals(savedItem.getCategory(), item1.getCategory());
+        Assert.assertEquals(savedItem.getId(), itemSpices.getId());
+        Assert.assertEquals(savedItem.getName(), itemSpices.getName());
+        Assert.assertEquals(savedItem.getQuantity(), itemSpices.getQuantity());
+        Assert.assertEquals(savedItem.getCategory(), itemSpices.getCategory());
 
-    mongoTemplateService.delete(savedItem.getId());
-  }
+        mongoTemplateService.delete(savedItem.getId());
+    }
 
-  @Test
-  void updateGrocery() {
-    mongoTemplateService.add(item1);
+    @Test
+    void testUpdateItem() {
+        Item savedItem = mongoTemplateService.add(itemSpices);
 
-    Item updatedItem = mongoTemplateService.update(item1ToUpdate);
+        itemToUpdate.setId(savedItem.getId());
+        Item updatedItem = mongoTemplateService.update(itemToUpdate);
 
-    Assert.assertEquals(updatedItem.getQuantity(),
-            item1ToUpdate.getQuantity());
+        Assert.assertEquals(updatedItem.getQuantity(),
+                itemToUpdate.getQuantity());
 
-    mongoTemplateService.delete(updatedItem.getId());
-  }
+        mongoTemplateService.delete(updatedItem.getId());
+    }
 
-  @Test
-  void getAllGroceries() {
-    mongoTemplateService.add(item1);
-    mongoTemplateService.add(item2);
+    @Test
+    void testGetAllItems() {
+        Item savedItemSpices = mongoTemplateService.add(itemSpices);
+        Item savedItemSnacks = mongoTemplateService.add(itemSnacks);
 
-    List<Item> items = mongoTemplateService.getAll();
-    Assert.assertTrue(items.size() == 2);
+        List<Item> items = mongoTemplateService.getAll();
+        Assert.assertTrue(items.size() == 2);
 
-    mongoTemplateService.delete(item1.getId());
-    mongoTemplateService.delete(item2.getId());
+        mongoTemplateService.delete(savedItemSpices.getId());
+        mongoTemplateService.delete(savedItemSnacks.getId());
 
-  }
+    }
 
-  @Test
-  void getGroceryById() {
-    mongoTemplateService.add(item1);
+    @Test
+    void testGetItemById() {
+        Item savedItem = mongoTemplateService.add(itemSpices);
 
-    Item item = mongoTemplateService.getById(3);
+        Item item = mongoTemplateService.getById(savedItem.getId());
 
-    Assert.assertEquals(item.getName(), item.getName());
+        Assert.assertEquals(item.getName(), item.getName());
 
-  }
+        mongoTemplateService.delete(savedItem.getId());
 
-  @Test
-  void searchGroceriesWithName() {
+    }
 
-    mongoTemplateService.add(item1);
-    mongoTemplateService.add(item2);
+    @Test
+    void testSearchItemWithName() {
+
+        Item savedItemSpices = mongoTemplateService.add(itemSpices);
+        Item savedItemSnacks = mongoTemplateService.add(itemSnacks);
 
 
-    List<Item> items = mongoTemplateService.search("Dried Red " +
-            "Chilli", null,
-        null, null);
+        List<Item> items = mongoTemplateService.search("Dried Red " +
+                        "Chilli", null,
+                null, null);
 
-    Assert.assertTrue(items.size() > 0);
+        Assert.assertTrue(items.size() > 0);
 
-    mongoTemplateService.delete(item1.getId());
-    mongoTemplateService.delete(item2.getId());
-  }
+        mongoTemplateService.delete(savedItemSpices.getId());
+        mongoTemplateService.delete(savedItemSnacks.getId());
+    }
 
-  @Test
-  void searchGroceriesWithQuantity() {
-    mongoTemplateService.add(item1);
-    mongoTemplateService.add(item2);
+    @Test
+    void testSearchItemWithQuantity() {
+        Item savedItemSpices = mongoTemplateService.add(itemSpices);
+        Item savedItemSnacks = mongoTemplateService.add(itemSnacks);
 
-    List<Item> items = mongoTemplateService.search(null, 1,
-        5, null);
+        List<Item> items = mongoTemplateService.search(null, 1,
+                5, null);
 
-    Assert.assertTrue(items.size() > 0);
+        Assert.assertTrue(items.size() > 0);
 
-    mongoTemplateService.delete(item1.getId());
-    mongoTemplateService.delete(item2.getId());
+        mongoTemplateService.delete(savedItemSpices.getId());
+        mongoTemplateService.delete(savedItemSnacks.getId());
 
-  }
+    }
 
-  @Test
-  void searchGroceriesWithCategory() {
-    mongoTemplateService.add(item1);
-    mongoTemplateService.add(item2);
+    @Test
+    void testSearchItemWithCategory() {
+        Item savedItemSpices = mongoTemplateService.add(itemSpices);
+        Item savedItemSnacks = mongoTemplateService.add(itemSnacks);
 
-    List<Item> items = mongoTemplateService.search(null, null,
-        null, "spices");
+        List<Item> items = mongoTemplateService.search(null, null,
+                null, searchCategory);
 
-    Assert.assertTrue(items.size() > 0);
+        Assert.assertTrue(items.size() > 0);
 
-    mongoTemplateService.delete(item1.getId());
-    mongoTemplateService.delete(item2.getId());
+        mongoTemplateService.delete(savedItemSpices.getId());
+        mongoTemplateService.delete(savedItemSnacks.getId());
 
-  }
+    }
 
-  @Test
-  void searchGroceriesWithAll() {
-    mongoTemplateService.add(item1);
-    mongoTemplateService.add(item2);
+    @Test
+    void testSearchItemWithAll() {
+        Item savedItemSpices = mongoTemplateService.add(itemSpices);
+        Item savedItemSnacks = mongoTemplateService.add(itemSnacks);
 
-    List<Item> items = mongoTemplateService.search("Dried Red " +
-            "Chilli", 1,
-        5, "spices");
+        List<Item> items = mongoTemplateService.search("Dried Red " +
+                        "Chilli", 1,
+                5, searchCategory);
 
-    Assert.assertTrue(items.size() > 0);
+        Assert.assertTrue(items.size() > 0);
 
-    mongoTemplateService.delete(item1.getId());
-    mongoTemplateService.delete(item2.getId());
+        mongoTemplateService.delete(savedItemSpices.getId());
+        mongoTemplateService.delete(savedItemSnacks.getId());
 
-  }
+    }
 
-  @Test
-  void findAllWithPagination() {
-    mongoTemplateService.add(item1);
-    mongoTemplateService.add(item2);
+    @Test
+    void testFindAllWithPagination() {
+        Item savedItemSpices = mongoTemplateService.add(itemSpices);
+        Item savedItemSnacks = mongoTemplateService.add(itemSnacks);
 
-    List<Item> items = mongoTemplateService.getAll(1, 5);
+        List<Item> items = mongoTemplateService.getAll(pageNumber, pageSize);
 
-    Assert.assertTrue(items.size() > 0);
+        Assert.assertTrue(items.size() > 0);
 
-    mongoTemplateService.delete(item1.getId());
-    mongoTemplateService.delete(item2.getId());
+        mongoTemplateService.delete(savedItemSpices.getId());
+        mongoTemplateService.delete(savedItemSnacks.getId());
 
-  }
+    }
 
-  @Test
-  void deleteGroceryById() {
-    mongoTemplateService.add(item1);
+    @Test
+    void testDeleteItemById() {
+        Item savedItemSpices = mongoTemplateService.add(itemSpices);
 
-    boolean result = mongoTemplateService.delete(item1.getId());
+        boolean result = mongoTemplateService.delete(savedItemSpices.getId());
 
-    Assert.assertEquals(result, true);
+        Assert.assertEquals(result, true);
 
-    mongoTemplateService.delete(item1.getId());
-    mongoTemplateService.delete(item2.getId());
+    }
 
-  }
+    @Test
+    void testDeleteItem() {
+        Item savedItemSpices = mongoTemplateService.add(itemSpices);
+
+        boolean result = mongoTemplateService.delete(savedItemSpices);
+
+        Assert.assertEquals(result, true);
+
+    }
 }

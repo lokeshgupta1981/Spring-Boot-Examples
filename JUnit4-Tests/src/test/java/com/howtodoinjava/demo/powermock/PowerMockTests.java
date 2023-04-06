@@ -59,8 +59,7 @@ public class PowerMockTests {
   @Test
   public void mockPrivateMethodTest() throws Exception {
     Service mock = PowerMockito.spy(new Service());
-    PowerMockito.doReturn("New Message from Mock!").when(mock,
-        "privateMessage");
+    PowerMockito.doReturn("New Message from Mock!").when(mock,"privateMessage");
     String privateMessage = Whitebox.invokeMethod(mock, "privateMessage");
     Assert.assertEquals(privateMessage, "New Message from Mock!");
 
