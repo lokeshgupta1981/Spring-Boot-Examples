@@ -14,9 +14,7 @@ const token = localStorage.getItem("jwtToken");
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    if (config.url !== "/auth/login") {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
   (error) => {

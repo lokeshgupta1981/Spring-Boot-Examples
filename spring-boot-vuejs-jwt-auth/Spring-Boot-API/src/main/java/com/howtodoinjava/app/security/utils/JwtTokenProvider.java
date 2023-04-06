@@ -2,6 +2,7 @@ package com.howtodoinjava.app.security.utils;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -55,6 +56,8 @@ public class JwtTokenProvider {
              log.error("Unsupported JWT token");
         } catch (IllegalArgumentException ex) {
             log.error("JWT claims string is empty");
+        }catch (SignatureException e){
+            log.error("there is an error with the signature of you token ");
         }
         return false;
     }
