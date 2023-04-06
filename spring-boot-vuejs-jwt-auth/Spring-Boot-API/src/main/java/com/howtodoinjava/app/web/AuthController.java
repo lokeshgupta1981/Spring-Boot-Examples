@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -29,6 +30,7 @@ public class AuthController {
             authenticationRequest.getPassword())
     );
 
+
     SecurityContextHolder.getContext().setAuthentication(authentication);
     String jwt = jwtTokenProvider.createToken(authentication);
     return ResponseEntity.ok(new AuthenticationResponse(jwt));
@@ -39,4 +41,5 @@ public class AuthController {
     SecurityContextHolder.clearContext();
     return ResponseEntity.ok("Logout successful");
   }
+
 }

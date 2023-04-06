@@ -1,5 +1,7 @@
 package com.howtodoinjava.app;
 
+import com.howtodoinjava.app.entity.Employee;
+import com.howtodoinjava.app.repository.EmployeeRepository;
 import com.howtodoinjava.app.security.entity.Role;
 import com.howtodoinjava.app.security.entity.User;
 import com.howtodoinjava.app.security.repo.UserRepository;
@@ -14,13 +16,17 @@ public class EmployeeRestApiApplication implements CommandLineRunner {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private EmployeeRepository employeeRepository ;
+
   public static void main(String[] args) {
     SpringApplication.run(EmployeeRestApiApplication.class, args);
   }
 
   @Override
   public void run(String... args) throws Exception {
-    userRepository.save(
-        new User("hamza", "nassour", "hamza.nassour13@gmail.com", "hamza123", Role.ADMIN));
+
+        employeeRepository.save(new Employee("hamza" , "0435645431" , "hamza.nassour13@gmail.com" , "SDE2"));
+        userRepository.save(new User("hamza", "nassour" ,"hamza.nassour13@gmail.com" ,"hamza123" , Role.ADMIN));
   }
 }
