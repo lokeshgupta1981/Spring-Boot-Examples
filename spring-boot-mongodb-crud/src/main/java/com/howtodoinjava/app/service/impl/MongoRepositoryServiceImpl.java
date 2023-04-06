@@ -23,8 +23,8 @@ public class MongoRepositoryServiceImpl implements MongoRepositoryService {
   }
 
   @Override
-  public Item update(Item item) {
-    return itemRepository.save(item);
+  public Item update(Item itemToUpdate) {
+    return itemRepository.save(itemToUpdate);
   }
 
   @Override
@@ -41,7 +41,7 @@ public class MongoRepositoryServiceImpl implements MongoRepositoryService {
   }
 
   @Override
-  public Item getById(Integer id) {
+  public Item getById(String id) {
     return itemRepository.findById(id).orElse(null);
   }
 
@@ -61,7 +61,7 @@ public class MongoRepositoryServiceImpl implements MongoRepositoryService {
   }
 
   @Override
-  public boolean delete(Integer id) {
+  public boolean delete(String id) {
     itemRepository.deleteById(id);
     return true;
   }
