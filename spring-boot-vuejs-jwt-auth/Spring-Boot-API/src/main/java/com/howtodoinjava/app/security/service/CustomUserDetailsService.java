@@ -9,19 +9,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Configuration
-public class CustomUserDetailsService  implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired
+  private UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        try {
-            return userRepository.findByUsername(username)
-                    .orElseThrow(() -> new Exception("user Not found "));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    try {
+      return userRepository.findByUsername(username)
+          .orElseThrow(() -> new Exception("user Not found "));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
+  }
 
 }

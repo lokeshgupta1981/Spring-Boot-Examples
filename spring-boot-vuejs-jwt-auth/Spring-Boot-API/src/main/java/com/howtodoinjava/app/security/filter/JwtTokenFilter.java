@@ -25,8 +25,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-      FilterChain filterChain)
-      throws ServletException, IOException {
+      FilterChain filterChain) throws ServletException, IOException {
 
     // Get the JWT token from the Authorization header
     String token = jwtTokenProvider.resolveToken(request);
