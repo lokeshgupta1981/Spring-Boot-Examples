@@ -12,6 +12,7 @@
         <module>Application-Properties</module>
         <module>Profiles</module>
         <module>spring-boot-vuejs-jwt-auth/Spring-Boot-API</module>
+        <module>spring-boot-keycloak-auth/Spring-Boot-API</module>
         <module>JUnit4-Tests</module>
         <module>Testing-Libraries</module>
         <module>Spring-Boot-Filters</module>
