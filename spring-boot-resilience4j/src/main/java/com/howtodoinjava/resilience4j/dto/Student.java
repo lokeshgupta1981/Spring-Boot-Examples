@@ -1,15 +1,14 @@
 package com.howtodoinjava.resilience4j.dto;
 
-public class Student {
-	
-	private String name;
-	private int id;
-	public Student(int id, String name) {
-		super();
-		this.name = name;
-		this.id = id;
-	}
-	
-	
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Student {
+
+	private int id;
+	private String name;
 }

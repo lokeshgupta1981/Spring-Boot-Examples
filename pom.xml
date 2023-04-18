@@ -34,6 +34,7 @@
       <module>spring-boot-resilience4j</module>
       <module>spring-boot-load-initial-data</module>
       <module>spring-boot-xml-request-response</module>
+        <module>multipart-file-upload-api</module>
     </modules>
     <name>spring-boot-examples</name>
     <url>https://howtodoinjava.com</url>
