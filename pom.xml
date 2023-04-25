@@ -34,7 +34,6 @@
     <module>spring-boot-resilience4j</module>
     <module>spring-boot-load-initial-data</module>
     <module>spring-boot-xml-request-response</module>
-    <module>multipart-file-upload-api</module>
     <module>spring-deploy-docker-image-to-aws</module>
     <module>spring-boot-mvc-thymeleaf</module>
   </modules>
