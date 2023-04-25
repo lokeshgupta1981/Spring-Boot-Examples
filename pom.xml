@@ -36,6 +36,7 @@
     <module>spring-boot-xml-request-response</module>
     <module>multipart-file-upload-api</module>
     <module>spring-deploy-docker-image-to-aws</module>
+    <module>spring-boot-mvc-thymeleaf</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
