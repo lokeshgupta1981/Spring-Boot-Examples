@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <title th:text="${message}"></title>
+</head>
+<body>
+<table border="1">
+  <tr><td>Error Message</td><td th:text="${message}"></td></tr>
+  <tr><td>Status Code</td><td th:text="${status}"></td></tr>
+  <tr><td>Exception</td><td th:text="${exception}"></td></tr>
+  <tr><td>Stacktrace</td><td><pre th:text="${trace}"></pre></td></tr>
+  <tr><td>Binding Errors</td><td th:text="${errors}"></td></tr>
+</table>
+</body>
+</html>

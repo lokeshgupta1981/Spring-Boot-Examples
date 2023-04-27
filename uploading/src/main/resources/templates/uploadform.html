@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Upload Form</title>
+</head>
+<body>
+<h1>Upload Form</h1>
+<form method="post" enctype="multipart/form-data" action="/submit">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name"><br><br>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email"><br><br>
+
+  <label for="phone">Phone:</label>
+  <input type="text" id="phone" name="phone"><br><br>
+
+  <label for="address">Address:</label>
+  <input type="text" id="address" name="address"><br><br>
+
+  <label for="files">Files:</label>
+  <input type="file" id="files" name="files" multiple><br><br>
+
+  <input type="submit" value="Submit">
+</form>
+
+<!-- Success message -->
+<div th:if="${param.success}">
+  <p>Your form has been submitted successfully!</p>
+  <p>Name: <span th:text="${name}"></span></p>
+  <p>Email: <span th:text="${email}"></span></p>
+  <p>Phone: <span th:text="${phone}"></span></p>
+  <p>Address: <span th:text="${address}"></span></p>
+  <p>Files: </p>
+  <ul>
+    <li th:each="filename : ${filenames}">
+      <a th:href="@{'/download/' + ${filename}}"><span th:text="${filename}"></span></a>
+    </li>
+  </ul>
+</div>
+</body>
+</html>
