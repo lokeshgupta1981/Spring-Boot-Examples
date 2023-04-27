@@ -8,10 +8,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,23 +28,6 @@ public class ProductController {
     @Autowired
     private ProductService fileService;
 
-    // for uploading the SINGLE file to the database
-//    @PostMapping("/single/base")
-//    public ResponseClass uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
-//
-//        Product attachment = null;
-//        String downloadURl = "";
-//        attachment = fileService.saveAttachment(file);
-//        downloadURl = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path("/download/")
-//                .path(attachment.getId())
-//                .toUriString();
-//
-//        return new ResponseClass(attachment.getFileName(),
-//                downloadURl,
-//                file.getContentType(),
-//                file.getSize());
-//    }
     @PostMapping("/single/base")
     public ResponseEntity<ResponseClass> uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
         Product attachment = null;
@@ -58,26 +47,6 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-
-    //for uploading the MULTIPLE files to the database
-//    @PostMapping("/multiple/base")
-//    public List<ResponseClass> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) throws Exception {
-//        List<ResponseClass> responseList = new ArrayList<>();
-//        for (MultipartFile file : files) {
-//            Product attachment = fileService.saveAttachment(file);
-//            String downloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                    .path("/download/")
-//                    .path(attachment.getId())
-//                    .toUriString();
-//            ResponseClass response = new ResponseClass(attachment.getFileName(),
-//                    downloadUrl,
-//                    file.getContentType(),
-//                    file.getSize());
-//            responseList.add(response);
-//        }
-//        return responseList;
-//    }
     @PostMapping("/multiple/base")
     public ResponseEntity<List<ResponseClass>> handleMultipleFilesUploads(@RequestParam("files") MultipartFile[] files) throws Exception {
         List<ResponseClass> responseList = new ArrayList<>();
@@ -163,35 +132,38 @@ public class ProductController {
         }
         return ResponseEntity.ok(responseList);
     }
-//For HTML FORM
-@GetMapping("/")
+
+    @GetMapping("/")
 public String getData() {
-    return "File";
+    return "uploadform";
 }
 
-    @PostMapping("/")
-    public String uploadMultipartFile(@RequestParam("files") MultipartFile[] files, Model modal) {
-        try {
-            // Declare empty list for collect the files data
-            // which will come from UI
-            List<Product> fileList = new ArrayList<Product>();
-            for (MultipartFile file : files) {
-                String fileContentType = file.getContentType();
-                byte[] sourceFileContent = file.getBytes();
-                String fileName = file.getOriginalFilename();
-                Product fileModal = new Product(fileName, fileContentType, sourceFileContent);
-
-                // Adding file into fileList
-                fileList.add(fileModal);
-            }
-            fileService.saveAllFilesList(fileList);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+    @PostMapping("/submit")
+    public String submitForm1(@RequestParam("name") String name,
+                             @RequestParam("email") String email,
+                             @RequestParam("phone") String phone,
+                             @RequestParam("address") String address,
+                             @RequestParam("files") MultipartFile[] files,
+                             Model model) throws IOException {
+        List<String> filenames = new ArrayList<>();
+        for (MultipartFile file : files) {
+            String filename = file.getOriginalFilename();
+            file.transferTo(new File("D:\\Folder\\" + filename));
+            filenames.add(filename);
         }
-        modal.addAttribute("allFiles", fileService.getAllFiles());
+        String downloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/download/")
+                .path(filenames.get(0))
+                .toUriString();
 
-        return "FileList";
+// Populate the model with the form data and uploaded files
+        model.addAttribute("name", name);
+        model.addAttribute("email", email);
+        model.addAttribute("phone", phone);
+        model.addAttribute("address", address);
+        model.addAttribute("filenames", filenames);
+        model.addAttribute("fileUrl", downloadUrl);
+        return "success";
+
     }
-
 }
