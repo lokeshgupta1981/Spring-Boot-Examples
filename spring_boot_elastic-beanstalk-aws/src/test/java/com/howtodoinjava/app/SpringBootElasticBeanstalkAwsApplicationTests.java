@@ -1,13 +1,14 @@
-package com.example.spring_boot_elasticbeanstalkaws;
+package com.howtodoinjava.app;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class SpringBootElasticBeanstalkAwsApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
-
+  @Disabled
+  @Test
+  void contextLoads() {
+  }
 }

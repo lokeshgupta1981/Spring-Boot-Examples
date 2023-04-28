@@ -36,6 +36,7 @@
     <module>spring-boot-xml-request-response</module>
     <module>spring-deploy-docker-image-to-aws</module>
     <module>spring-boot-mvc-thymeleaf</module>
+    <module>spring_boot_elastic-beanstalk-aws</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
@@ -75,6 +76,14 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.persistence</groupId>
+      <artifactId>jakarta.persistence-api</artifactId>
     </dependency>
     <!--<dependency>
       <groupId>org.mockito</groupId>

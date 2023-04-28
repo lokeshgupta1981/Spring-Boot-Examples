@@ -1,4 +1,4 @@
-package com.example.spring_boot_elasticbeanstalkaws.entity;
+package com.howtodoinjava.app.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,6 +1,6 @@
-package com.example.spring_boot_elasticbeanstalkaws.repo;
+package com.howtodoinjava.app.repo;
 
-import com.example.spring_boot_elasticbeanstalkaws.entity.Employee;
+import com.howtodoinjava.app.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
