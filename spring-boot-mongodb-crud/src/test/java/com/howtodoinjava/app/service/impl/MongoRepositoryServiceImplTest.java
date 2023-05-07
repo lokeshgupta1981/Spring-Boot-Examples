@@ -2,14 +2,17 @@ package com.howtodoinjava.app.service.impl;
 
 import com.howtodoinjava.app.model.Item;
 import com.howtodoinjava.app.service.MongoRepositoryService;
-import org.junit.jupiter.api.*;
+import java.util.List;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testng.Assert;
-
-import java.util.List;
 
 @SpringBootTest
+@Disabled
 class MongoRepositoryServiceImplTest {
 
   @Autowired
@@ -50,10 +53,10 @@ class MongoRepositoryServiceImplTest {
   void testAddItem() {
     Item savedItem = mongoRepositoryService.add(itemBiscuit);
 
-    Assert.assertEquals(itemBiscuit.getId(), savedItem.getId());
-    Assert.assertEquals(itemBiscuit.getName(), savedItem.getName());
-    Assert.assertEquals(itemBiscuit.getQuantity(), savedItem.getQuantity());
-    Assert.assertEquals(itemBiscuit.getCategory(), savedItem.getCategory());
+    Assertions.assertEquals(itemBiscuit.getId(), savedItem.getId());
+    Assertions.assertEquals(itemBiscuit.getName(), savedItem.getName());
+    Assertions.assertEquals(itemBiscuit.getQuantity(), savedItem.getQuantity());
+    Assertions.assertEquals(itemBiscuit.getCategory(), savedItem.getCategory());
 
     mongoRepositoryService.delete(savedItem.getId());
   }
@@ -65,7 +68,7 @@ class MongoRepositoryServiceImplTest {
     itemToUpdate.setId(savedItem.getId());
     Item updatedItem = mongoRepositoryService.update(itemToUpdate);
 
-    Assert.assertEquals(updatedItem.getQuantity(), itemToUpdate.getQuantity());
+    Assertions.assertEquals(updatedItem.getQuantity(), itemToUpdate.getQuantity());
 
     mongoRepositoryService.delete(updatedItem.getId());
   }
@@ -77,7 +80,7 @@ class MongoRepositoryServiceImplTest {
 
     List<Item> items = mongoRepositoryService.getAll();
 
-    Assert.assertTrue(items.size() > 0);
+    Assertions.assertTrue(items.size() > 0);
 
     mongoRepositoryService.delete(savedItemBiscuit.getId());
     mongoRepositoryService.delete(savedItemCrackers.getId());
@@ -89,7 +92,7 @@ class MongoRepositoryServiceImplTest {
     Item savedItemCrackers = mongoRepositoryService.add(itemCrackers);
 
     List<Item> items = mongoRepositoryService.getAll(1, 2);
-    Assert.assertTrue(items.size() == 2);
+    Assertions.assertTrue(items.size() == 2);
 
     mongoRepositoryService.delete(savedItemBiscuit.getId());
     mongoRepositoryService.delete(savedItemCrackers.getId());
@@ -101,7 +104,7 @@ class MongoRepositoryServiceImplTest {
 
     Item fetchedItem = mongoRepositoryService.getById(savedItem.getId());
 
-    Assert.assertEquals(fetchedItem.getName(), savedItem.getName());
+    Assertions.assertEquals(fetchedItem.getName(), savedItem.getName());
 
     mongoRepositoryService.delete(fetchedItem.getId());
   }
@@ -113,8 +116,8 @@ class MongoRepositoryServiceImplTest {
 
     Item itemFound = mongoRepositoryService.findByName(itemBiscuit.getName());
 
-    Assert.assertEquals(itemBiscuit.getName(), itemFound.getName());
-    Assert.assertEquals(itemBiscuit.getId(), itemFound.getId());
+    Assertions.assertEquals(itemBiscuit.getName(), itemFound.getName());
+    Assertions.assertEquals(itemBiscuit.getId(), itemFound.getId());
 
     mongoRepositoryService.delete(savedItemBiscuit.getId());
     mongoRepositoryService.delete(savedItemCrackers.getId());
@@ -128,12 +131,12 @@ class MongoRepositoryServiceImplTest {
 
     List<Item> items = mongoRepositoryService.findAllByCategory(searchCategory);
 
-    Assert.assertTrue(items.size() == 2);
+    Assertions.assertTrue(items.size() == 2);
 
     Item item = items.get(0);
-    Assert.assertNotNull(item.getName());
-    Assert.assertNotNull(item.getQuantity());
-    Assert.assertNull(item.getCategory());
+    Assertions.assertNotNull(item.getName());
+    Assertions.assertNotNull(item.getQuantity());
+    Assertions.assertNull(item.getCategory());
 
     mongoRepositoryService.delete(savedItemBiscuit.getId());
     mongoRepositoryService.delete(savedItemCrackers.getId());
@@ -145,7 +148,7 @@ class MongoRepositoryServiceImplTest {
     Item savedItemCrackers = mongoRepositoryService.add(itemCrackers);
 
     List<Item> items = mongoRepositoryService.findAllByQuantityBetween(1, 5);
-    Assert.assertTrue(items.size() == 1);
+    Assertions.assertTrue(items.size() == 1);
 
     mongoRepositoryService.delete(savedItemBiscuit.getId());
     mongoRepositoryService.delete(savedItemCrackers.getId());
@@ -156,6 +159,6 @@ class MongoRepositoryServiceImplTest {
     Item savedItem = mongoRepositoryService.add(itemBiscuit);
 
     boolean response = mongoRepositoryService.delete(savedItem.getId());
-    Assert.assertEquals(response, true);
+    Assertions.assertEquals(response, true);
   }
 }

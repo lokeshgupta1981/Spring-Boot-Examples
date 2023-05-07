@@ -30,7 +30,6 @@ public class AuthController {
             authenticationRequest.getPassword())
     );
 
-
     SecurityContextHolder.getContext().setAuthentication(authentication);
     String jwt = jwtTokenProvider.createToken(authentication);
     return ResponseEntity.ok(new AuthenticationResponse(jwt));

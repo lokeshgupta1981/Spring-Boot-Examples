@@ -20,11 +20,8 @@ public class Employee {
   private String phone;
   private String email;
   private String position;
-
   @Column(length = 1000)
   private String bio;
-
-
 
   public Employee(String name, String phone, String email, String position) {
     this.name = name;
@@ -32,5 +29,4 @@ public class Employee {
     this.email = email;
     this.position = position;
   }
-
 }

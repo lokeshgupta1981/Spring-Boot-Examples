@@ -15,37 +15,44 @@ import java.util.Set;
 public class KeycloakService {
 
 
-    @Autowired
-    private Keycloak keycloak;
+  @Autowired
+  private Keycloak keycloak;
 
+  public UserRepresentation searchById(String id) {
+    UserResource userResource = keycloak.realm("master").users().get(id);
+    return userResource.toRepresentation();
+  }
 
-    public UserRepresentation searchById(String id) {
-        UserResource userResource = keycloak.realm("master").users().get(id);
-        return userResource.toRepresentation();
+  public UserRepresentation searchByEmail(String email) throws UserNotFoundInKeycloakException {
+    List<UserRepresentation> userRepresentations = keycloak.realm("master").users()
+        .search(null, null, null, email, 0, 1);
+    if (userRepresentations.isEmpty()) {
+      throw new UserNotFoundInKeycloakException("User with email " + email + " not found");
     }
-    public UserRepresentation searchByEmail(String email) throws UserNotFoundInKeycloakException {
-        List<UserRepresentation> userRepresentations = keycloak.realm("master").users().search(null, null, null, email, 0, 1);
-        if (userRepresentations.isEmpty()) {
-            throw new UserNotFoundInKeycloakException("User with email " + email + " not found");
-        }
-        return userRepresentations.get(0);
+    return userRepresentations.get(0);
+  }
+
+  public UserRepresentation searchByUsername(String username)
+      throws UserNotFoundInKeycloakException {
+    List<UserRepresentation> userRepresentations = keycloak.realm("master").users()
+        .search(username, true);
+    if (userRepresentations.isEmpty()) {
+      throw new UserNotFoundInKeycloakException("User with username " + username + " not found");
     }
-    public UserRepresentation searchByUsername(String username) throws UserNotFoundInKeycloakException {
-        List<UserRepresentation> userRepresentations = keycloak.realm("master").users().search(username, true);
-        if (userRepresentations.isEmpty()) {
-            throw new UserNotFoundInKeycloakException("User with username " + username + " not found");
-        }
-        return userRepresentations.get(0);
+    return userRepresentations.get(0);
+  }
+
+  public UserRepresentation searchByPhone(String phone) throws UserNotFoundInKeycloakException {
+    List<UserRepresentation> userRepresentations = keycloak.realm("master").users()
+        .searchByAttributes("phone:" + phone);
+    if (userRepresentations.isEmpty()) {
+      throw new UserNotFoundInKeycloakException("User with phone number " + phone + " not found");
     }
-    public UserRepresentation searchByPhone(String phone) throws UserNotFoundInKeycloakException {
-        List<UserRepresentation> userRepresentations = keycloak.realm("master").users().searchByAttributes("phone:" + phone);
-        if (userRepresentations.isEmpty()) {
-            throw new UserNotFoundInKeycloakException("User with phone number " + phone + " not found");
-        }
-        return userRepresentations.get(0);
-    }
-    public Set<UserRepresentation> searchByRole(String roleName) {
-       return keycloak.realm("master").roles().get(roleName).getRoleUserMembers() ;
-    }
+    return userRepresentations.get(0);
+  }
+
+  public Set<UserRepresentation> searchByRole(String roleName) {
+    return keycloak.realm("master").roles().get(roleName).getRoleUserMembers();
+  }
 
 }

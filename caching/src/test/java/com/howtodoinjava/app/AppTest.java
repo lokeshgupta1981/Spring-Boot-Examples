@@ -1,9 +1,13 @@
 package com.howtodoinjava.app;
 
-import static org.testng.AssertJUnit.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class AppTest {
-  public void shouldAnswerWithTrue() {
-    assertTrue(true);
+
+  @Test
+  public void contextLoads() {
+
   }
 }

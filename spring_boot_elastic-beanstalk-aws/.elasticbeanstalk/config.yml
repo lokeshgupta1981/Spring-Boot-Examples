@@ -1,0 +1,24 @@
+branch-defaults:
+  default:
+    environment: spring-boot-app-qa-env
+    group_suffix: null
+deploy:
+  artifact: target/spring_boot_elastic-beanstalk-aws.jar
+global:
+  application_name: spring_boot_elastic-beanstalk-aws
+  branch: null
+  default_ec2_keyname: eb-howtodoinjava
+  default_platform: Corretto 17 running on 64bit Amazon Linux 2
+  default_region: us-east-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  repository: null
+  sc: null
+  workspace_type: Application
+option_settings:
+  aws:autoscaling:asg:
+    MinSize: '2'
+    MaxSize: '4'
