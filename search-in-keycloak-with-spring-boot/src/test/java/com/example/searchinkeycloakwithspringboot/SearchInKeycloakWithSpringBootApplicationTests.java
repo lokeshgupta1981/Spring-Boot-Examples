@@ -1,6 +1,8 @@
 package com.example.searchinkeycloakwithspringboot;
 
 import java.util.List;
+import java.util.Set;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.keycloak.admin.client.Keycloak;
@@ -17,14 +19,14 @@ class SearchInKeycloakWithSpringBootApplicationTests {
 
   @Test
   void testSearchById() {
-    String id = "test-id";
+    String id = "967a26d3-9a37-4a3b-9c22-c774f2933158";
     UserResource userResource = keycloak.realm("master").users().get(id);
     Assertions.assertEquals(id, userResource.toRepresentation().getId());
   }
 
   @Test
   void testSearchByEmail() {
-    String email = "test-email";
+    String email = "user1@howtodoinjava.com";
     List<UserRepresentation> userRepresentationsList = keycloak.realm("master").users()
         .searchByEmail(email, true);
     Assertions.assertEquals(1, userRepresentationsList.size());
@@ -33,11 +35,29 @@ class SearchInKeycloakWithSpringBootApplicationTests {
 
   @Test
   void testSearchByUsername() {
-    String username = "username";
+    String username = "user1";
     List<UserRepresentation> userRepresentationsList = keycloak.realm("master").users()
         .searchByUsername(username, true);
     Assertions.assertEquals(1, userRepresentationsList.size());
     Assertions.assertEquals(username, userRepresentationsList.get(0).getUsername());
+  }
+  @Test
+  void testSearchByPhone() {
+    String phone = "1234567890";
+    List<UserRepresentation> userRepresentationsList = keycloak.realm("master").users()
+            .searchByAttributes("phone:" + phone);
+    Assertions.assertEquals(1, userRepresentationsList.size());
+    Assertions.assertEquals(phone, userRepresentationsList.get(0).firstAttribute("phone"));
+  }
+  @Test
+  void testSearchByRole() {
+    String role = "admin";
+    Set<UserRepresentation> userRepresentationSet =keycloak.realm("master").roles().get(role)
+            .getRoleUserMembers();
+    Assertions.assertEquals(1, userRepresentationSet.size());
+    for (UserRepresentation userRepresentation : userRepresentationSet) {
+      Assertions.assertEquals("admin" , userRepresentation.getUsername());
+    }
   }
 
 }
