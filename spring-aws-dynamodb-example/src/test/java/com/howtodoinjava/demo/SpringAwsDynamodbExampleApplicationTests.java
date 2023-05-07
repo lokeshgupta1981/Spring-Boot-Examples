@@ -89,20 +89,12 @@ class SpringAwsDynamodbExampleApplicationTests {
 
         ArrayList<KeySchemaElement> tableKeySchema = new ArrayList<>();
         tableKeySchema.add(KeySchemaElement.builder().attributeName("id").keyType(KeyType.HASH).build());
-        List<KeySchemaElement> indexKeySchema = new ArrayList<>();
-        indexKeySchema.add(KeySchemaElement.builder().attributeName("id").keyType(KeyType.HASH).build());
 
-        GlobalSecondaryIndex precipIndex = GlobalSecondaryIndex.builder().indexName("movie_info_idx")
-                .provisionedThroughput(ProvisionedThroughput.builder().readCapacityUnits((long) 10)
-                        .writeCapacityUnits((long) 1).build())
-                .projection(Projection.builder().projectionType(ProjectionType.ALL).build()).keySchema(indexKeySchema)
-                .build();
         String tableName = StringUtils.hasText(tablePrefix) ? tablePrefix.concat("movie_details") : "movie_details";
         CreateTableRequest createTableRequest = CreateTableRequest.builder().tableName(tableName)
-                .provisionedThroughput(ProvisionedThroughput.builder().readCapacityUnits((long) 10)
+                .provisionedThroughput(ProvisionedThroughput.builder().readCapacityUnits((long) 1)
                         .writeCapacityUnits((long) 1).build())
-                .attributeDefinitions(attributeDefinitions).keySchema(tableKeySchema)
-                .globalSecondaryIndexes(precipIndex).build();
+                .attributeDefinitions(attributeDefinitions).keySchema(tableKeySchema).build();
 
         try {
             dynamoDbClient.createTable(createTableRequest);
