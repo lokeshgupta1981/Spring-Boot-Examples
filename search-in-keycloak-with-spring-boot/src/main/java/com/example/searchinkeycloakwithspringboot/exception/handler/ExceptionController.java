@@ -8,11 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ExceptionController {
 
-
-
-    @ExceptionHandler
-    public ResponseEntity<String> handleUserNotFoundInKeycloakException(UserNotFoundInKeycloakException e){
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
-
+  @ExceptionHandler
+  public ResponseEntity<String> handleUserNotFoundInKeycloakException(
+      UserNotFoundInKeycloakException e) {
+    return ResponseEntity.badRequest().body(e.getMessage());
+  }
 }
