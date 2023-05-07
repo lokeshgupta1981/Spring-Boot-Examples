@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <style>
+    body{
+      margin: 40px;
+      font-family: Arial;
+    }
+    table {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    table tr th,
+    table tr td {
+      border: 1px solid grey;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+<h1>Items List</h1>
+<table>
+  <tr>
+    <th>Item Id</th>
+    <th>Item Name</th>
+  </tr>
+  <tr th:each="item: ${items}">
+    <td th:text="${item.id}"/>
+    <td th:text="${item.name}"/>
+  </tr>
+</table>
+</body>
+</html>

@@ -26,9 +26,17 @@ export default defineComponent({
   setup() {
     let employees = ref<Employee[]>([]);
 
-    employeeService.getAllEmployees().then((response) => {
-      employees.value = response;
-    });
+    employeeService
+      .getAllEmployees()
+      .then((response) => {
+        employees.value = response;
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          // Redirect the user to the login page
+          window.location.href = "/login";
+        }
+      });
 
     return {
       employees,

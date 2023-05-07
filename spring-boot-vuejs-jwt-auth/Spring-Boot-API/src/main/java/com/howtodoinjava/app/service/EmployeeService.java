@@ -27,8 +27,10 @@ public class EmployeeService {
   }
 
   public Optional<Employee> updateEmployee(Long id, Employee employee) {
+
     Optional<Employee> existingEmployee = employeeRepository.findById(id);
     if (existingEmployee.isPresent()) {
+
       Employee updatedEmployee = existingEmployee.get();
       updatedEmployee.setName(employee.getName());
       updatedEmployee.setPhone(employee.getPhone());

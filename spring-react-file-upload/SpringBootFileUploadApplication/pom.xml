@@ -9,6 +9,7 @@
         <version>2.7.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <packaging>war</packaging>
     <groupId>com.rest.demo</groupId>
     <artifactId>SpringBootFileUploadApplication</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -40,7 +41,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.41</version> <!--$NO-MVN-MAN-VER$-->
+            <version>8.0.32</version> <!--$NO-MVN-MAN-VER$-->
         </dependency>
     </dependencies>
     <build>
@@ -51,6 +52,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <packaging>war</packaging>
 </project>

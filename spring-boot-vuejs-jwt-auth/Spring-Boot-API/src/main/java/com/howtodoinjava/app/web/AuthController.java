@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -39,4 +40,5 @@ public class AuthController {
     SecurityContextHolder.clearContext();
     return ResponseEntity.ok("Logout successful");
   }
+
 }

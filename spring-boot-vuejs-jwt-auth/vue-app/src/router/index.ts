@@ -4,12 +4,18 @@ import ShowDetails from "@/views/ShowDetailsView.vue";
 import EditEmployeeView from "@/views/EditEmployeeView.vue";
 import AddEmployeeView from "@/views/AddEmployeeView.vue";
 import AboutView from "@/views/AboutView.vue";
+import LoginView from "@/views/LoginView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "home",
     component: HomeView,
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: LoginView,
   },
   {
     path: "/about",
