@@ -2,11 +2,16 @@ package com.howtodoinjava.demo.service;
 
 import com.howtodoinjava.demo.entity.MovieDetails;
 import io.awspring.cloud.dynamodb.DynamoDbTemplate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import software.amazon.awssdk.core.pagination.sync.SdkIterable;
-import software.amazon.awssdk.enhanced.dynamodb.*;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.Expression;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.model.PageIterable;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryEnhancedRequest;
@@ -14,95 +19,86 @@ import software.amazon.awssdk.enhanced.dynamodb.model.ScanEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 @Service
 public class DynamoDbOperationService {
 
-    private DynamoDbTemplate dynamoDbTemplate;
-    private DynamoDbTable<MovieDetails> movieTable;
-    private DynamoDbClient dynamoDbClient;
-    private DynamoDbEnhancedClient dynamoDbEnhancedClient;
+  @Autowired
+  private DynamoDbTemplate dynamoDbTemplate;
 
-    @Autowired
-    public DynamoDbOperationService(@Qualifier("dynamoDbClient") DynamoDbClient dynamoDbClient,
-                                 @Qualifier("dynamoDbEnhancedClient") DynamoDbEnhancedClient dynamoDbEnhancedClient) {
+  @Autowired
+  private DynamoDbClient dynamoDbClient;
 
-        this.dynamoDbClient = dynamoDbClient;
-        this.dynamoDbEnhancedClient = dynamoDbEnhancedClient;
+  @Autowired
+  private DynamoDbEnhancedClient dynamoDbEnhancedClient;
 
-        dynamoDbTemplate = new DynamoDbTemplate(this.dynamoDbEnhancedClient);
-        movieTable = DynamoDbEnhancedClient.builder().dynamoDbClient(this.dynamoDbClient).build().table("movie_details",
-                TableSchema.fromBean(MovieDetails.class));
+  private DynamoDbTable<MovieDetails> movieTable;
 
-    }
+  public MovieDetails saveData(MovieDetails movieDetails) {
 
-    public MovieDetails saveData(MovieDetails movieDetails) {
-        return dynamoDbTemplate.save(movieDetails);
-    }
+    return dynamoDbTemplate.save(movieDetails);
+  }
 
-    public MovieDetails updateData(MovieDetails movieDetails) {
-        return dynamoDbTemplate.update(movieDetails);
-    }
+  public MovieDetails updateData(MovieDetails movieDetails) {
 
-    public void deleteByObject(MovieDetails movieDetails) {
-        dynamoDbTemplate.delete(movieDetails);
-    }
+    return dynamoDbTemplate.update(movieDetails);
+  }
 
-    public void deleteById(String id) {
-        Key key = Key.builder().partitionValue(id).build();
-        dynamoDbTemplate.delete(key, MovieDetails.class);
-    }
+  public void deleteByObject(MovieDetails movieDetails) {
 
-    public MovieDetails findById(String hashKey) {
+    dynamoDbTemplate.delete(movieDetails);
+  }
 
-        Key key = Key.builder().partitionValue(hashKey).build();
+  public void deleteById(String id) {
 
-        return dynamoDbTemplate.load(key, MovieDetails.class);
-    }
+    Key key = Key.builder().partitionValue(id).build();
+    dynamoDbTemplate.delete(key, MovieDetails.class);
+  }
 
-    public List<MovieDetails> scanDataByGenre(String genre) {
-        Map<String, AttributeValue> expressionValues = new HashMap<>();
-        expressionValues.put(":val1", AttributeValue.fromS(genre));
+  public MovieDetails findById(String hashKey) {
 
-        Expression filterExpression = Expression.builder()
-                .expression("genre = :val1")
-                .expressionValues(expressionValues)
-                .build();
+    Key key = Key.builder().partitionValue(hashKey).build();
+    return dynamoDbTemplate.load(key, MovieDetails.class);
+  }
 
-        ScanEnhancedRequest scanEnhancedRequest = ScanEnhancedRequest.builder()
-                .filterExpression(filterExpression).build();
+  public List<MovieDetails> scanDataByGenre(String genre) {
+    Map<String, AttributeValue> expressionValues = new HashMap<>();
+    expressionValues.put(":val1", AttributeValue.fromS(genre));
 
-        PageIterable<MovieDetails> returnedList = dynamoDbTemplate.scan(scanEnhancedRequest, MovieDetails.class);
+    Expression filterExpression = Expression.builder()
+        .expression("genre = :val1")
+        .expressionValues(expressionValues)
+        .build();
 
-        return returnedList.items().stream().collect(Collectors.toList());
-    }
+    ScanEnhancedRequest scanEnhancedRequest = ScanEnhancedRequest.builder()
+        .filterExpression(filterExpression).build();
 
-    public PageIterable<MovieDetails> queryData(String partitionKey,  String genre) {
+    PageIterable<MovieDetails> returnedList = dynamoDbTemplate.scan(scanEnhancedRequest,
+        MovieDetails.class);
 
-        Map<String, AttributeValue> expressionValues = new HashMap<>();
-        expressionValues.put(":value", AttributeValue.fromS(genre));
+    return returnedList.items().stream().collect(Collectors.toList());
+  }
 
-        Expression filterExpression = Expression.builder()
-                .expression("genre = :val1")
-                .expressionValues(expressionValues)
-                .build();
+  public PageIterable<MovieDetails> queryData(String partitionKey, String genre) {
 
-        QueryConditional queryConditional = QueryConditional
-                .keyEqualTo(
-                        Key.builder()
-                                .partitionValue(partitionKey)
-                                .build());
+    Map<String, AttributeValue> expressionValues = new HashMap<>();
+    expressionValues.put(":value", AttributeValue.fromS(genre));
 
-        QueryEnhancedRequest queryRequest = QueryEnhancedRequest.builder()
-                .queryConditional(queryConditional)
-                .filterExpression(filterExpression)
-                .build();
+    Expression filterExpression = Expression.builder()
+        .expression("genre = :val1")
+        .expressionValues(expressionValues)
+        .build();
 
-        return dynamoDbTemplate.query(queryRequest,MovieDetails.class);
-    }
+    QueryConditional queryConditional = QueryConditional
+        .keyEqualTo(
+            Key.builder()
+                .partitionValue(partitionKey)
+                .build());
 
+    QueryEnhancedRequest queryRequest = QueryEnhancedRequest.builder()
+        .queryConditional(queryConditional)
+        .filterExpression(filterExpression)
+        .build();
+
+    return dynamoDbTemplate.query(queryRequest, MovieDetails.class);
+  }
 }
