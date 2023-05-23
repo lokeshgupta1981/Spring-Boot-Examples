@@ -37,6 +37,7 @@
     <module>spring-deploy-docker-image-to-aws</module>
     <module>spring-boot-mvc-thymeleaf</module>
     <module>spring_boot_elastic-beanstalk-aws</module>
+    <module>Spring-data-redis-lettuce</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
