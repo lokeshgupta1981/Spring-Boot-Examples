@@ -5,7 +5,7 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.interceptor.CacheErrorHandler;
 
 @Slf4j
-public class RedisCacheErrorHandler implements CacheErrorHandler {
+public class CustomCacheErrorHandler implements CacheErrorHandler {
 
     @Override
     public void handleCacheGetError(RuntimeException exception, Cache cache, Object key) {
