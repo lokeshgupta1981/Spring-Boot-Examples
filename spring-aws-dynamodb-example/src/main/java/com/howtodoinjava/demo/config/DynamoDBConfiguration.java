@@ -1,5 +1,6 @@
 package com.howtodoinjava.demo.config;
 
+import io.awspring.cloud.dynamodb.DynamoDbTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,29 +15,34 @@ import java.net.URI;
 @Configuration
 public class DynamoDBConfiguration {
 
-  @Value("${aws.dynamodb.accessKey}")
+  @Value("${aws.dynamodb.accesskey}")
   private String accessKey;
 
-  @Value("${aws.dynamodb.secretKey}")
+  @Value("${aws.dynamodb.secretkey}")
   private String secretKey;
 
   @Value("${aws.dynamodb.endpoint}")
   private String endpoint;
 
-  @Bean(name = "dynamoDbClient")
-  public DynamoDbClient getDynamoDbClient() {
+  @Bean
+  public DynamoDbClient dynamoDbClient() {
     return DynamoDbClient.builder()
-            .endpointOverride(URI.create(endpoint))
-            .region(Region.AP_SOUTH_1)
-            .credentialsProvider(StaticCredentialsProvider.create(
-                    AwsBasicCredentials.create(accessKey, secretKey)))
-            .build();
+        .endpointOverride(URI.create(endpoint))
+        .region(Region.AP_SOUTH_1)
+        .credentialsProvider(StaticCredentialsProvider.create(
+            AwsBasicCredentials.create(accessKey, secretKey)))
+        .build();
   }
 
-  @Bean(name = "dynamoDbEnhancedClient")
-  public DynamoDbEnhancedClient getDynamoDbEnhancedClient() {
+  @Bean
+  public DynamoDbEnhancedClient dynamoDbEnhancedClient() {
     return DynamoDbEnhancedClient.builder()
-            .dynamoDbClient(getDynamoDbClient())
-            .build();
+        .dynamoDbClient(dynamoDbClient())
+        .build();
+  }
+
+  @Bean
+  public DynamoDbTemplate dynamoDbTemplate() {
+    return new DynamoDbTemplate(dynamoDbEnhancedClient());
   }
 }
