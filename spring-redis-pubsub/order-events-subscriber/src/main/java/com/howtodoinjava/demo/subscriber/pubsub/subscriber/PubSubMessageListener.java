@@ -1,4 +1,4 @@
-package com.howtodoinjava.demo.consumer.pubsub.subscriber;
+package com.howtodoinjava.demo.subscriber.pubsub.subscriber;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.howtodoinjava.demo.model.OrderEvents;

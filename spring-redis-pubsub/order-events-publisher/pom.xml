@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.howtodoinjava.demo</groupId>
-        <artifactId>spring-redis-pubsub-stream</artifactId>
+        <artifactId>spring-redis-pubsub</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.howtodoinjava.demo.consumer</groupId>
-    <artifactId>order-events-consumer</artifactId>
+    <groupId>com.howtodoinjava.demo.publisher</groupId>
+    <artifactId>order-events-publisher</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -25,5 +25,4 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
 </project>

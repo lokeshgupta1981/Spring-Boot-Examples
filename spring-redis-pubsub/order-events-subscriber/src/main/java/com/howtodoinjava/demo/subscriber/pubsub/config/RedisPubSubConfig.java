@@ -1,4 +1,4 @@
-package com.howtodoinjava.demo.consumer.pubsub.config;
+package com.howtodoinjava.demo.subscriber.pubsub.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
