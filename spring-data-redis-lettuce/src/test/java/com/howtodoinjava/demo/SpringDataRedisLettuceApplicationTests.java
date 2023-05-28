@@ -1,12 +1,13 @@
 package com.howtodoinjava.demo;
 
-
 import com.howtodoinjava.demo.service.RedisCacheService;
+import com.redis.lettucemod.output.SampleOutput;
 import com.redis.testcontainers.RedisContainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.junit.jupiter.Container;
@@ -16,17 +17,17 @@ import org.testcontainers.utility.DockerImageName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 @SpringBootTest
 @Testcontainers(disabledWithoutDocker = true)
 class SpringDataRedisLettuceApplicationTests {
 
   @Autowired
-  private RedisCacheService cacheUtil;
+  private RedisCacheService redisCacheService;
 
   @Container
+  /*@ServiceConnection*/
   private static final RedisContainer REDIS_CONTAINER =
-          new RedisContainer(DockerImageName.parse("redis:5.0.3-alpine")).withExposedPorts(6379);
+      new RedisContainer(DockerImageName.parse("redis:5.0.3-alpine")).withExposedPorts(6379);
 
   String key;
   String value;
@@ -35,8 +36,7 @@ class SpringDataRedisLettuceApplicationTests {
   @DynamicPropertySource
   private static void registerRedisProperties(DynamicPropertyRegistry registry) {
     registry.add("spring.data.redis.host", REDIS_CONTAINER::getHost);
-    registry.add("spring.data.redis.port", () -> REDIS_CONTAINER.getMappedPort(6379)
-            .toString());
+    registry.add("spring.data.redis.port", () -> REDIS_CONTAINER.getMappedPort(6379).toString());
     registry.add("default.redis.connection", () -> "standalone");
   }
 
@@ -48,22 +48,23 @@ class SpringDataRedisLettuceApplicationTests {
   }
 
   @Test
-  void givenRedisContainerConfiguredWithDynamicProperties_whenCheckingRunningStatus_thenStatusIsRunning() {
+  void testSetup() {
+    System.out.println(REDIS_CONTAINER.getFirstMappedPort());
     assertTrue(REDIS_CONTAINER.isRunning());
   }
 
   @Test
   public void testValueOps() {
 
-    cacheUtil.putSimple(key, value);
-    String retrievedValue = cacheUtil.getSimple(key);
+    redisCacheService.putSimple(key, value);
+    String retrievedValue = redisCacheService.getSimple(key);
     assertEquals(value, retrievedValue);
   }
 
   @Test
   public void testHashOps() {
-    cacheUtil.put(hashKey, key, value, 60L);
-    String fetchedValue = cacheUtil.get(hashKey, key);
+    redisCacheService.put(hashKey, key, value, 60L);
+    String fetchedValue = redisCacheService.get(hashKey, key);
     assertEquals(value, fetchedValue);
   }
 }

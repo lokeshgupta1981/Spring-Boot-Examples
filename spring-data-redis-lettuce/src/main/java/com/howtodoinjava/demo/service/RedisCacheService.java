@@ -25,7 +25,6 @@ public class RedisCacheService {
 
   public void putSimple(Object key, Object value) {
     redisTemplate.opsForValue().set(key, value);
-
   }
 
   public void putSimpleWithTTL(Object key, Object value, Long ttl) {
