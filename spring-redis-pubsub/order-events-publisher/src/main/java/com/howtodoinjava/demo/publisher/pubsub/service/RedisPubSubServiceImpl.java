@@ -21,7 +21,7 @@ public class RedisPubSubServiceImpl implements RedisPubSubService{
 
     @Override
     public void publish(OrderEvents orderEvents){
-        log.info("Sending message Sync: {}", orderEvents);
+        log.info("Sending message: {}", orderEvents);
         redisTemplate.convertAndSend(channelTopic.getTopic(), orderEvents);
     }
 

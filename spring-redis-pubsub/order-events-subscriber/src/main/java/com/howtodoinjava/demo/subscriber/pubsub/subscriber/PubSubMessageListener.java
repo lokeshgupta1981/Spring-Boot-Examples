@@ -22,7 +22,7 @@ public class PubSubMessageListener implements MessageListener {
 
         try {
             OrderEvents orderEvents = objectMapper.readValue(message.getBody(), OrderEvents.class);
-            log.info("New message received Sync: {}", orderEvents);
+            log.info("New message received: {}", orderEvents);
         } catch (IOException e) {
             log.error("error while parsing message");
         }
