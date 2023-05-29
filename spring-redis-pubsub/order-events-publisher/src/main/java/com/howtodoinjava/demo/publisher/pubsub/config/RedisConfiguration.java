@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.listener.ChannelTopic;
 
 @Configuration
-public class RedisPubSubConfig {
+public class RedisConfiguration {
 
     @Value("${redis.pubsub.topic}")
     private String redisPubSubTopic;
