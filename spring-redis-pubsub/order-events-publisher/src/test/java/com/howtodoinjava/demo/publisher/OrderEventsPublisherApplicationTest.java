@@ -35,12 +35,6 @@ class OrderEventsPublisherApplicationTest {
                 .getMappedPort(6379).toString());
     }
 
-    @AfterEach
-    public void destroy() {
-        REDIS_CONTAINER.stop();
-        REDIS_CONTAINER.close();
-    }
-
     @Test
     public void testOnMessage() throws Exception {
 

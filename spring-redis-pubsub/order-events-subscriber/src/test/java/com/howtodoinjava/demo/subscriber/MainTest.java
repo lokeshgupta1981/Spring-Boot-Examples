@@ -2,7 +2,6 @@ package com.howtodoinjava.demo.subscriber;
 
 import com.howtodoinjava.demo.model.OrderEvents;
 import com.redis.testcontainers.RedisContainer;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,12 +35,6 @@ class MainTest {
         registry.add("spring.data.redis.host", REDIS_CONTAINER::getHost);
         registry.add("spring.data.redis.port", () -> REDIS_CONTAINER
                 .getMappedPort(6379).toString());
-    }
-
-    @AfterEach
-    public void destroy() {
-        REDIS_CONTAINER.stop();
-        REDIS_CONTAINER.close();
     }
 
     @Test
