@@ -13,8 +13,8 @@ import java.io.Serializable;
 @Builder
 public class OrderEvents implements Serializable {
 
-    private int orderId;
-    private int userId;
+    private String orderId;
+    private String userId;
     private String productName;
     private int price;
     private int quantity;

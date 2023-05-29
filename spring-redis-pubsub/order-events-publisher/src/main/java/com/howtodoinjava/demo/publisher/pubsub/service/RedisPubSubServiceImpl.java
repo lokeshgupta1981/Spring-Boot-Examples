@@ -20,9 +20,9 @@ public class RedisPubSubServiceImpl implements RedisPubSubService{
     private ChannelTopic channelTopic;
 
     @Override
-    public void publish(OrderEvents orderEvents){
+    public Long publish(OrderEvents orderEvents){
         log.info("Sending message: {}", orderEvents);
-        redisTemplate.convertAndSend(channelTopic.getTopic(), orderEvents);
+        return redisTemplate.convertAndSend(channelTopic.getTopic(), orderEvents);
     }
 
 }
