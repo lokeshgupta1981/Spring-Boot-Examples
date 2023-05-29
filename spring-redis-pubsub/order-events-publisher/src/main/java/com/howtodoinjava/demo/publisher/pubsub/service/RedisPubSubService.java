@@ -4,5 +4,5 @@ import com.howtodoinjava.demo.model.OrderEvents;
 
 public interface RedisPubSubService {
 
-    void publish(OrderEvents orderEvents);
+    Long publish(OrderEvents orderEvents);
 }
