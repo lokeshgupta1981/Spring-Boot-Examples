@@ -1,11 +1,19 @@
 package com.howtodoinjava.demo.subscriber;
 
-import com.howtodoinjava.demo.model.OrderEvents;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.howtodoinjava.demo.model.OrderEvent;
+import com.howtodoinjava.demo.subscriber.pubsub.subscriber.OrderEventListener;
 import com.redis.testcontainers.RedisContainer;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -13,51 +21,53 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
-import java.time.Duration;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @Testcontainers(disabledWithoutDocker = true)
 class MainTest {
 
-    @Autowired
-    @Qualifier("pubsubRedisTemplate")
-    private RedisTemplate<String, Object> redisTemplate;
+  @Autowired
+  private RedisTemplate<String, Object> redisTemplate;
 
-    @Container
-    /*@ServiceConnection*/
-    private static final RedisContainer REDIS_CONTAINER =
-            new RedisContainer(DockerImageName.parse("redis:5.0.3-alpine")).withExposedPorts(6379);
+  @MockBean
+  OrderEventListener orderEventListener;
 
-    @DynamicPropertySource
-    private static void registerRedisProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.data.redis.host", REDIS_CONTAINER::getHost);
-        registry.add("spring.data.redis.port", () -> REDIS_CONTAINER
-                .getMappedPort(6379).toString());
-    }
+  @Autowired
+  private ObjectMapper objectMapper;
 
-    @Test
-    public void testOnMessage() throws Exception {
-        OrderEvents orderEvents = OrderEvents.builder()
-                .orderId("1")
-                .userId("12")
-                .productName("Mobile")
-                .quantity(1)
-                .price(42000)
-                .build();
+  @Container
+  static RedisContainer REDIS_CONTAINER =
+      new RedisContainer(DockerImageName.parse("redis:5.0.3-alpine")).withExposedPorts(6379);
 
-        redisTemplate.convertAndSend("order-events", orderEvents);
+  @DynamicPropertySource
+  private static void registerRedisProperties(DynamicPropertyRegistry registry) {
+    registry.add("spring.data.redis.host", REDIS_CONTAINER::getHost);
+    registry.add("spring.data.redis.port", () -> REDIS_CONTAINER.getMappedPort(6379).toString());
+  }
 
-        Thread.sleep(1000);
+  @Test
+  public void testOnMessage() throws Exception {
 
-        OrderEvents processedData = (OrderEvents) redisTemplate.opsForValue()
-                .get(orderEvents.getOrderId());
+    OrderEvent orderEvent = OrderEvent.builder()
+        .orderId("1")
+        .userId("12")
+        .productName("Mobile")
+        .quantity(1)
+        .price(42000)
+        .build();
 
-        assertEquals(processedData.getOrderId(), orderEvents.getOrderId());
-        assertEquals(processedData.getQuantity(), orderEvents.getQuantity());
-        assertEquals(processedData.getPrice(), orderEvents.getPrice());
+    redisTemplate.convertAndSend("order-events", orderEvent);
 
-        redisTemplate.expire(orderEvents.getOrderId(),  Duration.ofSeconds(2));
-    }
+    Thread.sleep(1000);
+
+    ArgumentCaptor<Message> argumentCaptor = ArgumentCaptor.forClass(Message.class);
+    Mockito.verify(orderEventListener).onMessage(argumentCaptor.capture(), ArgumentMatchers.any());
+
+    OrderEvent receivedEvent = objectMapper.readValue(argumentCaptor.getValue().getBody(),
+        OrderEvent.class);
+
+    assertEquals(receivedEvent.getOrderId(), orderEvent.getOrderId());
+    assertEquals(receivedEvent.getQuantity(), orderEvent.getQuantity());
+    assertEquals(receivedEvent.getPrice(), orderEvent.getPrice());
+  }
 }
+
