@@ -1,23 +1,16 @@
 package com.howtodoinjava.demo.redis.streams.consumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.howtodoinjava.demo.redis.streams.consumer.service.PurchaseEventListener;
 import com.howtodoinjava.demo.redis.streams.model.PurchaseEvent;
 import com.redis.testcontainers.RedisContainer;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.redis.RedisSystemException;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.redis.connection.stream.ObjectRecord;
-import org.springframework.data.redis.connection.stream.ReadOffset;
-import org.springframework.data.redis.connection.stream.RecordId;
 import org.springframework.data.redis.connection.stream.StreamRecords;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.stream.StreamListener;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.junit.jupiter.Container;
@@ -26,8 +19,13 @@ import org.testcontainers.utility.DockerImageName;
 
 import java.io.DataInput;
 import java.time.Duration;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
+import static org.mockito.ArgumentMatchers.isA;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 @Testcontainers(disabledWithoutDocker = true)
@@ -39,7 +37,8 @@ class RedisStreamEventConsumerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private String streamKey = "purchase-events";
+    @SpyBean(name = "purchaseStreamListener")
+    StreamListener<String, ObjectRecord<String, PurchaseEvent>> purchaseStreamListener;
 
     @Container
     /*@ServiceConnection*/
@@ -64,14 +63,20 @@ class RedisStreamEventConsumerTest {
                 .price(74000)
                 .build();
 
+        String streamKey = "purchase-events";
         ObjectRecord<String, PurchaseEvent> record = StreamRecords.newRecord()
                 .ofObject(purchaseEvent)
                 .withStreamKey(streamKey);
 
-        RecordId recordId = this.redisTemplate.opsForStream()
+        this.redisTemplate.opsForStream()
                 .add(record);
 
-        Thread.sleep(2000);
+
+        CountDownLatch latch = new CountDownLatch(1);
+        latch.await(3, TimeUnit.SECONDS);
+
+        verify(purchaseStreamListener, times(1))
+                .onMessage(isA(ObjectRecord.class));
 
         PurchaseEvent receivedEvent = objectMapper.readValue(
                 redisTemplate.opsForValue().get(purchaseEvent.getPurchaseId()),
@@ -83,20 +88,6 @@ class RedisStreamEventConsumerTest {
         assertEquals(receivedEvent.getPrice(), purchaseEvent.getPrice());
 
         redisTemplate.expire(purchaseEvent.getPurchaseId(), Duration.ofSeconds(2));
-    }
-
-    private void createConsumerGroupIfNotExists(RedisConnectionFactory redisConnectionFactory, String streamKey, String groupName){
-        try {
-            try {
-                redisConnectionFactory.getConnection().streamCommands()
-                        .xGroupCreate(streamKey.getBytes(), streamKey, ReadOffset.from("0-0"), true);
-            } catch (RedisSystemException exception) {
-
-            }
-        }
-        catch (RedisSystemException ex){
-
-        }
     }
 
 }
