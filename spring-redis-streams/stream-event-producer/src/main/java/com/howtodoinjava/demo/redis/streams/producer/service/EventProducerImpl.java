@@ -20,7 +20,6 @@ import java.util.Objects;
 public class EventProducerImpl implements IEventProducer {
 
     @Autowired
-    @Qualifier("redisTemplate")
     private RedisTemplate<String, String> redisTemplate;
 
     @Value("${stream.key:purchase-events}")
