@@ -1,7 +1,7 @@
 package com.howtodoinjava.demo.redis.streams.producer;
 
 import com.howtodoinjava.demo.redis.streams.model.PurchaseEvent;
-import com.howtodoinjava.demo.redis.streams.producer.service.IEventProducer;
+import com.howtodoinjava.demo.redis.streams.producer.service.PurchaseStreamProducer;
 import com.redis.testcontainers.RedisContainer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,32 +18,31 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Testcontainers(disabledWithoutDocker = true)
 class RedisStreamEventProducerTest {
 
-    @Autowired
-    private IEventProducer eventProducer;
+  @Autowired
+  private PurchaseStreamProducer eventProducer;
 
-    @Container
-    /*@ServiceConnection*/
-    private static final RedisContainer REDIS_CONTAINER =
-            new RedisContainer(DockerImageName.parse("redis:5.0.3-alpine")).withExposedPorts(6379);
+  @Container
+  private static final RedisContainer REDIS_CONTAINER =
+      new RedisContainer(DockerImageName.parse("redis:5.0.3-alpine")).withExposedPorts(6379);
 
-    @DynamicPropertySource
-    private static void registerRedisProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.data.redis.host", REDIS_CONTAINER::getHost);
-        registry.add("spring.data.redis.port", () -> REDIS_CONTAINER
-                .getMappedPort(6379).toString());
-    }
+  @DynamicPropertySource
+  private static void registerRedisProperties(DynamicPropertyRegistry registry) {
+    registry.add("spring.data.redis.host", REDIS_CONTAINER::getHost);
+    registry.add("spring.data.redis.port", () -> REDIS_CONTAINER
+        .getMappedPort(6379).toString());
+  }
 
-    @Test
-    public void testProduce() throws Exception {
+  @Test
+  public void testProduce() throws Exception {
 
-        PurchaseEvent purchaseEvent = PurchaseEvent.builder()
-                .purchaseId("1")
-                .productId("12")
-                .productName("IPhone 14")
-                .quantity(1)
-                .price(74000)
-                .build();
+    PurchaseEvent purchaseEvent = PurchaseEvent.builder()
+        .purchaseId("1")
+        .productId("12")
+        .productName("IPhone 14")
+        .quantity(1)
+        .price(74000)
+        .build();
 
-        assertNotNull(eventProducer.produce(purchaseEvent));
-    }
+    assertNotNull(eventProducer.produce(purchaseEvent));
+  }
 }

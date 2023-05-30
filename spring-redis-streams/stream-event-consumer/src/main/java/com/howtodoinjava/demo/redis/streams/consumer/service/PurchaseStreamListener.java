@@ -15,7 +15,7 @@ import java.net.InetAddress;
 
 @Slf4j
 @Service
-public class PurchaseEventListener implements StreamListener<String, ObjectRecord<String, PurchaseEvent>> {
+public class PurchaseStreamListener implements StreamListener<String, ObjectRecord<String, PurchaseEvent>> {
 
     @Value("${stream.key:purchase-events}")
     private String streamKey;
