@@ -72,7 +72,7 @@ public class RedisConfig implements CachingConfigurer {
     if (connectionType.equalsIgnoreCase("standalone")) {
       return new LettuceConnectionFactory(redisStandaloneConfiguration(), poolingClientConfiguration);
     } else {
-      return redisSentinelConfiguration();
+      return new LettuceConnectionFactory(redisSentinelConfiguration(), poolingClientConfiguration);
     }
   }
 
@@ -121,7 +121,7 @@ public class RedisConfig implements CachingConfigurer {
     return redisStandaloneConfiguration;
   }
 
-  private LettuceConnectionFactory redisSentinelConfiguration() {
+  private RedisSentinelConfiguration redisSentinelConfiguration() {
 
 
     RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration()
@@ -140,6 +140,6 @@ public class RedisConfig implements CachingConfigurer {
         .readFrom(ReadFrom.REPLICA_PREFERRED)
         .build();
 
-    return new LettuceConnectionFactory(sentinelConfig, clientConfig);
+    return sentinelConfig;
   }
 }

@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderEvents implements Serializable {
+public class OrderEvent implements Serializable {
 
     private String orderId;
     private String userId;

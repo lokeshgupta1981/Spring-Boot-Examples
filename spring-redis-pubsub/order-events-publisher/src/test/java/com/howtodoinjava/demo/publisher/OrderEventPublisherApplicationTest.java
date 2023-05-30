@@ -1,9 +1,8 @@
 package com.howtodoinjava.demo.publisher;
 
-import com.howtodoinjava.demo.model.OrderEvents;
-import com.howtodoinjava.demo.publisher.pubsub.service.RedisPubSubService;
+import com.howtodoinjava.demo.model.OrderEvent;
+import com.howtodoinjava.demo.publisher.pubsub.service.OrderService;
 import com.redis.testcontainers.RedisContainer;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,13 +14,12 @@ import org.testcontainers.utility.DockerImageName;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-
 @SpringBootTest
 @Testcontainers(disabledWithoutDocker = true)
-class OrderEventsPublisherApplicationTest {
+class OrderEventPublisherApplicationTest {
 
     @Autowired
-    private RedisPubSubService redisPubSubService;
+    private OrderService orderService;
 
     @Container
     /*@ServiceConnection*/
@@ -38,7 +36,7 @@ class OrderEventsPublisherApplicationTest {
     @Test
     public void testOnMessage() throws Exception {
 
-        OrderEvents orderEvents = OrderEvents.builder()
+        OrderEvent orderEvent = OrderEvent.builder()
                 .orderId("1")
                 .userId("12")
                 .productName("Mobile")
@@ -46,7 +44,7 @@ class OrderEventsPublisherApplicationTest {
                 .price(42000)
                 .build();
 
-        assertNotNull(redisPubSubService.publish(orderEvents));
+        assertNotNull(orderService.publish(orderEvent));
     }
 
 }

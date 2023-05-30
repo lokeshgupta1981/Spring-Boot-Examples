@@ -1,6 +1,6 @@
 package com.howtodoinjava.demo.publisher.pubsub.service;
 
-import com.howtodoinjava.demo.model.OrderEvents;
+import com.howtodoinjava.demo.model.OrderEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class RedisPubSubServiceImpl implements RedisPubSubService{
+public class OrderServiceImpl implements OrderService {
 
     @Autowired
     @Qualifier("customRedisTemplate")
@@ -20,9 +20,9 @@ public class RedisPubSubServiceImpl implements RedisPubSubService{
     private ChannelTopic channelTopic;
 
     @Override
-    public Long publish(OrderEvents orderEvents){
-        log.info("Sending message: {}", orderEvents);
-        return redisTemplate.convertAndSend(channelTopic.getTopic(), orderEvents);
+    public Long publish(OrderEvent orderEvent){
+        log.info("Sending message: {}", orderEvent);
+        return redisTemplate.convertAndSend(channelTopic.getTopic(), orderEvent);
     }
 
 }
