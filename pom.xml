@@ -39,6 +39,7 @@
     <module>spring_boot_elastic-beanstalk-aws</module>
     <module>Spring-data-redis-lettuce</module>
     <module>spring-redis-pubsub</module>
+      <module>spring-redis-streams</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
