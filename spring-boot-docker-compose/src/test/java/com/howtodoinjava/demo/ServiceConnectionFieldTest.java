@@ -13,7 +13,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.utility.DockerImageName;
 
 @SpringBootTest
-public class ServiceConnectionTest {
+public class ServiceConnectionFieldTest {
 
   @Autowired
   ItemRepository itemRepository;
