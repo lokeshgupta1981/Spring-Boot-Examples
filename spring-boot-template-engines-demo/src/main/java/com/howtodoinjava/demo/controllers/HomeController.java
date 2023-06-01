@@ -16,8 +16,8 @@ public class HomeController {
 
     @GetMapping("/thyme")
     public String homeThymeleaf(Model model) {
-        model.addAttribute("message", "Welcome to the Demo using Thymleaf!");
-        return "thymeleafdemo";
+        model.addAttribute("message", "Welcome to the Demo using Thymeleaf!");
+        return "thymeleaf";
     }
 
     @GetMapping("/free")
@@ -29,19 +29,14 @@ public class HomeController {
 
     @GetMapping("/groovy")
     public String template(Model model) {
-        model.addAttribute("message", "This is the Groovy template");
-        return "test";
+        model.addAttribute("message", "Welcome to the Demo using Groovy");
+        return "index";
     }
 
     @GetMapping("/jsp")
     public ModelAndView templateJSP(Model model) {
-        ModelAndView mav = new ModelAndView("template");
-
+        ModelAndView mav = new ModelAndView("homejsp");
         mav.addObject("message", "This is the JSP template");
         return mav;
-//        model.addAttribute("message", "This is the JSP template");
-//        return "template";
     }
-
-
 }
