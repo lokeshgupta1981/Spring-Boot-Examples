@@ -38,6 +38,8 @@
     <module>spring-boot-mvc-thymeleaf</module>
     <module>spring_boot_elastic-beanstalk-aws</module>
     <module>Spring-data-redis-lettuce</module>
+    <module>spring-boot-template-engines-demo</module>
+    <module>spring-boot-template-engines-demo</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
