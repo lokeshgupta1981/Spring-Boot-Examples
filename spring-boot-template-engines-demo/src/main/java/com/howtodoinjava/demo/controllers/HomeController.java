@@ -3,6 +3,8 @@ package com.howtodoinjava.demo.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -33,10 +35,11 @@ public class HomeController {
         return "index";
     }
 
+
     @GetMapping("/jsp")
-    public ModelAndView templateJSP(Model model) {
-        ModelAndView mav = new ModelAndView("homejsp");
-        mav.addObject("message", "This is the JSP template");
-        return mav;
+    public String templateJSP(Model model) {
+        model.addAttribute("message", "Welcome to the Demo using JSP");
+        return "test";
     }
 }
+
