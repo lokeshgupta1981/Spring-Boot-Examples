@@ -42,6 +42,7 @@
     <module>spring-redis-pubsub</module>
     <module>spring-redis-streams</module>
     <module>spring-boot-docker-compose</module>
+    <module>chatgpt-demo</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
