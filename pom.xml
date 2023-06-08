@@ -43,6 +43,7 @@
     <module>spring-redis-streams</module>
     <module>spring-boot-docker-compose</module>
     <module>chatgpt-demo</module>
+    <module>spring-boot-long-running-tasks</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
