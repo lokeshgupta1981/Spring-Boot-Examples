@@ -1,49 +1,29 @@
 package com.howtodoinjava.demo.jms.config;
 
 import com.howtodoinjava.demo.web.model.TaskStatus;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.config.TopicConfig;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.KafkaAdmin;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import org.springframework.kafka.support.serializer.JsonSerializer;
 
 @Configuration
 public class KafkaConfig {
 
-  /*@Autowired
-  private KafkaProperties kafkaProperties;
-
-  @Value("${spring.kafka.bootstrap-servers:PLAINTEXT_HOST://localhost:19092}")
-  private String bootstrapServers;*/
-
-  /*@Bean
-  public KafkaTemplate<String, TaskStatus> kafkaTemplate(ProducerFactory<String, TaskStatus> pf) {
-    KafkaTemplate kafkaTemplate =  new KafkaTemplate<>(pf,
-        Map.of(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class));
-
-    kafkaTemplate.setConsumerFactory(consumerFactory());
-    return kafkaTemplate;
-  }*/
+  @Autowired KafkaProperties kafkaProperties;
 
   @Bean
   public NewTopic taskTopic() {
@@ -53,29 +33,37 @@ public class KafkaConfig {
         .build();
   }
 
-  /*@Bean
-  @ConditionalOnMissingBean
-  public KafkaAdmin kafkaAdmin(@Autowired KafkaProperties properties) {
-    KafkaAdmin kafkaAdmin = new KafkaAdmin(properties.buildAdminProperties());
-    kafkaAdmin.setFatalIfBrokerNotAvailable(properties.getAdmin().isFailFast());
+  @Bean
+  public KafkaAdmin kafkaAdmin() {
+    KafkaAdmin kafkaAdmin = new KafkaAdmin(kafkaProperties.buildAdminProperties());
+    kafkaAdmin.setFatalIfBrokerNotAvailable(kafkaProperties.getAdmin().isFailFast());
     return kafkaAdmin;
-  }*/
+  }
 
-
-  /*@Bean
+  @Bean
+  @ConditionalOnMissingBean
   public ConsumerFactory<String, TaskStatus> consumerFactory() {
-    Map<String, Object> props = new HashMap<>();
-    props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
-    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-    return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
-        new JsonDeserializer<>(TaskStatus.class));
+    Map<String, Object> configProps = new HashMap<>();
+    configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
+    configProps.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+    configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "task-group");
+    configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+    configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+    configProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+
+    return new DefaultKafkaConsumerFactory<>(configProps);
+  }
+
+  @Bean
+  public KafkaConsumer<String, TaskStatus> kafkaConsumer() {
+    return (KafkaConsumer<String, TaskStatus>) consumerFactory().createConsumer();
   }
 
   @Bean
   public ConcurrentKafkaListenerContainerFactory<String, TaskStatus> kafkaListenerContainerFactory() {
     ConcurrentKafkaListenerContainerFactory<String, TaskStatus> factory = new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(consumerFactory());
-    factory.setMessageConverter(new StringJsonMessageConverter());
+    /*factory.setMessageConverter(new StringJsonMessageConverter());*/
     return factory;
-  }*/
+  }
 }

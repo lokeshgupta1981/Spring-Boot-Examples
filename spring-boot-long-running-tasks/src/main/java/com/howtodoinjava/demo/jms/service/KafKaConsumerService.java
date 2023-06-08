@@ -13,7 +13,7 @@ public class KafKaConsumerService {
 
   private final Logger logger = LoggerFactory.getLogger(KafKaConsumerService.class);
 
-  @KafkaListener(topics = {"task-topic"}, groupId = "task-group")
+  @KafkaListener(topics = {"general-task-topic"}, groupId = "task-group")
   public void consume(TaskStatus taskStatus) {
 
     logger.info(String.format("Task status is updated : " + taskStatus));

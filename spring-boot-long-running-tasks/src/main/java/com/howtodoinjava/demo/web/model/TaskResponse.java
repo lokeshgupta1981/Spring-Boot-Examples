@@ -12,4 +12,5 @@ public class TaskResponse implements Serializable {
 
   private String taskId;
   private String name;
+  private String queueURL;
 }
