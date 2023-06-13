@@ -7,5 +7,7 @@ html(lang:'en') {
     body {
         h3 ("$message")
 
+        p ("Current date and time: ${new Date()}")
+
     }
 }
