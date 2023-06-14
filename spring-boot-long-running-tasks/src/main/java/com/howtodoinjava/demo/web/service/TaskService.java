@@ -1,28 +1,22 @@
 package com.howtodoinjava.demo.web.service;
 
+import com.howtodoinjava.demo.jms.service.KafkaProducerService;
 import com.howtodoinjava.demo.web.model.TaskRequest;
 import com.howtodoinjava.demo.web.model.TaskStatus;
 import com.howtodoinjava.demo.web.model.TaskStatus.Status;
-import java.time.Duration;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import lombok.extern.java.Log;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.NewTopic;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.config.TopicConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaAdmin;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +25,10 @@ import org.springframework.stereotype.Service;
 public class TaskService {
 
   @Autowired
-  KafkaTemplate<String, TaskStatus> kafkaTemplate;
+  KafkaConsumer<String, TaskStatus> kafkaConsumer;
 
   @Autowired
-  KafkaConsumer<String, TaskStatus> kafkaConsumer;
+  KafkaProducerService kafkaProducerService;
 
   @Autowired
   KafkaAdmin kafkaAdmin;
@@ -76,35 +70,6 @@ public class TaskService {
   }
 
   void updateTaskExecutionProgess(TaskStatus taskStatus) {
-
-    try {
-      CompletableFuture<SendResult<String, TaskStatus>> future
-          = kafkaTemplate.send(taskStatus.getTaskId(), taskStatus.getTaskId(), taskStatus);
-
-      future.whenComplete((sendResult, exception) -> {
-        if (exception != null) {
-          future.completeExceptionally(exception);
-        } else {
-          future.complete(sendResult);
-        }
-        LOGGER.info("Task status send to Kafka topic : "+ taskStatus);
-      });
-    } catch (Exception ex) {
-      ex.printStackTrace();
-    }
-  }
-
-  //For client application
-  public TaskStatus getLatestTaskStatus(String taskId){
-    ConsumerRecord<String, TaskStatus> latestUpdate = null;
-    ConsumerRecords<String, TaskStatus> consumerRecords = kafkaConsumer.poll(Duration.ofMillis(1000));
-    if (!consumerRecords.isEmpty()) {
-      Iterator itr = consumerRecords.records(taskId).iterator();
-      while(itr.hasNext()) {
-        latestUpdate = (ConsumerRecord<String, TaskStatus>) itr.next();
-      }
-      LOGGER.info("Latest updated status : "+ latestUpdate.value());
-    }
-    return latestUpdate != null ? latestUpdate.value() : null;
+    kafkaProducerService.send(taskStatus.getTaskId(), taskStatus.getTaskId(), taskStatus);
   }
 }

@@ -1,5 +1,6 @@
 package com.howtodoinjava.demo.web.controller;
 
+import com.howtodoinjava.demo.jms.service.KafkaConsumerService;
 import com.howtodoinjava.demo.web.model.TaskResponse;
 import com.howtodoinjava.demo.web.model.TaskRequest;
 import com.howtodoinjava.demo.web.model.TaskStatus;
@@ -24,6 +25,9 @@ public class TaskController {
   @Autowired
   TaskService taskService;
 
+  @Autowired
+  KafkaConsumerService kafkaConsumerService;
+
   @PostMapping
   public ResponseEntity<TaskResponse> processAsync(@RequestBody TaskRequest taskRequest, UriComponentsBuilder b) {
 
@@ -40,7 +44,7 @@ public class TaskController {
   @GetMapping("{taskId}/progress")
   public ResponseEntity<?> processAsync(@PathVariable String taskId) {
 
-    TaskStatus taskStatus = taskService.getLatestTaskStatus(taskId);
+    TaskStatus taskStatus = kafkaConsumerService.getLatestTaskStatus(taskId);
     if(taskStatus == null) {
       return ResponseEntity.noContent().build();
     }
