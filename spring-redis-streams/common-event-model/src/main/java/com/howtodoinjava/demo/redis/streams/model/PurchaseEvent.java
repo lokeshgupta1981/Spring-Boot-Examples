@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class PurchaseEvent {
+
     private String purchaseId;
     private String productId;
     private String productName;
