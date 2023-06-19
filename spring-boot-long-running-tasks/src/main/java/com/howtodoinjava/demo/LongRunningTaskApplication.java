@@ -25,12 +25,14 @@ public class LongRunningTaskApplication implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     kafkaTemplate.send("general-task-topic", 0, "taskId", new TaskStatus("taskId", "taskName", 50.0f, Status.RUNNING));
-    kafkaTemplate.send("general-task-topic", 0, "taskId", new TaskStatus("taskId", "taskName", 100.0f, Status.FINISHED));
+   // kafkaTemplate.send("general-task-topic", 0, "taskId", new TaskStatus("taskId", "taskName", 100.0f, Status.FINISHED));
 
-    var message1 = kafkaTemplate.receive("general-task-topic", 0, 0L);
+    kafkaTemplate.send("general-task-topic", "test-message");
+
+    /*var message1 = kafkaTemplate.receive("general-task-topic", 0, 0L);
     var message2 = kafkaTemplate.receive("general-task-topic", 0, 1L);
 
     System.out.println(message1.value());
-    System.out.println(message2.value());
+    System.out.println(message2.value());*/
   }
 }
