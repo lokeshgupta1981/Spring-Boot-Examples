@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Log
 @Service
@@ -36,7 +38,7 @@ public class TaskService {
   final static Logger LOGGER = LoggerFactory.getLogger(TaskService.class);
 
   @Async
-  public void process(String taskId, TaskRequest taskRequest) {
+  public void process(String taskId, TaskRequest taskRequest, UriComponentsBuilder b) {
 
     try {
       createNewTopic(taskId);
