@@ -38,10 +38,14 @@
     <module>spring-boot-mvc-thymeleaf</module>
     <module>spring_boot_elastic-beanstalk-aws</module>
     <module>Spring-data-redis-lettuce</module>
+    <module>spring-boot-template-engines-demo</module>
     <module>spring-redis-pubsub</module>
     <module>spring-redis-streams</module>
     <module>spring-boot-docker-compose</module>
     <module>spring-kafka-example</module>
+    <module>chatgpt-demo</module>
+    <module>spring-boot-long-running-tasks</module>
+    <module>spring-boot-file-upload-restapi</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
