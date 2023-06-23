@@ -41,6 +41,7 @@
     <module>spring-redis-pubsub</module>
     <module>spring-redis-streams</module>
     <module>spring-boot-docker-compose</module>
+    <module>spring-kafka-example</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>

@@ -1,0 +1,13 @@
+
+topic:
+  partitions: 3
+  replicas: 3
+
+spring:
+  kafka:
+    topic: 'inventory-events'
+    bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+    producer:
+      bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
