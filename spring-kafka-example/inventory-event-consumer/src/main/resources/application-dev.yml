@@ -3,8 +3,8 @@ server:
 
 
 topics:
-  retry: 'library-events.RETRY'
-  dlt: 'library-events.DLT'
+  retry: 'inventory-events.RETRY'
+  dlt: 'inventory-events.DLT'
 
 spring:
   kafka:
