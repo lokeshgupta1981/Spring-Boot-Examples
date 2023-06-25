@@ -24,56 +24,50 @@ public class InventoryEventProducer {
     public String topic;
 
     @Autowired
-    private KafkaTemplate<Integer, String> kafkaTemplate;
+    private KafkaTemplate<Integer, Object> kafkaTemplate;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    public CompletableFuture<SendResult<Integer, String>> sendInventoryEvent_Async(InventoryEvent inventoryEvent) throws JsonProcessingException {
+    public CompletableFuture<SendResult<Integer, Object>> sendInventoryEvent_Async(InventoryEvent inventoryEvent) throws JsonProcessingException {
 
         var key = inventoryEvent.getInventoryId();
-        var value = objectMapper.writeValueAsString(inventoryEvent);
 
-        var completableFuture = kafkaTemplate.send(topic, key, value);
+        var completableFuture = kafkaTemplate.send(topic, key, inventoryEvent);
 
         return completableFuture.whenComplete(((sendResult, throwable) -> {
             if (throwable != null) {
-                handleFailure(key, value, throwable);
+                handleFailure(key, inventoryEvent, throwable);
             } else {
-                handleSuccess(key, value, sendResult);
+                handleSuccess(key, inventoryEvent, sendResult);
             }
         }));
     }
 
-    public CompletableFuture<SendResult<Integer, String>> sendInventoryEvent_ProducerRecord(InventoryEvent inventoryEvent) throws JsonProcessingException {
+    public CompletableFuture<SendResult<Integer, Object>> sendInventoryEvent_ProducerRecord(InventoryEvent inventoryEvent) throws JsonProcessingException {
 
         var key = inventoryEvent.getInventoryId();
-        var value = objectMapper.writeValueAsString(inventoryEvent);
-
-        var producerRecord = buildProducerRecord(key, value);
+        var producerRecord = buildProducerRecord(key, inventoryEvent);
 
         var completableFuture = kafkaTemplate.send(producerRecord);
 
         return completableFuture.whenComplete(((sendResult, throwable) -> {
             if (throwable != null) {
-                handleFailure(key, value, throwable);
+                handleFailure(key, inventoryEvent, throwable);
             } else {
-                handleSuccess(key, value, sendResult);
+                handleSuccess(key, inventoryEvent, sendResult);
             }
         }));
     }
 
-    private ProducerRecord<Integer, String> buildProducerRecord(Integer key, String value) {
+    private ProducerRecord<Integer, Object> buildProducerRecord(Integer key, Object value) {
         List<Header> recordHeader = List.of(new RecordHeader("event-source", "library-event-producer".getBytes()));
         return new ProducerRecord<>(topic, null, key, value, recordHeader);
     }
 
-    private void handleSuccess(Integer key, String value, SendResult<Integer, String> sendResult) {
+    private void handleSuccess(Integer key, Object value, SendResult<Integer, Object> sendResult) {
         log.info("Message sent successfully for the key: {} and the value: {}, partition is: {}",
                 key, value, sendResult.getRecordMetadata().partition());
     }
 
-    private void handleFailure(Integer key, String value, Throwable throwable) {
+    private void handleFailure(Integer key, Object value, Throwable throwable) {
         log.error("Error sending message and exception is {}", throwable.getMessage(), throwable);
     }
 }

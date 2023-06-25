@@ -3,6 +3,9 @@ package com.howtodoinjava.demo.kafka.consumer.consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.howtodoinjava.demo.kafka.consumer.model.InventoryEvent;
+import com.howtodoinjava.demo.kafka.consumer.model.InventoryEventType;
+import com.howtodoinjava.demo.kafka.consumer.model.Product;
 import com.howtodoinjava.demo.kafka.consumer.service.InventoryEventService;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -59,7 +62,7 @@ class InventoryEventsConsumerTest {
     EmbeddedKafkaBroker embeddedKafkaBroker;
 
     @Autowired
-    KafkaTemplate<Integer, String> kafkaTemplate;
+    KafkaTemplate<Integer, Object> kafkaTemplate;
 
     @Autowired
     KafkaListenerEndpointRegistry endpointRegistry;
@@ -100,8 +103,20 @@ class InventoryEventsConsumerTest {
     @Test
     void publishNewInventoryEvent_Success() throws ExecutionException, InterruptedException, JsonProcessingException {
         //given
-        String json = " {\"inventoryId\":null,\"inventoryEventType\":\"NEW\",\"product\":{\"productId\":456,\"productName\":\"Samsung S23\",\"price\":\"750000\",\"quantity\":50}}";
-        kafkaTemplate.send("inventory-events", json).get();
+        Product product = Product.builder()
+                .productId(456)
+                .productName("Samsung S23")
+                .price("75000")
+                .quantity(50)
+                .build();
+
+        InventoryEvent inventoryEvent = InventoryEvent.builder()
+                .inventoryId(null)
+                .inventoryEventType(InventoryEventType.NEW)
+                .product(product)
+                .build();
+
+        kafkaTemplate.send("inventory-events", inventoryEvent).get();
 
         //when
         CountDownLatch latch = new CountDownLatch(1);
@@ -115,9 +130,22 @@ class InventoryEventsConsumerTest {
     @Test
     void publishModifyInventoryEvent_Null_InventoryId_DeadLetter_Topic() throws JsonProcessingException, InterruptedException, ExecutionException {
         //given
-        Integer inventoryId = null;
-        String json = "{\"inventoryId\":" + inventoryId + ",\"inventoryEventType\":\"UPDATE\",\"product\":{\"productId\":456,\"productName\":\"Samsung S23\",\"price\":\"750000\",\"quantity\":50}}";
-        kafkaTemplate.send("inventory-events", json).get();
+        Product product = Product.builder()
+                .productId(456)
+                .productName("Samsung S23")
+                .price("75000")
+                .quantity(50)
+                .build();
+
+        InventoryEvent inventoryEvent = InventoryEvent.builder()
+                .inventoryId(null)
+                .inventoryEventType(InventoryEventType.UPDATE)
+                .product(product)
+                .build();
+
+        String json = objectMapper.writeValueAsString(inventoryEvent);
+
+        kafkaTemplate.send("inventory-events", inventoryEvent).get();
         //when
         CountDownLatch latch = new CountDownLatch(1);
         latch.await(3, TimeUnit.SECONDS);
@@ -130,6 +158,7 @@ class InventoryEventsConsumerTest {
         consumer = new DefaultKafkaConsumerFactory<>(configs, new IntegerDeserializer(), new StringDeserializer()).createConsumer();
         embeddedKafkaBroker.consumeFromAnEmbeddedTopic(consumer, deadLetterTopic);
 
+        //then
         ConsumerRecords<Integer, String> consumerRecords = KafkaTestUtils.getRecords(consumer);
 
         var deadletterList = new ArrayList<ConsumerRecord<Integer, String>>();
@@ -141,7 +170,7 @@ class InventoryEventsConsumerTest {
 
         var finalList = deadletterList.stream()
                 .filter(record -> record.value().equals(json))
-                .collect(Collectors.toList());
+                .toList();
 
         assert finalList.size() == 1;
     }
