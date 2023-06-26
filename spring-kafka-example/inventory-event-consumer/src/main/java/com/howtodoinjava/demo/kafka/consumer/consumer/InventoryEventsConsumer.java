@@ -1,6 +1,7 @@
 package com.howtodoinjava.demo.kafka.consumer.consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.howtodoinjava.demo.kafka.consumer.model.InventoryEvent;
 import com.howtodoinjava.demo.kafka.consumer.service.InventoryEventService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -16,7 +17,7 @@ public class InventoryEventsConsumer {
     private InventoryEventService inventoryEventService;
 
     @KafkaListener(topics = {"inventory-events"}, groupId = "inventory-consumer-group-1")
-    public void onMessage(ConsumerRecord<Integer, String> consumerRecord) throws JsonProcessingException {
+    public void onMessage(ConsumerRecord<Integer, InventoryEvent> consumerRecord) throws JsonProcessingException {
         inventoryEventService.processLibraryEvent(consumerRecord);
         log.info("Consumer Record: {}", consumerRecord);
     }
@@ -30,7 +31,7 @@ public class InventoryEventsConsumer {
                             @PartitionOffset(partition = "0", initialOffset = "0"),
                             @PartitionOffset(partition = "2", initialOffset = "0")}))
      */
-    public void onMessage_PartitionIntialOffset(ConsumerRecord<Integer, String> consumerRecord) {
+    public void onMessage_PartitionIntialOffset(ConsumerRecord<Integer, InventoryEvent> consumerRecord) {
         log.info("Consumer Record: {}", consumerRecord);
     }
 
@@ -40,7 +41,7 @@ public class InventoryEventsConsumer {
      *
     @KafkaListener(topicPartitions = @TopicPartition(topic = "inventory-events", partitions = { "0", "1" }))
      */
-    public void onMessage_PartitionNoOffset(ConsumerRecord<Integer, String> consumerRecord) {
+    public void onMessage_PartitionNoOffset(ConsumerRecord<Integer, InventoryEvent> consumerRecord) {
         log.info("Consumer Record: {}", consumerRecord);
     }
 }

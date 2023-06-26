@@ -19,26 +19,23 @@ public class InventoryEventService {
     ObjectMapper objectMapper;
 
     @Autowired
-    KafkaTemplate<Integer,String> kafkaTemplate;
+    KafkaTemplate<Integer, Object> kafkaTemplate;
 
-    public void processLibraryEvent(ConsumerRecord<Integer,String> consumerRecord) throws JsonProcessingException {
-        InventoryEvent inventoryEvent = objectMapper.readValue(consumerRecord.value(), InventoryEvent.class);
+    public void processLibraryEvent(ConsumerRecord<Integer,InventoryEvent> consumerRecord) throws JsonProcessingException {
+        InventoryEvent inventoryEvent = consumerRecord.value();
         log.info("libraryEvent : {} ", inventoryEvent);
 
         if(inventoryEvent.getInventoryId() != null && ( inventoryEvent.getInventoryId() == 999 )){
             throw new RecoverableDataAccessException("Temporary Network Issue");
         }
 
-        switch(inventoryEvent.getInventoryEventType()){
-            case NEW:
-                save(inventoryEvent);
-                break;
-            case UPDATE:
+        switch (inventoryEvent.getInventoryEventType()) {
+            case NEW -> save(inventoryEvent);
+            case UPDATE -> {
                 validate(inventoryEvent);
                 save(inventoryEvent);
-                break;
-            default:
-                log.info("Invalid Library Event Type");
+            }
+            default -> log.info("Invalid Library Event Type");
         }
 
     }

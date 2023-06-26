@@ -8,7 +8,6 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.TopicPartition;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -45,7 +44,7 @@ class InventoryEventProducerTest {
     }
 
     @Test
-    void sendLibraryEvent_ProducerRecord_success() throws JsonProcessingException, ExecutionException, InterruptedException {
+    void sendInventoryEvent_ProducerRecord_success() throws JsonProcessingException, ExecutionException, InterruptedException {
         //given
         InventoryEvent inventoryEvent = TestUtil.inventoryEventRecord();
         String record = objectMapper.writeValueAsString(inventoryEvent);
@@ -64,7 +63,7 @@ class InventoryEventProducerTest {
         var completableFuture = eventProducer.sendInventoryEvent_ProducerRecord(inventoryEvent);
 
         //then
-        SendResult<Integer, String> sendResult1 = completableFuture.get();
+        SendResult<Integer, Object> sendResult1 = completableFuture.get();
         assert sendResult1.getRecordMetadata().partition() == 1;
 
     }
