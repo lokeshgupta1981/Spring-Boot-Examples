@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Greeting</title>
+    <style>
+        * {
+            background: azure;
+        }
+    </style>
+</head>
+<body>
+<h2 th:text="${response}" style="text-align:center"></h2>
+<div style="text-align:center;">
+    <button style="cursor: pointer;"><a href="/logout">Logout</a></button>
+</div>
+</body>
+</html>
