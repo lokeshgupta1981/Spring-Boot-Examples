@@ -46,6 +46,7 @@
     <module>chatgpt-demo</module>
     <module>spring-boot-long-running-tasks</module>
     <module>spring-boot-file-upload-restapi</module>
+    <module>spring-boot-vaadin-demo</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
@@ -68,14 +69,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-<!--    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-    </dependency>-->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -97,18 +90,13 @@
     <dependency>
       <groupId>org.keycloak</groupId>
       <artifactId>keycloak-admin-client</artifactId>
-      <version>20.0.0</version>
+      <version>21.0.1</version>
     </dependency>
     <dependency>
       <groupId>io.awspring.cloud</groupId>
       <artifactId>spring-cloud-aws-dynamodb</artifactId>
       <version>3.0.0</version>
     </dependency>
-    <!--<dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-inline</artifactId>
-      <scope>test</scope>
-    </dependency>-->
   </dependencies>
 
   <build>
