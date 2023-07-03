@@ -78,27 +78,8 @@ font-weight: bold;
     </tr>
     </thead>
     <tbody>
-<!--    <tr>-->
-<!--      -->
-<!--        <td th:text="${fileForm.file.originalFilename}"></td>-->
-<!--        <td th:text="${fileForm.file.size} + ' bytes'"></td>-->
-<!--        <td th:text="${fileForm.file.contentType}"></td>-->
-<!--    </tr>-->
     </tbody>
 </table>
 
-
-
-<div th:if="${fileForms}">
-    <h2>File Details:</h2>
-    <ul>
-        <li th:each="fileForm : ${fileForms}">
-            <p>Name: <span th:text="${fileForm.file.originalFilename}"></span></p>
-            <p>Size: <span th:text="${fileForm.file.size}"></span> bytes</p>
-            <p>Type: <span th:text="${fileForm.file.contentType}"></span></p>
-            <hr>
-        </li>
-    </ul>
-</div>
 </body>
 </html>
