@@ -9,15 +9,15 @@ import org.springframework.web.multipart.MultipartException;
 
 @RestControllerAdvice
 public class CustomExceptionHandler {
-        @ExceptionHandler(MaxUploadSizeExceededException.class)
-        public ResponseEntity<String> handleMaxUploadSizeExceeded() {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("File size exceeds the limit.");
-        }
 
-        @ExceptionHandler(MultipartException.class)
-        public ResponseEntity<String> handleMultipartException() {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during file upload.");
-        }
-        // Other exception handlers for specific error scenarios
+  @ExceptionHandler(MaxUploadSizeExceededException.class)
+  public ResponseEntity<String> handleMaxUploadSizeExceeded() {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("File size exceeds the limit.");
+  }
 
+  @ExceptionHandler(MultipartException.class)
+  public ResponseEntity<String> handleMultipartException() {
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body("Error occurred during file upload.");
+  }
 }

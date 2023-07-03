@@ -1,0 +1,22 @@
+server:
+  port: 8081
+
+
+topics:
+  retry: 'inventory-events.RETRY'
+  dlt: 'inventory-events.DLT'
+
+spring:
+  kafka:
+    topic: "inventory-events"
+    bootstrap-servers: localhost:9092
+    consumer:
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
