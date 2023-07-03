@@ -19,6 +19,24 @@ import java.util.concurrent.CompletableFuture;
 @Controller
 public class FileUploadController {
 
+    @PostMapping("/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("name") String name, @RequestParam("email") String email, Model model) throws IOException {
+        if (file.isEmpty()) {
+            // Handle empty file error
+            model.addAttribute("error", "File is empty.");
+        } else if (!file.getOriginalFilename().endsWith(".txt")) {
+            // Handle invalid file format error
+            model.addAttribute("error", "Invalid file format. Only .txt files are allowed.");
+        } else {
+            model.addAttribute("success", "File uploaded successfully!");
+            model.addAttribute("name", name);
+            model.addAttribute("email", email);
+            model.addAttribute("fileForm", new FileForm(file));
+        }
+
+        return "home";
+    }
+
   @PostMapping("/upload")
   public String handleFileUpload(@RequestParam("file") MultipartFile file, Model model)
       throws IOException {
