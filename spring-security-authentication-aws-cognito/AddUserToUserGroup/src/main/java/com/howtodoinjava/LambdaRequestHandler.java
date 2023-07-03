@@ -2,10 +2,9 @@ package com.howtodoinjava;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import java.util.Map;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient;
 import software.amazon.awssdk.services.cognitoidentityprovider.model.AdminAddUserToGroupRequest;
-
-import java.util.Map;
 
 public class LambdaRequestHandler implements RequestHandler<Map<String, Object>, Map<String, Object>> {
 
