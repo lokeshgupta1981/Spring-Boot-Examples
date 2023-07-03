@@ -27,15 +27,15 @@ font-weight: bold;
 </head>
 <body>
 <h1>File Upload</h1>
-<form th:action="@{/upload}" th:object="${fileForm}" method="post" enctype="multipart/form-data">
+<form th:action="@{/upload}" th:object="${user}" method="post" enctype="multipart/form-data">
     <div>
         <label for="name">Name:</label>
-        <input type="text" name="name" id="name" />
+        <input type="text" name="name" id="name" th:field="*{name}" />
     </div>
     <br />
     <div>
         <label for="email">Email:</label>
-        <input type="email" name="email" id="email" />
+        <input type="email" name="email" id="email" th:field="*{email}" />
     </div>
     <br />
     <div>

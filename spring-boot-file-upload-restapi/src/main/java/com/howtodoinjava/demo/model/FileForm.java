@@ -1,4 +1,4 @@
-package com.howtodoinjava.demo.entities;
+package com.howtodoinjava.demo.model;
 
 import org.springframework.web.multipart.MultipartFile;
 
