@@ -13,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Controller
@@ -32,97 +34,41 @@ public class FileUploadController {
             model.addAttribute("email", email);
             model.addAttribute("fileForm", new FileForm(file));
         }
-
         return "home";
     }
-
-    @PostMapping("/uploadMultipleForm")
-    public String handleFileUploadMultiple(@RequestParam("files") MultipartFile[] files, Model model) throws IOException {
-        // Check if any files are provided
-        if (files.length == 0) {
-            model.addAttribute("error", "No files selected");
-
-        }
-        List<FileForm> fileForms = new ArrayList<>();
-
-        // Process each file
-        for (MultipartFile file : files) {
-            // Handle each file as needed
-            // Example: Save the file to disk, process its contents, etc.
-            fileForms.add(new FileForm(file));
-        }
-        model.addAttribute("success", "Files uploaded successfully!");
-        model.addAttribute("fileForms", fileForms);
-
-        // Return a success message
-        return "home";
-    }
-
-    @PostMapping("/uploadMultiple")
-    public ResponseEntity<String> handleFileUploadMultipleCurl(@RequestParam("files") MultipartFile[] files, Model model) throws IOException {
-        // Check if any files are provided
-        if (files.length == 0) {
-            model.addAttribute("error", "No files selected");
-        }
-
-        List<FileForm> fileForms = new ArrayList<>();
-
-        // Process each file
-        for (MultipartFile file : files) {
-            // Handle each file as needed
-            // Example: Save the file to disk, process its contents, etc.
-            fileForms.add(new FileForm(file));
-        }
-
-        model.addAttribute("success", "Files uploaded successfully!");
-        model.addAttribute("fileForms", fileForms);
-
-        // Return a success message
-        return ResponseEntity.ok("Files uploaded successfully!");
-    }
-
-
 
     @PostMapping("/uploadCurl")
-    public ResponseEntity<String> handleFileUploadUsingCurl(@RequestParam("file") MultipartFile file, Model model) throws IOException {
+    public ResponseEntity<Map<String, Object>> handleFileUploadUsingCurl(@RequestParam("file") MultipartFile file, Model model) throws IOException {
+        Map<String, Object> response = new HashMap<>();
+
         if (file.isEmpty()) {
             // Handle empty file error
-            return ResponseEntity.badRequest().body("File is empty.");
-
+            response.put("error", "File is empty.");
+            return ResponseEntity.badRequest().body(response);
         } else if (!file.getOriginalFilename().endsWith(".txt")) {
             // Handle invalid file format error
-            return ResponseEntity.badRequest().body("Invalid file format. Only .txt files are allowed.");
-        }
-        else {
+            response.put("error", "Invalid file format. Only .txt files are allowed.");
+            return ResponseEntity.badRequest().body(response);
+        } else {
             String sanitizedFileName = sanitizeFileName(file.getOriginalFilename());
-
             // Check if the sanitized file name is different from the original file name
             if (!sanitizedFileName.equals(file.getOriginalFilename())) {
                 // Handle file name with restricted characters error
-                return ResponseEntity.badRequest().body("File name contains restricted characters. Please rename the file.");
+                response.put("error", "File name contains restricted characters. Please rename the file.");
+                return ResponseEntity.badRequest().body(response);
             }
-            // File upload is successful
-            return ResponseEntity.ok("file upload done");
-        }
 
-    }
+            // Populate the map with file details
+            response.put("fileName", file.getOriginalFilename());
+            response.put("fileSize", file.getSize());
+            response.put("fileContentType", file.getContentType());
 
-    @Async
-    @PostMapping("/uploadAsync")
-    public CompletableFuture<ResponseEntity<String>> handleConcurrentFileUpload(@RequestParam("file") MultipartFile file, Model model) throws IOException {
-        if (file.isEmpty()) {
-            // Handle empty file error
-            return CompletableFuture.completedFuture(ResponseEntity.badRequest().body("File is empty."));
-        } else if (!file.getOriginalFilename().endsWith(".txt")) {
-            // Handle invalid file format error
-            return CompletableFuture.completedFuture(ResponseEntity.badRequest().body("Invalid file format. Only .txt files are allowed."));
-        } else {
             // File upload is successful
-            String fileName = file.getOriginalFilename();
-            // Additional processing or logging with the fileName
-            return CompletableFuture.completedFuture(ResponseEntity.ok("File uploaded: " + fileName + "\n"));
+            response.put("message", "File upload done");
+            return ResponseEntity.ok(response);
         }
     }
+
 
     private String sanitizeFileName(String fileName) {
         // Define the restricted characters or character sets
