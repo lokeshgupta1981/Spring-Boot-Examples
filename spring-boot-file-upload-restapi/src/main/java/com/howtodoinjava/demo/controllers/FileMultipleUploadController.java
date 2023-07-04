@@ -31,7 +31,6 @@ public class FileMultipleUploadController {
         }
 
         model.addAttribute("success", "Files uploaded successfully!");
-        model.addAttribute("fileForms", fileForms);
 
         // Return a success message
         return ResponseEntity.ok("Files uploaded successfully!");
