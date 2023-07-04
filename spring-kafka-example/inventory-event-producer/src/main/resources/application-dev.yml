@@ -1,0 +1,20 @@
+
+topic:
+  partitions: 3
+  replicas: 1
+
+spring:
+  kafka:
+    topic: library-events
+    bootstrap-servers: localhost:9092
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        acks: all
+        retries: 10
+        retry.backoff.ms: 1000
+    admin:
+      properties:
+        bootstrap.servers: localhost:9092

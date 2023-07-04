@@ -1,6 +1,6 @@
 package com.howtodoinjava.demo.controllers;
 
-import com.howtodoinjava.demo.entities.FileForm;
+import com.howtodoinjava.demo.model.FileForm;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -12,12 +12,10 @@ font-weight: bold;
 color: red;
 font-weight: bold;
 }
-
 </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
 </head>
-
 <body>
 <div class="container">
     <h1 class="mt-5">File Upload</h1>
@@ -71,7 +69,6 @@ font-weight: bold;
         <th>File size</th>
         <td th:text="${fileForm.file.size} + ' bytes'"></td>
     </tr>
-
     <tr>
         <th>File content type</th>
         <td th:text="${fileForm.file.contentType}"></td>
@@ -80,6 +77,5 @@ font-weight: bold;
     <tbody>
     </tbody>
 </table>
-
 </body>
 </html>
