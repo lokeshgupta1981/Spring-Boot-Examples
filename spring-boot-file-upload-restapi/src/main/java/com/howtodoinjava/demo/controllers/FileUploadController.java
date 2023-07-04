@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.HashMap;
 
+import com.howtodoinjava.demo.model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class FileUploadController {
     @PostMapping("/upload")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("name") String name, @RequestParam("email") String email, Model model) throws IOException {
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, @ModelAttribute User user, Model model) throws IOException {
         if (file.isEmpty()) {
             // Handle empty file error
             model.addAttribute("error", "File is empty.");
@@ -26,8 +28,7 @@ public class FileUploadController {
             model.addAttribute("error", "Invalid file format. Only .txt files are allowed.");
         } else {
             model.addAttribute("success", "File uploaded successfully!");
-            model.addAttribute("name", name);
-            model.addAttribute("email", email);
+            model.addAttribute("user", user);
             model.addAttribute("fileForm", new FileForm(file));
         }
         return "home";
@@ -73,6 +74,7 @@ public class FileUploadController {
 
     @GetMapping("/")
     public String home(Model model) {
+        model.addAttribute("user", new User());
         return "home";
     }
 }
