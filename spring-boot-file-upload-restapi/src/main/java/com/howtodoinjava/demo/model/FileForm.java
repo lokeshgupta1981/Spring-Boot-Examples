@@ -1,23 +1,16 @@
 package com.howtodoinjava.demo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class FileForm {
 
+  private String name;
+  private String email;
   private MultipartFile file;
-
-  public FileForm() {
-  }
-
-  public FileForm(MultipartFile file) {
-    this.file = file;
-  }
-
-  public MultipartFile getFile() {
-    return file;
-  }
-
-  public void setFile(MultipartFile file) {
-    this.file = file;
-  }
 }

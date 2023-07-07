@@ -13,20 +13,28 @@ import java.util.concurrent.CompletableFuture;
 
 @Controller
 public class FileAsyncUploadController {
-    @Async
-    @PostMapping("/uploadAsync")
-    public CompletableFuture<ResponseEntity<String>> handleConcurrentFileUpload(@RequestParam("file") MultipartFile file, Model model) throws IOException {
-        if (file.isEmpty()) {
-            // Handle empty file error
-            return CompletableFuture.completedFuture(ResponseEntity.badRequest().body("File is empty."));
-        } else if (!file.getOriginalFilename().endsWith(".txt")) {
-            // Handle invalid file format error
-            return CompletableFuture.completedFuture(ResponseEntity.badRequest().body("Invalid file format. Only .txt files are allowed."));
-        } else {
-            // File upload is successful
-            String fileName = file.getOriginalFilename();
-            // Additional processing or logging with the fileName
-            return CompletableFuture.completedFuture(ResponseEntity.ok("File uploaded: " + fileName + "\n"));
-        }
+
+  @Async
+  @PostMapping("/uploadAsync")
+  public CompletableFuture<ResponseEntity<String>> handleConcurrentFileUpload(
+      @RequestParam("file") MultipartFile file, Model model) throws IOException {
+
+    // Handle empty file error
+    if (file.isEmpty()) {
+      return CompletableFuture
+          .completedFuture(ResponseEntity.badRequest().body("File is empty."));
     }
+    // Handle invalid file format error
+    else if (!file.getOriginalFilename().endsWith(".txt")) {
+      return CompletableFuture.completedFuture(
+          ResponseEntity.badRequest().body("Invalid file format. Only .txt files are allowed."));
+    }
+    // File upload is successful
+    else {
+      String fileName = file.getOriginalFilename();
+      //TODO: Additional processing if any
+      return CompletableFuture.completedFuture(
+          ResponseEntity.ok("File uploaded: " + fileName + "\n"));
+    }
+  }
 }
