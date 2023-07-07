@@ -18,7 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class FileUploadController {
 
   @PostMapping("/upload")
-  public String handleFileUpload(@ModelAttribute FileForm fileForm, Model model, RedirectAttributes redirectAttributes) throws IOException {
+  public String handleFileUpload(@ModelAttribute FileForm fileForm, Model model,
+      RedirectAttributes redirectAttributes) throws IOException {
 
     if (fileForm.getFile().isEmpty()) {
 
@@ -45,9 +46,10 @@ public class FileUploadController {
     return "redirect:/home";
   }
 
-  @PostMapping("/uploadCurl")
+  @PostMapping("/single-file-upload")
   public ResponseEntity<Map<String, Object>> handleFileUploadUsingCurl(
-      @RequestParam("file") MultipartFile file, Model model) throws IOException {
+      @RequestParam("file") MultipartFile file) throws IOException {
+
     Map<String, Object> response = new HashMap<>();
     if (file.isEmpty()) {
       // Handle empty file error
@@ -89,6 +91,7 @@ public class FileUploadController {
     model.addAttribute("fileForm", new FileForm());
     return "home";
   }
+
   @GetMapping("/")
   public String root() {
     return "redirect:/home";
