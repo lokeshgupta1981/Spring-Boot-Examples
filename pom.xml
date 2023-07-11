@@ -47,6 +47,9 @@
     <module>spring-boot-long-running-tasks</module>
     <module>spring-boot-file-upload-restapi</module>
     <module>spring-kafka-streams-example</module>
+    <module>spring-boot-vaadin-demo</module>
+    <module>spring-security-authentication-aws-cognito/AWSCognitoBasicAuthentication</module>
+    <module>search-in-keycloak-with-spring-boot</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
@@ -55,7 +58,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.1.0</version>
+    <version>3.1.1</version>
   </parent>
 
   <properties>
@@ -69,14 +72,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-<!--    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-    </dependency>-->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -87,7 +82,7 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-jpa</artifactId>
     </dependency>
@@ -96,20 +91,20 @@
       <artifactId>jakarta.persistence-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.keycloak</groupId>
-      <artifactId>keycloak-admin-client</artifactId>
-      <version>20.0.0</version>
-    </dependency>
-    <dependency>
-      <groupId>io.awspring.cloud</groupId>
-      <artifactId>spring-cloud-aws-dynamodb</artifactId>
-      <version>3.0.0</version>
-    </dependency>
-    <!--<dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-inline</artifactId>
-      <scope>test</scope>
-    </dependency>-->
+       <groupId>org.keycloak</groupId>
+       <artifactId>keycloak-admin-client</artifactId>
+       <version>21.0.1</version>
+     </dependency>
+     <dependency>
+       <groupId>io.awspring.cloud</groupId>
+       <artifactId>spring-cloud-aws-dynamodb</artifactId>
+       <version>3.0.0</version>
+     </dependency>
+     <dependency>
+       <groupId>com.amazonaws</groupId>
+       <artifactId>aws-java-sdk-core</artifactId>
+       <version>1.12.472</version>
+     </dependency>-->
   </dependencies>
 
   <build>

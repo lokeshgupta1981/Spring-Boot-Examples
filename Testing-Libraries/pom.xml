@@ -23,6 +23,7 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-webflux</artifactId>
+      <version>3.0.4</version>
     </dependency>
     <dependency>
       <groupId>com.github.tomakehurst</groupId>
@@ -45,12 +46,13 @@
     <dependency>
       <groupId>io.projectreactor</groupId>
       <artifactId>reactor-test</artifactId>
+      <version>3.5.4</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.easymock</groupId>
       <artifactId>easymock</artifactId>
-      <version>4.3</version>
+      <version>5.1.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
