@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: order-streams-app
+  profiles:
+    active: local
