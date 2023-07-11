@@ -46,6 +46,7 @@
     <module>chatgpt-demo</module>
     <module>spring-boot-long-running-tasks</module>
     <module>spring-boot-file-upload-restapi</module>
+    <module>spring-kafka-streams-example</module>
     <module>spring-boot-vaadin-demo</module>
     <module>spring-security-authentication-aws-cognito/AWSCognitoBasicAuthentication</module>
     <module>search-in-keycloak-with-spring-boot</module>
