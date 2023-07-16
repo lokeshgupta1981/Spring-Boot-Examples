@@ -23,7 +23,6 @@ public class StudentServiceImpl implements StudentService{
         @Override
         public Optional<Student> getStudentById(Long id) {
             return studentRepository.findById(id);
-//                    .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
         }
 
         @Override
@@ -31,11 +30,6 @@ public class StudentServiceImpl implements StudentService{
             return studentRepository.save(student);
         }
 
-//    public Optional<Student> getStudentById(Long id) {
-//        return studentRepository.findById(id);
-//        // Alternatively, throw an exception if student is not found
-//        // .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
-//    }
 
     @Override
     public Student updateStudent(Long id, Student updatedStudent) {
