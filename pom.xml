@@ -50,6 +50,7 @@
     <module>spring-boot-vaadin-demo</module>
     <module>spring-security-authentication-aws-cognito/AWSCognitoBasicAuthentication</module>
     <module>search-in-keycloak-with-spring-boot</module>
+    <module>spring-boot-response-entity-demo</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
