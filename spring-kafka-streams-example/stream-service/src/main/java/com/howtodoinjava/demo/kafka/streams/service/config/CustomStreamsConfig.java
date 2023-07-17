@@ -13,12 +13,12 @@ import org.springframework.kafka.config.TopicBuilder;
 @EnableKafkaStreams
 public class CustomStreamsConfig {
 
-    @Bean
-    public NewTopic topicBuilder() {
-        return TopicBuilder.name(OrdersTopology.ORDERS)
-                .partitions(2)
-                .replicas(1)
-                .build();
-    }
+  @Bean
+  public NewTopic topicBuilder() {
+    return TopicBuilder.name(OrdersTopology.ORDERS)
+        .partitions(2)
+        .replicas(1)
+        .build();
+  }
 
 }

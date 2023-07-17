@@ -11,12 +11,12 @@ import java.util.List;
 @RequestMapping("/v1/orders")
 public class OrdersController {
 
-    @Autowired
-    private OrderService orderService;
+  @Autowired
+  private OrderService orderService;
 
-    @GetMapping("/count")
-    public List<OrdersCountPerStoreDTO> ordersCount() {
-        return orderService.ordersCount();
-    }
+  @GetMapping("/count")
+  public List<OrdersCountPerStoreDTO> ordersCount() {
+    return orderService.ordersCount();
+  }
 
 }
