@@ -1,72 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>File Upload</title>
-    <style>
-body {
-text-align: center;
-}
-h1 {
-margin-bottom: 20px;
-}
-form {
-margin-bottom: 20px;
-}
-input[type="submit"] {
-margin-top: 10px;
-}
-.success-message {
-color: green;
-font-weight: bold;
-}
-.error-message {
-color: red;
-font-weight: bold;
-}
-</style>
+  <title>File Upload</title>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-<h1>File Upload</h1>
-<form th:action="@{/upload}" th:object="${fileForm}" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" id="file" />
-    <br/>
-    <input type="submit" value="Upload" />
-</form>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-4">
+      <h3>File Upload REST API Demo</h3>
+      <form th:action="@{/upload}" th:object="${fileForm}" method="post"
+            enctype="multipart/form-data"
+            class="form">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" name="name" id="name" class="form-control" th:field="*{name}"/>
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="email" class="form-control" th:field="*{email}"/>
+        </div>
+        <div class="form-group">
+          <label for="file">Select File:</label>
+          <input type="file" name="file" id="file" class="form-control-file"/>
+        </div>
+        <div class="mt-4">
+          <input type="submit" value="Upload" class="btn btn-primary"/>
+        </div>
+      </form>
+      <div th:if="${success}" class="alert alert-success mt-2">
+        <div th:text="${success}"/>
+      </div>
+      <div th:if="${error}" class="alert alert-danger mt-2">
+        <div th:text="${error}"/>
+      </div>
+    </div>
 
-<form th:action="@{/uploadMultiple}" th:object="${fileForms}" method="post" enctype="multipart/form-data">
-    <input type="file" name="files" id="files" multiple />
-    <br/>
-    <input type="submit" value="Upload" />
-</form>
-
-<!-- Add condition for success -->
-<div th:if="${success}" class="success-message">
-    <p th:text="${success}"></p>
-</div>
-
-<!-- Add condition for error -->
-<div th:if="${error}" class="error-message">
-    <p th:text="${error}"></p>
-</div>
-
-<!-- Display file details -->
-<div th:if="${fileForm}">
-    <h2>File Details:</h2>
-    <p>Name: <span th:text="${fileForm.file.originalFilename}"></span></p>
-    <p>Size: <span th:text="${fileForm.file.size}"></span> bytes</p>
-    <p>Type: <span th:text="${fileForm.file.contentType}"></span></p>
-</div>
-
-<div th:if="${fileForms}">
-    <h2>File Details:</h2>
-    <ul>
-        <li th:each="fileForm : ${fileForms}">
-            <p>Name: <span th:text="${fileForm.file.originalFilename}"></span></p>
-            <p>Size: <span th:text="${fileForm.file.size}"></span> bytes</p>
-            <p>Type: <span th:text="${fileForm.file.contentType}"></span></p>
-            <hr>
-        </li>
-    </ul>
+    <div class="col-lg-4 mt-5">
+      <!-- Display file details -->
+      <table th:if="${success}" class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+          <th>File name</th>
+          <td th:text="*{fileName}"></td>
+        </tr>
+        <tr>
+          <th>File size</th>
+          <td th:text="*{fileSize} + ' bytes'"></td>
+        </tr>
+        <tr>
+          <th>File content type</th>
+          <td th:text="*{fileType}"></td>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 </body>
 </html>

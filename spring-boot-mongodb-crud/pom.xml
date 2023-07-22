@@ -30,6 +30,7 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-mongodb</artifactId>
+      <version>3.0.7</version>
     </dependency>
   </dependencies>
 
