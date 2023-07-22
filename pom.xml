@@ -47,6 +47,7 @@
     <module>spring-boot-long-running-tasks</module>
     <module>spring-boot-file-upload-restapi</module>
     <module>spring-kafka-streams-example</module>
+    <module>PathVariable-vs-RequestParam</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
