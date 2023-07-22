@@ -50,6 +50,7 @@
     <module>spring-boot-vaadin-demo</module>
     <module>spring-security-authentication-aws-cognito/AWSCognitoBasicAuthentication</module>
     <module>search-in-keycloak-with-spring-boot</module>
+    <module>spring-boot-response-entity-demo</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
@@ -82,29 +83,6 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <!--<dependency>
-      <groupId>org.springframework.data</groupId>
-      <artifactId>spring-data-jpa</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.persistence</groupId>
-      <artifactId>jakarta.persistence-api</artifactId>
-    </dependency>
-    <dependency>
-       <groupId>org.keycloak</groupId>
-       <artifactId>keycloak-admin-client</artifactId>
-       <version>21.0.1</version>
-     </dependency>
-     <dependency>
-       <groupId>io.awspring.cloud</groupId>
-       <artifactId>spring-cloud-aws-dynamodb</artifactId>
-       <version>3.0.0</version>
-     </dependency>
-     <dependency>
-       <groupId>com.amazonaws</groupId>
-       <artifactId>aws-java-sdk-core</artifactId>
-       <version>1.12.472</version>
-     </dependency>-->
   </dependencies>
 
   <build>
