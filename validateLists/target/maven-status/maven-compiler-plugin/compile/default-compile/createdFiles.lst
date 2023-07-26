@@ -1,0 +1,11 @@
+com\validateLists\EmailValidator.class
+com\validateLists\User.class
+com\validateLists\CarController.class
+com\validateLists\Car.class
+com\validateLists\UserLogginController.class
+com\validateLists\ValidateListsApplication.class
+com\validateLists\CustomValidEmail.class
+com\validateLists\EmailAddressForCustomValidator.class
+com\validateLists\EmailAddress.class
+com\validateLists\EmailController.class
+com\validateLists\EmailRequest.class
