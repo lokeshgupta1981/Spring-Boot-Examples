@@ -10,7 +10,6 @@
 
   <artifactId>spring-boot-vaadin-demo</artifactId>
   <packaging>jar</packaging>
-
   <name>spring-boot-vaadin-demo</name>
   <url>http://maven.apache.org</url>
 

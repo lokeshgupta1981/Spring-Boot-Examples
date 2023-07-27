@@ -51,6 +51,7 @@
     <module>spring-security-authentication-aws-cognito/AWSCognitoBasicAuthentication</module>
     <module>search-in-keycloak-with-spring-boot</module>
     <module>spring-boot-response-entity-demo</module>
+    <module>spring-boot-validate-list</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
