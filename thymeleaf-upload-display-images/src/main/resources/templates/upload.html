@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Upload</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col min-h-screen">
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="lg:container mx-auto px-5 py-2 lg:px-32 lg:pt-12">
+    <form action="/image/upload" method="post" enctype="multipart/form-data">
+        <div class="space-y-12">
+            <label class="block">
+                <span class="sr-only">Choose profile photo</span>
+                <input type="file" name="file" class="block w-full text-sm text-gray-500
+                                                file:mr-4 file:py-2 file:px-4
+                                                file:rounded-md file:border-0
+                                              file:text-sm file:font-semibold
+                                             file:bg-blue-500 file:text-white
+                                                       hover:file:bg-blue-600
+                "/>
+            </label>
+        </div>
+
+        <div class="mt-6 flex items-center justify-end gap-x-6">
+
+            <h3 th:if="${message} != nil" th:text="${message}"></h3>
+
+            <button type="reset" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+            <button type="submit"
+                    class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                Save
+            </button>
+        </div>
+
+
+
+    </form>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>
