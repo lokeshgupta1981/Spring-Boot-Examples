@@ -1,5 +1,10 @@
 package com.oauth2.cognito.demo.base.config;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,54 +15,64 @@ import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMap
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    private final CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler;
+  private final CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler;
 
-    public SecurityConfiguration(CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler) {
+  @Value("${aws.cognito.logoutUrl}")
+  private String logoutUrl;
 
-        this.customizeAuthenticationSuccessHandler = customizeAuthenticationSuccessHandler;
+  @Value("${aws.cognito.logout.success.redirectUrl}")
+  private String logoutRedirectUrl;
 
-    }
+  @Value("${spring.security.oauth2.client.registration.cognito.clientId}")
+  private String clientId;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  public SecurityConfiguration(
+      CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler) {
 
-        http.authorizeHttpRequests(request -> request.requestMatchers("/").permitAll()
-                        .requestMatchers("/admin/*").hasRole("ADMIN")
-                        .requestMatchers("/user/*").hasAnyRole("ADMIN", "USER").anyRequest().authenticated())
-                .oauth2Login(oauth -> oauth.redirectionEndpoint(endPoint -> endPoint.baseUri("/login/oauth2/code/cognito"))
-                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userAuthoritiesMapper(userAuthoritiesMapper()))
-                        .successHandler(customizeAuthenticationSuccessHandler))
-                .logout(logout -> logout.logoutSuccessUrl("/"));
-        return http.build();
-    }
+    this.customizeAuthenticationSuccessHandler = customizeAuthenticationSuccessHandler;
+  }
 
-    @Bean
-    public GrantedAuthoritiesMapper userAuthoritiesMapper() {
-        return (authorities) -> {
-            Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-            try {
-                OidcUserAuthority oidcUserAuthority = (OidcUserAuthority) new ArrayList<>(authorities).get(0);
+    http.authorizeHttpRequests(request -> request.requestMatchers("/").permitAll()
+            .requestMatchers("/admin/*").hasRole("ADMIN")
+            .requestMatchers("/user/*").hasAnyRole("ADMIN", "USER").anyRequest().authenticated())
+        .oauth2Login(oauth -> oauth.redirectionEndpoint(endPoint -> endPoint.baseUri("/login/oauth2/code/cognito"))
+            .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userAuthoritiesMapper(userAuthoritiesMapper()))
+            .successHandler(customizeAuthenticationSuccessHandler))
+        .logout(httpSecurityLogoutConfigurer -> {
+          httpSecurityLogoutConfigurer.logoutSuccessHandler(
+              new CustomLogoutHandler(logoutUrl, logoutRedirectUrl, clientId));
+        });
+    return http.build();
+  }
 
-                mappedAuthorities = ((ArrayList<?>) oidcUserAuthority.getAttributes().get("cognito:groups")).stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role)).collect(Collectors.toSet());
-            } catch (Exception exception) {
-                System.out.println("Not Authorized!");
+  @Bean
+  public GrantedAuthoritiesMapper userAuthoritiesMapper() {
+    return (authorities) -> {
+      Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
 
-                System.out.println(exception.getMessage());
-            }
+      try {
+        OidcUserAuthority oidcUserAuthority = (OidcUserAuthority) new ArrayList<>(authorities).get(
+            0);
 
-            return mappedAuthorities;
-        };
-    }
+        mappedAuthorities = ((ArrayList<?>) oidcUserAuthority.getAttributes()
+            .get("cognito:groups")).stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+            .collect(Collectors.toSet());
+      } catch (Exception exception) {
+        System.out.println("Not Authorized!");
+
+        System.out.println(exception.getMessage());
+      }
+
+      return mappedAuthorities;
+    };
+  }
 
 }
 
