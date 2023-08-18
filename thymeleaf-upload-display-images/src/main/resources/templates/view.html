@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>View</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col min-h-screen">
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container mx-auto px-5 py-2 lg:px-32 lg:pt-12">
+    <div class="-m-1 flex flex-wrap md:-m-2">
+
+        <div th:each="profile : ${profiles}"
+             class="flex flex-wrap p-6 m-3 shadow-md rounded-xl sm:px-12 dark:bg-gray-900 dark:text-gray-100">
+            <img th:src="@{'data:image/jpeg;base64,'+${profile.generateBase64Image()}}" alt="profile"
+                 class="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 aspect-square">
+            <div class="space-y-4 text-center divide-y divide-gray-700">
+                <div class="my-2 space-y-1">
+                    <h2 class="text-xl font-semibold sm:text-2xl" th:text="${profile.fullName}"></h2>
+                    <p class="px-5 text-xs sm:text-base dark:text-gray-400" th:text="${profile.designation}"></p>
+                </div>
+                <div class="flex justify-center pt-2 space-x-4 align-center">
+                    <a rel="noopener noreferrer" th:href="${profile.githubLink}" target="_blank" aria-label="GitHub"
+                       class="p-2 rounded-md dark:text-gray-100 hover:dark:text-violet-400">
+                        <img th:src="@{/images/github.svg}" class="w-4 h-4"/>
+                    </a>
+                    <a rel="noopener noreferrer" th:href="${profile.twitterLink}" target="_blank" aria-label="Twitter"
+                       class="p-2 rounded-md dark:text-gray-100 hover:dark:text-violet-400">
+                        <img th:src="@{/images/twitter.svg}" class="w-4 h-4"/>
+                    </a>
+                    <a rel="noopener noreferrer" th:href="${'mailto:'+profile.email}" aria-label="Email"
+                       class="p-2 rounded-md dark:text-gray-100 hover:dark:text-violet-400">
+                        <img th:src="@{/images/email.svg}" class="w-4 h-4"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>
