@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class HandleSizeLimitExceededException {
 
     @ExceptionHandler(SizeLimitExceededException.class)
-    public String handle(Model model, SizeLimitExceededException exception){
+    public String handle(Model model, SizeLimitExceededException exception) {
 
-        model.addAttribute("message","File size limit exceeded!");
+        model.addAttribute("message", "File size limit exceeded!");
 
         return "upload";
 

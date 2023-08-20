@@ -37,8 +37,7 @@ public class Profile {
     @Column
     private byte[] profileImage;
 
-    public String generateBase64Image()
-    {
+    public String generateBase64Image() {
         return Base64.encodeBase64String(this.profileImage);
     }
 

@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
-
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @Controller
@@ -40,7 +38,7 @@ public class ProfileController {
     @GetMapping("/profiles/add")
     public ModelAndView addProfile() {
 
-        return new ModelAndView("addProfile", "profile", new Profile()) ;
+        return new ModelAndView("addProfile", "profile", new Profile());
 
     }
 
@@ -49,7 +47,7 @@ public class ProfileController {
 
         log.info("handling request parts: {}", file);
 
-       profileService.save(profile, file);
+        profileService.save(profile, file);
 
         return "redirect:/profiles/view";
 
