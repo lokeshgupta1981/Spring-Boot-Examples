@@ -25,9 +25,9 @@ public class ProfileServiceImpl implements ProfileService {
 
             profileRepository.save(profile);
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
-            log.debug("Some internal error occurred",e);
+            log.debug("Some internal error occurred", e);
 
         }
     }

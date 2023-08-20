@@ -1,7 +1,6 @@
 package com.howtodoinjava.service;
 
 import com.howtodoinjava.model.Profile;
-import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
