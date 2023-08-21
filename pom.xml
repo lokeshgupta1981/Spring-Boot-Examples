@@ -52,6 +52,7 @@
     <module>search-in-keycloak-with-spring-boot</module>
     <module>spring-boot-response-entity-demo</module>
     <module>spring-boot-validate-list</module>
+    <module>thymeleaf-upload-display-images</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>

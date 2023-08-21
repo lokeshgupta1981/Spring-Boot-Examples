@@ -8,16 +8,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfiguration {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests(request -> request.requestMatchers("/profiles/*").permitAll()
-                .requestMatchers("/").permitAll()
-                .requestMatchers("/images/*").permitAll()
-                .anyRequest().authenticated());
+    http.authorizeHttpRequests(request -> request
+        .requestMatchers("/profiles/*").permitAll()
+        .requestMatchers("/images/*").permitAll()
+        .anyRequest().authenticated());
 
-        return http.build();
-    }
-
-
+    return http.build();
+  }
 }

@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;
 
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -35,10 +34,9 @@ public class Profile {
 
     @Lob
     @Column
-    private byte[] profileImage;
+    private byte[] imageData;
 
     public String generateBase64Image() {
-        return Base64.encodeBase64String(this.profileImage);
+        return Base64.encodeBase64String(this.imageData);
     }
-
 }
