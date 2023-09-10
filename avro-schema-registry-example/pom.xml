@@ -11,6 +11,12 @@
 
     <groupId>com.howtodoinjava.avro.example</groupId>
     <artifactId>avro-schema-registry-example</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>schema</module>
+        <module>order-service</module>
+        <module>order-consumer</module>
+    </modules>
 
     <dependencies>
         <dependency>

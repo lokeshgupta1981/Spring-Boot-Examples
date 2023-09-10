@@ -18,6 +18,10 @@
       "name": "lastName",
       "type": "string"
     },
+//    {
+//      "name": "middleName",
+//      "type": "string"
+//    },
     {
       "name": "ordered_time",
       "type": {
