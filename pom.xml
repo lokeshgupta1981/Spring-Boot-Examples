@@ -53,6 +53,7 @@
     <module>spring-boot-response-entity-demo</module>
     <module>spring-boot-validate-list</module>
     <module>thymeleaf-upload-display-images</module>
+    <module>rest-api-timeout</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
