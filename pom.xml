@@ -54,6 +54,7 @@
     <module>spring-boot-validate-list</module>
     <module>thymeleaf-upload-display-images</module>
     <module>rest-api-timeout</module>
+      <module>podman-deployment</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
