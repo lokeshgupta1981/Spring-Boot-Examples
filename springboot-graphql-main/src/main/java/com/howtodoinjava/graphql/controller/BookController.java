@@ -17,6 +17,8 @@ public class BookController {
   @Autowired
   private BookRepository bookRepository;
 
+  
+
   @SchemaMapping(typeName = "Query", value = "allBooks")
   public List<Book> getAllBooks() {
     return bookRepository.allBooks();
