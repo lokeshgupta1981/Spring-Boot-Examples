@@ -1,6 +1,6 @@
-package com.howtodoinjava.demo.batch.listener;
+package com.howtodoinjava.demo.batch.jobs.csvToDb.listener;
 
-import com.howtodoinjava.demo.batch.model.Person;
+import com.howtodoinjava.demo.batch.jobs.csvToDb.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ItemWriteListener;
@@ -15,11 +15,13 @@ public class PersonItemWriteListener implements ItemWriteListener<Person> {
     logger.info("Writing started persons list : " + items);
   }
 
+  @Override
   public void afterWrite(Chunk<? extends Person> items) {
     logger.info("Writing completed persons list : " + items);
     ;
   }
 
+  @Override
   public void onWriteError(Exception e, Chunk<? extends Person> items) {
     logger.error("Error in reading the person records " + items);
     logger.error("Error in reading the person records " + e);

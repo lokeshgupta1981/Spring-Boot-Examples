@@ -1,9 +1,10 @@
-package com.howtodoinjava.demo.batch.jobs;
+package com.howtodoinjava.demo.batch.jobs.csvToDb;
 
-import com.howtodoinjava.demo.batch.listener.JobCompletionNotificationListener;
-import com.howtodoinjava.demo.batch.listener.PersonItemReadListener;
-import com.howtodoinjava.demo.batch.listener.PersonItemWriteListener;
-import com.howtodoinjava.demo.batch.model.Person;
+import com.howtodoinjava.demo.batch.jobs.csvToDb.processor.PersonItemProcessor;
+import com.howtodoinjava.demo.batch.jobs.csvToDb.listener.JobCompletionNotificationListener;
+import com.howtodoinjava.demo.batch.jobs.csvToDb.listener.PersonItemReadListener;
+import com.howtodoinjava.demo.batch.jobs.csvToDb.listener.PersonItemWriteListener;
+import com.howtodoinjava.demo.batch.jobs.csvToDb.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;

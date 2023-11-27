@@ -1,6 +1,6 @@
-package com.howtodoinjava.demo.batch.jobs;
+package com.howtodoinjava.demo.batch.jobs.csvToDb.processor;
 
-import com.howtodoinjava.demo.batch.model.Person;
+import com.howtodoinjava.demo.batch.jobs.csvToDb.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;

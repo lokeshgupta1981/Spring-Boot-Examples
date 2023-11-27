@@ -1,4 +1,4 @@
-package com.howtodoinjava.demo.batch.model;
+package com.howtodoinjava.demo.batch.jobs.csvToDb.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
