@@ -1,4 +1,4 @@
-package com.howtodoinjava.demo;
+package com.howtodoinjava.demo.batch.jobs.csvToDb;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;

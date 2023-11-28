@@ -1,4 +1,4 @@
-package com.howtodoinjava.demo.batch.jobs.csvToDb;
+package com.howtodoinjava.demo.batch.jobs.csvToDb.job;
 
 import com.howtodoinjava.demo.batch.jobs.csvToDb.listener.JobCompletionNotificationListener;
 import com.howtodoinjava.demo.batch.jobs.csvToDb.listener.PersonItemReadListener;
@@ -50,7 +50,7 @@ public class CsvToDatabaseJob {
   @Value("classpath:csv/inputData.csv")
   private Resource inputFeed;
 
-  @Bean
+  @Bean(name="insertIntoDbFromCsvJob")
   public Job insertIntoDbFromCsvJob(Step step1, Step step2) {
 
     var name = "Persons Import Job";
