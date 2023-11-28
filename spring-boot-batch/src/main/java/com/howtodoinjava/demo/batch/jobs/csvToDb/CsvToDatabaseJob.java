@@ -4,6 +4,7 @@ import com.howtodoinjava.demo.batch.jobs.csvToDb.listener.JobCompletionNotificat
 import com.howtodoinjava.demo.batch.jobs.csvToDb.listener.PersonItemReadListener;
 import com.howtodoinjava.demo.batch.jobs.csvToDb.model.Person;
 import com.howtodoinjava.demo.batch.jobs.csvToDb.processor.PersonItemProcessor;
+import com.howtodoinjava.demo.batch.jobs.csvToDb.tasklets.DeleteInputCsvTasklet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -50,10 +51,15 @@ public class CsvToDatabaseJob {
   private Resource inputFeed;
 
   @Bean
-  public Job insertIntoDbFromCsvJob(Step step1) {
+  public Job insertIntoDbFromCsvJob(Step step1, Step step2) {
+
     var name = "Persons Import Job";
     var builder = new JobBuilder(name, jobRepository);
-    return builder.start(step1).listener(new JobCompletionNotificationListener()).build();
+
+    return builder.start(step1)
+        //.next(step2)
+        .listener(new JobCompletionNotificationListener(new Resource[]{inputFeed}))
+        .build();
   }
 
   @Bean
@@ -73,6 +79,17 @@ public class CsvToDatabaseJob {
         //.listener(new PersonItemProcessor())
         .writer(writer)
         //.listener(new PersonItemWriteListener())
+        .build();
+  }
+
+  @Bean
+  public Step step2(PlatformTransactionManager txManager) {
+    DeleteInputCsvTasklet task = new DeleteInputCsvTasklet();
+    task.setResources(new Resource[]{inputFeed});
+    var name = "DELETE CSV FILE";
+    var builder = new StepBuilder(name, jobRepository);
+    return builder
+        .tasklet(task, txManager)
         .build();
   }
 

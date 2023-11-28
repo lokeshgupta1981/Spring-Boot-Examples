@@ -1,4 +1,4 @@
-package com.howtodoinjava.demo.batch.config;
+package com.howtodoinjava.demo.batch.jobs.csvToDb.config;
 
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.context.annotation.Bean;
