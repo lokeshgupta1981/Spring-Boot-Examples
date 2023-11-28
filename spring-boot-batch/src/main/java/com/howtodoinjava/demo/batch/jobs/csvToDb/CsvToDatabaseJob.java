@@ -1,10 +1,9 @@
 package com.howtodoinjava.demo.batch.jobs.csvToDb;
 
-import com.howtodoinjava.demo.batch.jobs.csvToDb.processor.PersonItemProcessor;
 import com.howtodoinjava.demo.batch.jobs.csvToDb.listener.JobCompletionNotificationListener;
 import com.howtodoinjava.demo.batch.jobs.csvToDb.listener.PersonItemReadListener;
-import com.howtodoinjava.demo.batch.jobs.csvToDb.listener.PersonItemWriteListener;
 import com.howtodoinjava.demo.batch.jobs.csvToDb.model.Person;
+import com.howtodoinjava.demo.batch.jobs.csvToDb.processor.PersonItemProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -28,7 +27,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
-import org.springframework.dao.DeadlockLoserDataAccessException;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -67,14 +65,14 @@ public class CsvToDatabaseJob {
     var builder = new StepBuilder(name, jobRepository);
     return builder
         .<Person, Person>chunk(5, txManager)
-        .faultTolerant()
-        .retryLimit(3).retry(DeadlockLoserDataAccessException.class)
+        /*.faultTolerant()
+        .retryLimit(3).retry(DeadlockLoserDataAccessException.class)*/
         .reader(reader)
         .listener(new PersonItemReadListener())
-        .processor(processor)
-        .listener(new PersonItemProcessor())
+        //.processor(processor)
+        //.listener(new PersonItemProcessor())
         .writer(writer)
-        .listener(new PersonItemWriteListener())
+        //.listener(new PersonItemWriteListener())
         .build();
   }
 

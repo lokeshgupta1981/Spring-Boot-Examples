@@ -8,12 +8,12 @@ import org.springframework.batch.core.JobExecutionListener;
 
 public class JobCompletionNotificationListener implements JobExecutionListener {
 
-    private static final Logger log = LoggerFactory.getLogger(JobCompletionNotificationListener.class);
+  private static final Logger log = LoggerFactory.getLogger(JobCompletionNotificationListener.class);
 
-    @Override
-    public void afterJob(JobExecution jobExecution) {
-        if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
-            log.info("JOB FINISHED !!");
-        }
+  @Override
+  public void afterJob(JobExecution jobExecution) {
+    if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
+      log.info("JOB FINISHED !!");
     }
+  }
 }

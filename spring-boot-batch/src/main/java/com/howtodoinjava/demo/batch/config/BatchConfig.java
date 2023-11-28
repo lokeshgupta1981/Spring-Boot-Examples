@@ -14,27 +14,27 @@ import javax.sql.DataSource;
 @EnableBatchProcessing
 public class BatchConfig {
 
-    DataSource dataSource;
+  DataSource dataSource;
 
-    public BatchConfig(DataSource dataSource){
-        this.dataSource = dataSource;
-    }
+  public BatchConfig(DataSource dataSource) {
+    this.dataSource = dataSource;
+  }
 
-    @Bean
-    public DataSourceTransactionManager transactionManager() {
-        return new DataSourceTransactionManager(dataSource);
-    }
+  @Bean
+  public DataSourceTransactionManager transactionManager() {
+    return new DataSourceTransactionManager(dataSource);
+  }
 
-    @Bean
-    public DataSourceInitializer databasePopulator() {
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScript(new ClassPathResource("org/springframework/batch/core/schema-h2.sql"));
-        populator.addScript(new ClassPathResource("sql/batch-schema.sql"));
-        populator.setContinueOnError(false);
-        populator.setIgnoreFailedDrops(false);
-        DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
-        dataSourceInitializer.setDataSource(dataSource);
-        dataSourceInitializer.setDatabasePopulator(populator);
-        return dataSourceInitializer;
-    }
+  @Bean
+  public DataSourceInitializer databasePopulator() {
+    ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+    populator.addScript(new ClassPathResource("org/springframework/batch/core/schema-h2.sql"));
+    populator.addScript(new ClassPathResource("sql/batch-schema.sql"));
+    populator.setContinueOnError(false);
+    populator.setIgnoreFailedDrops(false);
+    DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+    dataSourceInitializer.setDataSource(dataSource);
+    dataSourceInitializer.setDatabasePopulator(populator);
+    return dataSourceInitializer;
+  }
 }
