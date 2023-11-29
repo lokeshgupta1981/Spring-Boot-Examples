@@ -1,4 +1,4 @@
-package com.howtodoinjava.demo.batch.quartz.config;
+package com.howtodoinjava.demo.batch.quartz.tasklets;
 
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;

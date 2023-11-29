@@ -1,4 +1,4 @@
-package com.howtodoinjava.demo.batch.quartz.job;
+package com.howtodoinjava.demo.batch.quartz.quartzJobs;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,14 +9,21 @@ import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.configuration.JobLocator;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.stereotype.Component;
 
-@Setter
-@Getter
-public class CustomQuartzJobBean extends QuartzJobBean {
+@Component
+public class CustomQuartzJob extends QuartzJobBean {
 
-  private String jobName;
-  private JobLauncher jobLauncher;
-  private JobLocator jobLocator;
+  @Getter @Setter
+  String jobName;
+
+  JobLauncher jobLauncher;
+  JobLocator jobLocator;
+
+  public CustomQuartzJob(JobLauncher jobLauncher, JobLocator jobLocator) {
+    this.jobLauncher = jobLauncher;
+    this.jobLocator = jobLocator;
+  }
 
   @Override
   protected void executeInternal(JobExecutionContext context) {

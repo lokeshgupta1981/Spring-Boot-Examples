@@ -1,5 +1,6 @@
 package com.howtodoinjava.demo.batch.quartz.config;
 
+import com.howtodoinjava.demo.batch.quartz.tasklets.CustomTasklet;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;

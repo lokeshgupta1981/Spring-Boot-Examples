@@ -1,5 +1,7 @@
 package com.howtodoinjava.demo.batch.quartz.config;
 
+import org.springframework.boot.autoconfigure.quartz.QuartzDataSource;
+import org.springframework.boot.autoconfigure.quartz.QuartzTransactionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -12,6 +14,7 @@ import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfig {
 
+  @QuartzDataSource
   DataSource dataSource;
 
   public DataSourceConfig(DataSource dataSource){
@@ -19,6 +22,7 @@ public class DataSourceConfig {
   }
 
   @Bean
+  @QuartzTransactionManager
   public DataSourceTransactionManager transactionManager() {
     return new DataSourceTransactionManager(dataSource);
   }
