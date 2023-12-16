@@ -133,6 +133,8 @@ public class TestMyKafkaConsumer
 
             kafkaConsumer.stopPolling();
 
+            TimeUnit.MILLISECONDS.sleep(200);
+
             Assertions.assertTrue(mockConsumer.closed());
 
         }
