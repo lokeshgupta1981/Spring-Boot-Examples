@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.howtodoinjava.demo</groupId>
@@ -48,15 +48,18 @@
     <module>spring-boot-file-upload-restapi</module>
     <module>spring-kafka-streams-example</module>
     <module>spring-boot-vaadin-demo</module>
-    <module>spring-security-authentication-aws-cognito/AWSCognitoBasicAuthentication</module>
+    <module>
+      spring-security-authentication-aws-cognito/AWSCognitoBasicAuthentication
+    </module>
     <module>search-in-keycloak-with-spring-boot</module>
     <module>spring-boot-response-entity-demo</module>
     <module>spring-boot-validate-list</module>
     <module>thymeleaf-upload-display-images</module>
     <module>rest-api-timeout</module>
-      <module>podman-deployment</module>
     <module>spring-elasticsearch-example</module>
-
+    <module>podman-deployment</module>
+    <module>spring-boot-batch</module>
+    <module>application-events</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
@@ -65,13 +68,13 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.1.1</version>
+    <version>3.2.0</version>
   </parent>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -83,6 +86,7 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <scope>provided</scope>
+      <version>1.18.30</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
