@@ -60,6 +60,8 @@
     <module>podman-deployment</module>
     <module>spring-boot-batch</module>
     <module>application-events</module>
+      <module>spring-virtual-threads-example</module>
+      <module>spring-virtual-threads-example/spring-webflux-example</module>
   </modules>
   <name>spring-boot-examples</name>
   <url>https://howtodoinjava.com</url>
@@ -78,10 +80,6 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
