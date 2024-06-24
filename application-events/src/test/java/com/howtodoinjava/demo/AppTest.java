@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.event.ApplicationEvents;
 import org.springframework.test.context.event.RecordApplicationEvents;
+import org.springframework.web.context.annotation.ApplicationScope;
 
 @SpringBootTest
 @RecordApplicationEvents
+@ApplicationScope
 public class AppTest {
 
   @Autowired
