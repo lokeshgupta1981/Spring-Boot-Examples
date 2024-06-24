@@ -56,6 +56,7 @@
     <module>spring-boot-validate-list</module>
     <module>thymeleaf-upload-display-images</module>
     <module>rest-api-timeout</module>
+    <module>spring-elasticsearch-example</module>
     <module>podman-deployment</module>
     <module>spring-boot-batch</module>
     <module>application-events</module>
