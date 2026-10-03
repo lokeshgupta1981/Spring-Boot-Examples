@@ -1,0 +1,15 @@
+logging:
+  level:
+    root: DEBUG
+spring:
+  r2dbc:
+    url: r2dbc:h2:mem:///mydb?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    name: sa
+    password:
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: reactive
+
+  h2:
+    console:
+      enabled: true
