@@ -1,0 +1,18 @@
+# One control plane and two workers. Port 8080 on the host goes to the
+# ingress controller (port 80) on the control-plane node.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "ingress-ready=true"
+    extraPortMappings:
+      - containerPort: 80
+        hostPort: 8080
+        protocol: TCP
+  - role: worker
+  - role: worker
