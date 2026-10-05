@@ -1,9 +1,0 @@
-spring:
-  application:
-    name: kafka-share-groups
-  kafka:
-    bootstrap-servers: localhost:9092
-
-logging:
-  level:
-    org.apache.kafka: WARN

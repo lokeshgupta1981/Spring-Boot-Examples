@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: greeting-config
-data:
-  GREETING_MESSAGE: "Hello from Kubernetes"

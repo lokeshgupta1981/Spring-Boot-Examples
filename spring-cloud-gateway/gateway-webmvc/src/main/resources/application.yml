@@ -1,9 +1,0 @@
-server:
-  port: 8090
-
-spring:
-  application:
-    name: recipe-gateway-mvc
-
-recipe-service:
-  uri: http://localhost:8081
