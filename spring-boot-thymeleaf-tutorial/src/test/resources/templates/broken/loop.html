@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:object="${song}">
+  <ul>
+    <li th:each="tag : *{genre.split(',')}" th:text="*{tag}">tag</li>
+  </ul>
+</div>
+</body>
+</html>
