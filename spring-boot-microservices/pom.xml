@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>4.1.1</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>com.howtodoinjava</groupId>
+  <artifactId>spring-boot-microservices</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <name>spring-boot-microservices</name>
+
+  <modules>
+    <module>book-service</module>
+    <module>loan-service</module>
+    <module>gateway</module>
+  </modules>
+
+  <properties>
+    <java.version>25</java.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Imported first: the Spring Cloud BOM would pin Resilience4j 2.3.0 -->
+      <dependency>
+        <groupId>io.github.resilience4j</groupId>
+        <artifactId>resilience4j-bom</artifactId>
+        <version>2.4.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>2025.1.3</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.github.resilience4j</groupId>
+        <artifactId>resilience4j-spring-boot4</artifactId>
+        <version>2.4.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.wiremock</groupId>
+        <artifactId>wiremock-standalone</artifactId>
+        <version>3.13.2</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+</project>

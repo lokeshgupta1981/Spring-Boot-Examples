@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+  <meta charset="UTF-8">
+  <title th:text="*{title}">Playlist</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:fragment="header">
+  <nav>
+    <a th:href="@{/songs}" th:text="#{nav.songs}">Songs</a>
+    <a th:href="@{/songs/new}" th:text="#{nav.add}">Add a song</a>
+  </nav>
+</header>
+
+<p th:fragment="copy">Playlist demo, 2026</p>
+
+</body>
+</html>

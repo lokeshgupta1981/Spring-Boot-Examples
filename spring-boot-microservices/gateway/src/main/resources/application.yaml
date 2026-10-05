@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+
+library:
+  book-service: http://localhost:8081
+  loan-service: http://localhost:8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  tracing:
+    sampling:
+      probability: 1.0
+  opentelemetry:
+    tracing:
+      export:
+        otlp:
+          endpoint: http://localhost:4318/v1/traces
+  otlp:
+    metrics:
+      export:
+        enabled: false
+  logging:
+    export:
+      otlp:
+        enabled: false

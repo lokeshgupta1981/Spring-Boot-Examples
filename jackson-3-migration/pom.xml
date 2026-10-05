@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.howtodoinjava</groupId>
+  <artifactId>jackson-3-migration</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <name>jackson-3-migration</name>
+
+  <modules>
+    <module>core-changes</module>
+    <module>spring-boot-app</module>
+    <module>jackson2-app</module>
+  </modules>
+</project>
