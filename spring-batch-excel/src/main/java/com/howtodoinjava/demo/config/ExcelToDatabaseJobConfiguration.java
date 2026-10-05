@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
-import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.extensions.excel.poi.PoiItemReader;
@@ -72,7 +71,7 @@ public class ExcelToDatabaseJobConfiguration {
   @Bean
   Step step1() {
 
-    return new StepBuilder("stepBuilder", jobRepository)
+    return new StepBuilder("excelFileToStep1", jobRepository)
         .<Person, Person>chunk(1, transactionManager)
         .reader(reader())
         .processor(processor())
@@ -83,9 +82,8 @@ public class ExcelToDatabaseJobConfiguration {
   @Bean
   Job excelFileToDatabaseJob(Step step1) {
 
-    var builder = new JobBuilder("jobBuilder", jobRepository);
+    var builder = new JobBuilder("excelFileToDatabase", jobRepository);
     return builder
-        .incrementer(new RunIdIncrementer())
         .start(step1)
         .build();
   }

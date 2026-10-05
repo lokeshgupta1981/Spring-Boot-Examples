@@ -10,11 +10,10 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
-@Component
+//@Component
 public class BatchJobLauncherScheduler {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(BatchJobLauncherScheduler.class);
