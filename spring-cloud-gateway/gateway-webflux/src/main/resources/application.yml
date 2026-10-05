@@ -1,0 +1,51 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: recipe-gateway
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 500ms            # fail fast when Redis is down
+  cloud:
+    gateway:
+      server:
+        webflux:
+          globalcors:
+            add-to-simple-url-handler-mapping: true
+            cors-configurations:
+              '[/api/**]':
+                allowedOrigins: "http://localhost:3000"
+                allowedMethods:
+                  - GET
+                allowedHeaders: "*"
+                maxAge: 3600
+          routes:
+            - id: recipes
+              uri: http://localhost:8081
+              predicates:
+                - Path=/api/recipes/**
+                - Method=GET
+              filters:
+                - RewritePath=/api/recipes/?(?<segment>.*), /recipes/$\{segment}
+                - AddRequestHeader=X-Request-Source, recipe-gateway
+                - AddResponseHeader=X-Served-By, recipe-gateway
+                - name: RequestRateLimiter
+                  args:
+                    redis-rate-limiter.replenishRate: 1
+                    redis-rate-limiter.burstCapacity: 2
+                    key-resolver: "#{@userKeyResolver}"
+
+recipe-service:
+  uri: http://localhost:8081
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,gateway
+  endpoint:
+    gateway:
+      access: read-only
