@@ -8,6 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {"com.howtodoinjava.demo.batch.quartz"})
 public class BatchJobByQuartzApplication {
   public static void main(String[] args) {
-    SpringApplication.run(BatchJobByQuartzApplication.class, args);
+    SpringApplication app = new SpringApplication(BatchJobByQuartzApplication.class);
+    app.setAdditionalProfiles("quartz");
+    app.run(args);
   }
 }

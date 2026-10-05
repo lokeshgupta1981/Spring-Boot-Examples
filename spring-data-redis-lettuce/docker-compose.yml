@@ -1,24 +1,7 @@
-version: '2'
-
-networks:
-  app-tier:
-    driver: bridge
-
+# docker compose up -d   (same as: docker run -d --name redis-demo -p 6379:6379 redis:latest)
 services:
   redis:
-    image: 'bitnami/redis:latest'
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+    image: redis:latest
+    container_name: redis-demo
     ports:
-      - '6379:6379'
-    networks:
-      - app-tier
-  redis-sentinel:
-    image: 'bitnami/redis-sentinel:latest'
-    environment:
-      - REDIS_MASTER_HOST=localhost
-      - REDIS_SENTINEL_RESOLVE_HOSTNAMES=yes
-    ports:
-      - '26379:26379'
-    networks:
-      - app-tier
+      - "6379:6379"

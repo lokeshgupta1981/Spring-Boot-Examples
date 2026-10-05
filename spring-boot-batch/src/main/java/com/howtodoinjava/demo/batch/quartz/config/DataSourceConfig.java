@@ -1,7 +1,7 @@
 package com.howtodoinjava.demo.batch.quartz.config;
 
-import org.springframework.boot.autoconfigure.quartz.QuartzDataSource;
-import org.springframework.boot.autoconfigure.quartz.QuartzTransactionManager;
+import org.springframework.boot.quartz.autoconfigure.QuartzDataSource;
+import org.springframework.boot.quartz.autoconfigure.QuartzTransactionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
