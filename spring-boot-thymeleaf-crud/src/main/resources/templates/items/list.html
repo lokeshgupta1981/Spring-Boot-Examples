@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><title>Inventory items</title></head>
+<body>
+<h1>Inventory items</h1>
+<p><a th:href="@{/items/new}">Add item</a></p>
+<table>
+  <thead><tr><th>Name</th><th>Quantity</th><th>Actions</th></tr></thead>
+  <tbody>
+  <tr th:each="item : ${items}">
+    <td th:text="${item.name}">Notebook</td>
+    <td th:text="${item.quantity}">5</td>
+    <td>
+      <a th:href="@{/items/{id}/edit(id=${item.id})}">Edit</a>
+      <form th:action="@{/items/{id}/delete(id=${item.id})}" method="post">
+        <button type="submit">Delete</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<p th:if="${#lists.isEmpty(items)}">No items yet.</p>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><title>Inventory item</title></head>
+<body>
+<h1 th:text="${itemId == null} ? 'Add item' : 'Edit item'">Item</h1>
+<form th:object="${item}" th:action="${itemId == null} ? @{/items} : @{/items/{id}(id=${itemId})}" method="post">
+  <p>
+    <label for="name">Name</label>
+    <input id="name" type="text" th:field="*{name}">
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span>
+  </p>
+  <p>
+    <label for="quantity">Quantity</label>
+    <input id="quantity" type="number" min="0" th:field="*{quantity}">
+    <span th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">Quantity error</span>
+  </p>
+  <button type="submit">Save</button>
+</form>
+<p><a th:href="@{/items}">Back to list</a></p>
+</body>
+</html>
