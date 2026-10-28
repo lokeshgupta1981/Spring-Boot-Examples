@@ -5,7 +5,7 @@ Source code for the article [Spring Boot DataSource Configuration](https://howto
 ## Versions
 
 - Java 25
-- Spring Boot 4.1.1 (HikariCP 7.0.2, H2 2.4.240, Testcontainers 2.0.5)
+- Spring Boot 4.1.2 (managed dependency versions; inspect with `mvn dependency:tree`)
 
 ## What the example shows
 
