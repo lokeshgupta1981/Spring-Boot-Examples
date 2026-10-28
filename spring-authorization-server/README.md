@@ -12,8 +12,8 @@ Two Spring Boot applications in one Maven build:
 ## Versions
 
 - Java 25 (Java 17 or later works)
-- Spring Boot 4.1.1
-- Spring Security 7.1.1 (includes Spring Authorization Server)
+- Spring Boot 4.1.2
+- Spring Security version managed by Spring Boot 4.1.2 (includes Spring Authorization Server)
 - Starters: spring-boot-starter-security-oauth2-authorization-server, spring-boot-starter-security-oauth2-resource-server
 - H2 2.4.240 (only for the "jdbc" profile)
 

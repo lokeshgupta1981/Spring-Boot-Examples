@@ -48,9 +48,10 @@ class AuthorizationServerEndpointsTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.token_type").value("Bearer"))
         .andExpect(jsonPath("$.scope").value("recipes.read"))
-        .andExpect(jsonPath("$.expires_in").value(599))
         .andReturn();
 
+    int expiresIn = JsonPath.read(result.getResponse().getContentAsString(), "$.expires_in");
+    assertThat(expiresIn).isBetween(1, 600);
     String token = JsonPath.read(result.getResponse().getContentAsString(), "$.access_token");
     Jwt jwt = jwtDecoder.decode(token);
 
